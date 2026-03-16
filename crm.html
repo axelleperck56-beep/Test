@@ -847,9 +847,16 @@
     .settings-msg.error { background: var(--red-100); color: #dc2626; }
 
     /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 1024px) {
+      .crm-sidebar { width: 200px; }
+      .crm-main { margin-left: 200px; padding: 28px 20px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .dashboard-row { grid-template-columns: 1fr; }
+      .crm-page-title { font-size: 1.25rem; }
     }
 
     .mobile-topbar {
@@ -903,12 +910,82 @@
     .sidebar-overlay.open { display: block; }
 
     @media (max-width: 768px) {
-      .crm-sidebar { transform: translateX(-100%); transition: transform .3s; z-index: 100; }
+      .crm-sidebar { transform: translateX(-100%); transition: transform .3s; z-index: 100; width: 240px; }
       .crm-sidebar.open { transform: translateX(0); }
-      .crm-main { margin-left: 0; padding: 76px 16px 20px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .crm-main { margin-left: 0; padding: 68px 16px 24px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .form-grid { grid-template-columns: 1fr; }
       .mobile-topbar { display: flex; }
+
+      /* Table scroll horizontal sur mobile */
+      .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { min-width: 680px; }
+
+      /* Topbar */
+      .crm-topbar { flex-wrap: wrap; gap: 10px; }
+      .topbar-actions { flex-wrap: wrap; gap: 8px; }
+
+      /* Toolbar leads */
+      .leads-toolbar { gap: 8px; }
+      .filter-btn { padding: 7px 12px; font-size: .8rem; }
+
+      /* Modal glisse depuis le bas */
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal { border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; }
+
+      /* Dashboard */
+      .stat-card { padding: 16px; gap: 12px; }
+      .stat-value { font-size: 1.5rem; }
+      .dash-card { padding: 18px; }
+
+      /* Tarifs editor */
+      #tarifsEditorGrid { grid-template-columns: 1fr !important; }
+    }
+
+    @media (max-width: 480px) {
+      .crm-main { padding: 64px 12px 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 12px 10px; gap: 10px; }
+      .stat-icon { width: 34px; height: 34px; }
+      .stat-icon svg { width: 17px; height: 17px; }
+      .stat-value { font-size: 1.25rem; }
+      .stat-label { font-size: .7rem; }
+      .stat-change { font-size: .7rem; }
+
+      /* Boutons */
+      .btn-primary, .btn-outline { padding: 8px 12px; font-size: .82rem; }
+      .btn-primary svg, .btn-outline svg { width: 14px; height: 14px; }
+      .crm-page-title { font-size: 1.05rem; }
+      .crm-page-title span { display: none; }
+
+      /* Toolbar – colonne complète */
+      .leads-toolbar { flex-direction: column; }
+      .search-bar { min-width: 100%; }
+      .leads-toolbar .filter-btn { text-align: center; }
+
+      /* Table thead petites colonnes */
+      th { padding: 10px 12px; font-size: .7rem; }
+      td { padding: 10px 12px; font-size: .82rem; }
+
+      /* Modal */
+      .modal-header { padding: 18px 16px 0; }
+      .modal-body { padding: 0 16px 16px; }
+      .form-grid { gap: 10px; }
+      .field label { font-size: .72rem; }
+      .field input, .field select, .field textarea { padding: 9px 10px; font-size: .85rem; }
+
+      /* Settings */
+      .settings-card { padding: 18px 16px; }
+
+      /* Dashboard */
+      .dashboard-row { gap: 12px; margin-top: 12px; }
+      .dash-card { padding: 14px; }
+      .dash-card h3 { font-size: .75rem; margin-bottom: 12px; }
+      .pipeline-label { font-size: .78rem; width: 68px; }
+      .pipeline-count { font-size: .78rem; }
+      .recent-date { display: none; }
+      .recent-name { font-size: .85rem; }
+      .recent-project { font-size: .75rem; }
     }
 
     /* ===== TARIFS EDITOR ===== */
