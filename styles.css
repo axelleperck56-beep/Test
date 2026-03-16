@@ -1596,6 +1596,26 @@ body.subpage #header .logo-dot { box-shadow: 0 0 0 3px rgba(29,110,245,.2); }
 .form-success h3 { color: var(--gray-900); margin-bottom: 8px; }
 .form-success p { color: var(--gray-500); }
 
+.form-error {
+  text-align: center;
+  padding: 40px 20px;
+}
+.error-icon {
+  width: 60px; height: 60px;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 auto 16px;
+}
+.form-error h3 { color: var(--gray-900); margin-bottom: 8px; }
+.form-error p  { color: var(--gray-500); }
+.form-error a  { color: var(--blue-500); font-weight: 600; }
+
 /* =============================================
    FOOTER
    ============================================= */

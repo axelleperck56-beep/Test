@@ -115,6 +115,14 @@
         </div>
         <div class="contact-form-wrapper" data-aos>
           <form class="contact-form" id="contactForm">
+
+            <!-- Web3Forms : champs cachés obligatoires -->
+            <input type="hidden" name="access_key" value="REMPLACER_PAR_VOTRE_CLE" />
+            <input type="hidden" name="subject" value="Nouvelle demande de projet – NÉBULA" />
+            <input type="hidden" name="from_name" value="Site NÉBULA" />
+            <input type="hidden" name="redirect" value="false" />
+            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Votre nom *</label>
@@ -156,9 +164,9 @@
               <label for="message">Décrivez votre projet *</label>
               <textarea id="message" name="message" rows="5" placeholder="Parlez-nous de votre activité, vos objectifs, votre cible, vos inspirations, votre délai..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-full">
-              <span>Envoyer ma demande</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+              <span id="submitText">Envoyer ma demande</span>
+              <svg id="submitIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
             <p class="form-note">* Champs obligatoires — Réponse garantie sous 24h ouvrées</p>
           </form>
@@ -166,6 +174,11 @@
             <div class="success-icon">✓</div>
             <h3>Message envoyé !</h3>
             <p>Merci pour votre message. Nous vous répondons dans les 24 heures.</p>
+          </div>
+          <div class="form-error" id="formError" style="display:none;">
+            <div class="error-icon">✕</div>
+            <h3>Erreur d'envoi</h3>
+            <p>Une erreur est survenue. Écrivez-nous directement à <a href="mailto:axelleperck56@gmail.com">axelleperck56@gmail.com</a></p>
           </div>
         </div>
       </div>

@@ -107,21 +107,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- Contact form ----
-  const form = document.getElementById('contactForm');
+  // ---- Contact form → Web3Forms → axelleperck56@gmail.com ----
+  const form       = document.getElementById('contactForm');
   const successMsg = document.getElementById('formSuccess');
+  const errorMsg   = document.getElementById('formError');
+  const submitBtn  = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+  const submitIcon = document.getElementById('submitIcon');
+
   if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const btnSpan = btn.querySelector('span');
-      btn.disabled = true;
-      btnSpan.textContent = 'Envoi en cours…';
-      btn.style.opacity = '.7';
-      setTimeout(() => {
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitText.textContent = 'Envoi en cours…';
+      submitIcon.style.display = 'none';
+      submitBtn.style.opacity = '.75';
+
+      const formData = new FormData(form);
+      const data     = Object.fromEntries(formData);
+
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(data),
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          throw new Error(json.message || 'Échec envoi');
+        }
+      } catch (err) {
         form.style.display = 'none';
-        successMsg.style.display = 'block';
-      }, 1400);
+        if (errorMsg) errorMsg.style.display = 'block';
+      }
     });
   }
 
