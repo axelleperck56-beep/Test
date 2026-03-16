@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NÉBULA – Portfolio : découvrez nos réalisations web, e-commerce, landing pages et sites vitrines pour nos clients." />
+  <title>Portfolio – NÉBULA</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header id="header">
+    <nav class="navbar">
+      <div class="nav-logo">
+        <a href="index.html" style="display:flex;align-items:center;gap:10px;">
+          <span class="logo-dot"></span>
+          <span class="logo-name">NÉ<strong>BULA</strong></span>
+        </a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html" class="nav-active">Portfolio</a></li>
+        <li><a href="apropos.html">À propos</a></li>
+        <li><a href="tarifs.html">Tarifs</a></li>
+        <li><a href="contact.html" class="nav-cta">Me contacter</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="page-header-bg">
+      <div class="hero-blob blob-1"></div>
+      <div class="hero-blob blob-2"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Accueil</a>
+        <span>→</span>
+        <span>Portfolio</span>
+      </div>
+      <h1>Nos <span class="hero-highlight">Réalisations</span></h1>
+      <p>Des projets concrets, des résultats mesurables. Chaque site est une histoire de succès partagé avec nos clients.</p>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio section" style="padding-top:72px;">
+    <div class="container">
+      <div class="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="vitrine">Vitrine</button>
+        <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+        <button class="filter-btn" data-filter="landing">Landing Page</button>
+      </div>
+      <div class="portfolio-grid">
+        <!-- Project 1 -->
+        <div class="portfolio-item" data-category="ecommerce" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #1d6ef5 0%, #0d4fc4 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content ecommerce-mock">
+                <div class="pm-nav"><div class="pm-logo-sm"></div><div class="pm-nav-r"><div></div><div></div></div></div>
+                <div class="pm-hero-sm">
+                  <div class="pm-hero-text"><div class="pm-h1"></div><div class="pm-h2"></div><div class="pm-btn-sm"></div></div>
+                  <div class="pm-hero-img"></div>
+                </div>
+                <div class="pm-products"><div class="pm-prod"></div><div class="pm-prod"></div><div class="pm-prod"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>E-Commerce</span><span>WordPress</span></div>
+            <h3>BioNature Shop</h3>
+            <p>Boutique en ligne de cosmétiques bio avec +300 produits. Augmentation des ventes de 180% en 3 mois.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">+180%</span><span class="metric-label">Ventes</span></div>
+              <div class="metric"><span class="metric-value">2.1s</span><span class="metric-label">Chargement</span></div>
+              <div class="metric"><span class="metric-value">98/100</span><span class="metric-label">PageSpeed</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="portfolio-item large" data-category="vitrine" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #0f2d6b 0%, #1d6ef5 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content vitrine-mock">
+                <div class="pm-nav"><div class="pm-logo-sm"></div><div class="pm-nav-r"><div></div><div></div><div></div></div></div>
+                <div class="pm-big-hero">
+                  <div class="pm-title-big"></div>
+                  <div class="pm-sub"></div>
+                  <div class="pm-sub short"></div>
+                  <div class="pm-cta-group"><div class="pm-cta1"></div><div class="pm-cta2"></div></div>
+                </div>
+                <div class="pm-grid-3"><div></div><div></div><div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>Vitrine</span><span>Next.js</span><span>Animations</span></div>
+            <h3>Cabinet Architecte Lemaire</h3>
+            <p>Site vitrine haut de gamme pour un cabinet d'architecte parisien. Design élégant avec galerie de projets interactive.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">+320%</span><span class="metric-label">Leads</span></div>
+              <div class="metric"><span class="metric-value">4.9★</span><span class="metric-label">Avis clients</span></div>
+              <div class="metric"><span class="metric-value">100/100</span><span class="metric-label">Accessibilité</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 3 -->
+        <div class="portfolio-item" data-category="landing" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #06b6d4 0%, #1d6ef5 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content landing-mock">
+                <div class="pm-lp-hero">
+                  <div class="pm-badge-sm"></div>
+                  <div class="pm-lp-title"></div>
+                  <div class="pm-lp-title short"></div>
+                  <div class="pm-lp-sub"></div>
+                  <div class="pm-lp-cta"></div>
+                </div>
+                <div class="pm-features"><div></div><div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>Landing Page</span><span>Figma</span></div>
+            <h3>Formation Marketing Digital</h3>
+            <p>Landing page de vente pour une formation en ligne. Taux de conversion de 8.4% — bien au-dessus de la moyenne du secteur.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">8.4%</span><span class="metric-label">Conversion</span></div>
+              <div class="metric"><span class="metric-value">3.2k</span><span class="metric-label">Inscrits</span></div>
+              <div class="metric"><span class="metric-value">1.8s</span><span class="metric-label">Chargement</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 4 -->
+        <div class="portfolio-item" data-category="vitrine" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content restaurant-mock">
+                <div class="pm-nav dark"><div class="pm-logo-sm"></div></div>
+                <div class="pm-resto-hero">
+                  <div class="pm-resto-title"></div>
+                  <div class="pm-resto-sub"></div>
+                  <div class="pm-resto-btn"></div>
+                </div>
+                <div class="pm-menu-items"><div></div><div></div><div></div><div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>Vitrine</span><span>Restaurant</span></div>
+            <h3>Le Comptoir Gourmet</h3>
+            <p>Site restaurant avec réservation en ligne, menu dynamique et galerie photos appétissante. +45% de réservations en ligne.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">+45%</span><span class="metric-label">Réservations</span></div>
+              <div class="metric"><span class="metric-value">4.8★</span><span class="metric-label">Note</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 5 -->
+        <div class="portfolio-item" data-category="ecommerce" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #4f46e5 0%, #1d6ef5 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content ecommerce-mock">
+                <div class="pm-nav"><div class="pm-logo-sm"></div><div class="pm-nav-r"><div></div><div></div></div></div>
+                <div class="pm-hero-sm">
+                  <div class="pm-hero-text"><div class="pm-h1"></div><div class="pm-h2"></div><div class="pm-btn-sm"></div></div>
+                  <div class="pm-hero-img"></div>
+                </div>
+                <div class="pm-products"><div class="pm-prod"></div><div class="pm-prod"></div><div class="pm-prod"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>E-Commerce</span><span>Shopify</span></div>
+            <h3>UrbanStyle Boutique</h3>
+            <p>Boutique de mode en ligne avec essayage virtuel et recommandations personnalisées. Expérience client réinventée.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">+240%</span><span class="metric-label">CA annuel</span></div>
+              <div class="metric"><span class="metric-value">4.2%</span><span class="metric-label">Conversion</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Project 6 -->
+        <div class="portfolio-item" data-category="vitrine" data-aos>
+          <div class="portfolio-preview" style="background: linear-gradient(135deg, #0891b2 0%, #1d6ef5 100%);">
+            <div class="preview-browser">
+              <div class="preview-bar"><span></span><span></span><span></span></div>
+              <div class="preview-content vitrine-mock">
+                <div class="pm-nav"><div class="pm-logo-sm"></div><div class="pm-nav-r"><div></div><div></div></div></div>
+                <div class="pm-big-hero">
+                  <div class="pm-title-big"></div>
+                  <div class="pm-sub"></div>
+                  <div class="pm-cta-group"><div class="pm-cta1"></div></div>
+                </div>
+                <div class="pm-grid-3"><div></div><div></div><div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tags"><span>Vitrine</span><span>React</span><span>Animations</span></div>
+            <h3>NovaTech Solutions</h3>
+            <p>Site vitrine pour une startup tech. Interface futuriste avec animations 3D et présentation produit immersive.</p>
+            <div class="portfolio-metrics">
+              <div class="metric"><span class="metric-value">+500%</span><span class="metric-label">Leads</span></div>
+              <div class="metric"><span class="metric-value">99/100</span><span class="metric-label">PageSpeed</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-cta">
+        <p>Vous souhaitez un projet similaire ?</p>
+        <a href="contact.html" class="btn btn-primary">Discutons de votre projet</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <span class="logo-dot"></span>
+            <span class="logo-name">NÉ<strong>BULA</strong></span>
+          </div>
+          <p>Agence de design web, spécialisée dans la création de sites web professionnels qui convertissent et performent.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Site Vitrine</a></li>
+            <li><a href="services.html">E-Commerce</a></li>
+            <li><a href="services.html">Landing Page</a></li>
+            <li><a href="services.html">Refonte Web</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="tarifs.html">Tarifs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Légal</h4>
+          <ul>
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">CGV</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 NÉBULA – Designer Web. Tous droits réservés.</p>
+        <p>Conçu &amp; développé avec ♥ par NÉBULA</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

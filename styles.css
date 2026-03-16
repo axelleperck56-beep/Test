@@ -1606,6 +1606,101 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 }
 
 /* =============================================
+   PAGE HEADER (sous-pages)
+   ============================================= */
+.page-header {
+  min-height: 320px;
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 50%, var(--blue-600) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nav-height) + 48px) 32px 64px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.page-header-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-header-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -.02em;
+}
+
+.page-header p {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.75);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .82rem;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 16px;
+}
+.breadcrumb a {
+  color: rgba(255,255,255,.7);
+  transition: var(--transition);
+}
+.breadcrumb a:hover { color: var(--white); }
+.breadcrumb span { color: rgba(255,255,255,.4); }
+.breadcrumb span:last-child { color: rgba(255,255,255,.9); font-weight: 500; }
+
+/* Active nav link */
+.nav-active {
+  font-weight: 700 !important;
+  color: var(--white) !important;
+}
+#header.scrolled .nav-active {
+  color: var(--blue-500) !important;
+  background: var(--blue-50) !important;
+}
+
+/* Contact reassurance */
+.contact-reassurance {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 20px;
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-md);
+}
+.reassurance-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .85rem;
+  color: var(--gray-700);
+  font-weight: 500;
+}
+.reassurance-item svg {
+  width: 16px; height: 16px;
+  stroke: #16a34a;
+  flex-shrink: 0;
+}
+
+/* =============================================
    BACK TO TOP
    ============================================= */
 .back-to-top {
