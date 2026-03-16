@@ -846,6 +846,42 @@
     .settings-msg.success { background: var(--green-100); color: #15803d; }
     .settings-msg.error { background: var(--red-100); color: #dc2626; }
 
+    /* ===== CLOUD SYNC ===== */
+    .sync-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--gray-400);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      margin: 0 16px 16px;
+      cursor: default;
+      user-select: none;
+    }
+    .sync-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gray-300); flex-shrink: 0;
+    }
+    .sync-dot.ok { background: #22c55e; }
+    .sync-dot.error { background: #ef4444; }
+    .sync-dot.syncing {
+      background: var(--blue-500);
+      animation: syncPulse .9s ease-in-out infinite;
+    }
+    @keyframes syncPulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.4; transform:scale(.65); }
+    }
+    .sync-toggle-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; font-size: .88rem; color: var(--gray-700);
+    }
+    .sync-toggle-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--blue-500); cursor: pointer; }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1200px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1452,6 +1488,10 @@
         Paramètres
       </div>
     </nav>
+    <div class="sync-badge" id="syncBadge" title="Synchronisation cloud">
+      <div class="sync-dot" id="syncDot"></div>
+      <span id="syncBadgeText">Cloud : non configuré</span>
+    </div>
     <button class="sidebar-logout" id="logoutBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Déconnexion
@@ -1900,6 +1940,37 @@
         <p>Supprime tous les leads du CRM. Cette action est irréversible.</p>
         <button class="btn-outline" id="resetDataBtn" style="color:#dc2626;border-color:#fca5a5;">Supprimer tous les leads</button>
       </div>
+
+      <div class="settings-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:-2px;margin-right:6px;"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Synchronisation entre appareils
+        </h3>
+        <p>Synchronisez automatiquement vos données (leads, tarifs, contenu du site) entre votre téléphone et votre ordinateur via <a href="https://jsonbin.io" target="_blank" rel="noopener" style="color:var(--blue-500);text-decoration:none;">JSONBin.io</a> (service gratuit). Créez un compte, copiez votre <strong>Master Key</strong> et collez-la ci-dessous.</p>
+        <div class="settings-field">
+          <label>Clé API JSONBin (X-Master-Key)</label>
+          <input type="password" id="syncApiKey" placeholder="$2a$10$…" autocomplete="off" />
+        </div>
+        <div class="settings-field">
+          <label>Bin ID (généré automatiquement au premier envoi)</label>
+          <input type="text" id="syncBinId" placeholder="Généré lors du 1er envoi" readonly style="background:var(--gray-50);color:var(--gray-500);" />
+        </div>
+        <div class="sync-toggle-row">
+          <input type="checkbox" id="syncAutoToggle" />
+          <label for="syncAutoToggle">Synchronisation automatique à l'ouverture du CRM</label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-primary" id="syncPushBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Envoyer vers le cloud
+          </button>
+          <button class="btn-outline" id="syncPullBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="8 8 12 12 16 8"/><line x1="12" y1="12" x2="12" y2="3"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Récupérer depuis le cloud
+          </button>
+        </div>
+        <div class="settings-msg" id="syncMsg"></div>
+      </div>
     </div>
 
   </main>
@@ -2012,6 +2083,7 @@
 
   function saveLeads(leads) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    autoPush();
   }
 
   function genId() {
@@ -2077,6 +2149,8 @@
     loginScreen.style.display = 'none';
     crmApp.style.display = 'block';
     refreshAll();
+    fillSyncSettings();
+    autoSyncOnLoad();
   }
 
   togglePw.addEventListener('click', () => {
@@ -2573,6 +2647,7 @@
 
   function saveSiteContent(data) {
     localStorage.setItem(SITE_KEY, JSON.stringify(data));
+    autoPush();
   }
 
   function collectSiteContent() {
@@ -2758,6 +2833,7 @@
 
   function saveTarifs(tarifs) {
     localStorage.setItem(TARIFS_KEY, JSON.stringify(tarifs));
+    autoPush();
   }
 
   function renderTarifsEditor() {
@@ -2879,6 +2955,190 @@
     const tarifs = collectTarifsFromDOM();
     saveTarifs(tarifs);
     showToast('Tarifs mis à jour sur le site !', 'success');
+  });
+
+  // ===== CLOUD SYNC (JSONBin.io) =====
+  const SYNC_CONFIG_KEY = 'nebula_sync_config';
+  const JSONBIN_BASE = 'https://api.jsonbin.io/v3/b';
+
+  function getSyncConfig() {
+    try { return JSON.parse(localStorage.getItem(SYNC_CONFIG_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function saveSyncConfig(cfg) { localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify(cfg)); }
+
+  function getAllDataForSync() {
+    return {
+      leads: getLeads(),
+      siteContent: getSiteContent(),
+      tarifs: getTarifs(),
+      syncedAt: new Date().toISOString(),
+    };
+  }
+
+  function applyCloudData(data) {
+    if (Array.isArray(data.leads)) localStorage.setItem(STORAGE_KEY, JSON.stringify(data.leads));
+    if (data.siteContent && typeof data.siteContent === 'object') localStorage.setItem(SITE_KEY, JSON.stringify(data.siteContent));
+    if (Array.isArray(data.tarifs)) localStorage.setItem(TARIFS_KEY, JSON.stringify(data.tarifs));
+  }
+
+  function setSyncStatus(state, text) {
+    var dot = document.getElementById('syncDot');
+    var badge = document.getElementById('syncBadgeText');
+    if (!dot || !badge) return;
+    dot.className = 'sync-dot' + (state ? ' ' + state : '');
+    badge.textContent = text;
+  }
+
+  function updateSyncBadge() {
+    var cfg = getSyncConfig();
+    if (!cfg.apiKey) { setSyncStatus('', 'Cloud : non configuré'); return; }
+    if (cfg.lastSync) {
+      var d = new Date(cfg.lastSync);
+      setSyncStatus('ok', 'Sync ' + d.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}));
+    } else {
+      setSyncStatus('', 'Cloud : configuré');
+    }
+  }
+
+  function fillSyncSettings() {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var binInput = document.getElementById('syncBinId');
+    var autoToggle = document.getElementById('syncAutoToggle');
+    if (apiInput && cfg.apiKey) apiInput.value = cfg.apiKey;
+    if (binInput && cfg.binId) binInput.value = cfg.binId;
+    if (autoToggle) autoToggle.checked = !!cfg.autoSync;
+    updateSyncBadge();
+  }
+
+  function showSyncMsg(msg, type) {
+    var el = document.getElementById('syncMsg');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'settings-msg ' + (type || '');
+    el.style.display = 'block';
+    clearTimeout(el._t);
+    el._t = setTimeout(function() { el.style.display = 'none'; }, 6000);
+  }
+
+  async function pushToCloud(silent) {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var apiKey = (apiInput ? apiInput.value.trim() : '') || cfg.apiKey || '';
+    if (!apiKey) {
+      if (!silent) showSyncMsg('Entrez votre clé API JSONBin d\'abord.', 'error');
+      return false;
+    }
+    setSyncStatus('syncing', 'Envoi…');
+    var payload = getAllDataForSync();
+    try {
+      var res, binId = cfg.binId || '';
+      if (binId) {
+        res = await fetch(JSONBIN_BASE + '/' + binId, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        res = await fetch(JSONBIN_BASE, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': apiKey,
+            'X-Bin-Name': 'nebula-crm',
+            'X-Bin-Private': 'true',
+          },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          var clone = res.clone();
+          var j = await clone.json();
+          binId = (j.metadata && j.metadata.id) || (j.record && j.record._id) || '';
+        }
+      }
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var now = new Date().toISOString();
+      saveSyncConfig(Object.assign({}, cfg, { apiKey: apiKey, binId: binId, lastSync: now }));
+      var binInput = document.getElementById('syncBinId');
+      if (binInput) binInput.value = binId;
+      updateSyncBadge();
+      if (!silent) showSyncMsg('✓ Données envoyées dans le cloud !', 'success');
+      return true;
+    } catch(e) {
+      setSyncStatus('error', 'Erreur sync');
+      if (!silent) showSyncMsg('Erreur réseau : ' + e.message, 'error');
+      return false;
+    }
+  }
+
+  async function pullFromCloud(silent) {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var apiKey = (apiInput ? apiInput.value.trim() : '') || cfg.apiKey || '';
+    var binId = cfg.binId;
+    if (!apiKey) { if (!silent) showSyncMsg('Entrez votre clé API JSONBin.', 'error'); return false; }
+    if (!binId) { if (!silent) showSyncMsg('Aucun Bin ID. Envoyez d\'abord depuis un autre appareil.', 'error'); return false; }
+    setSyncStatus('syncing', 'Récupération…');
+    try {
+      var res = await fetch(JSONBIN_BASE + '/' + binId + '/latest', {
+        headers: { 'X-Master-Key': apiKey }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var json = await res.json();
+      var data = json.record;
+      if (!data) throw new Error('Données vides');
+      applyCloudData(data);
+      var now = new Date().toISOString();
+      saveSyncConfig(Object.assign({}, cfg, { apiKey: apiKey, lastSync: now }));
+      updateSyncBadge();
+      if (!silent) {
+        showSyncMsg('✓ Données récupérées ! Actualisation…', 'success');
+        setTimeout(function() { location.reload(); }, 1200);
+      }
+      return true;
+    } catch(e) {
+      setSyncStatus('error', 'Erreur sync');
+      if (!silent) showSyncMsg('Erreur : ' + e.message, 'error');
+      return false;
+    }
+  }
+
+  async function autoPush() {
+    var cfg = getSyncConfig();
+    if (!cfg.apiKey || !cfg.binId) return;
+    await pushToCloud(true);
+  }
+
+  async function autoSyncOnLoad() {
+    var cfg = getSyncConfig();
+    if (!cfg.autoSync || !cfg.apiKey || !cfg.binId) return;
+    if (sessionStorage.getItem('nebula_synced')) return;
+    sessionStorage.setItem('nebula_synced', '1');
+    var ok = await pullFromCloud(true);
+    if (ok) {
+      renderDashboard();
+      renderLeads();
+      renderTarifsEditor();
+      fillSiteEditorFields();
+      updateSyncBadge();
+      showToast('Données synchronisées depuis le cloud', 'success');
+    }
+  }
+
+  document.getElementById('syncPushBtn').addEventListener('click', async function() {
+    var apiKey = document.getElementById('syncApiKey').value.trim();
+    if (apiKey) saveSyncConfig(Object.assign(getSyncConfig(), { apiKey: apiKey }));
+    await pushToCloud(false);
+  });
+
+  document.getElementById('syncPullBtn').addEventListener('click', async function() {
+    var apiKey = document.getElementById('syncApiKey').value.trim();
+    if (apiKey) saveSyncConfig(Object.assign(getSyncConfig(), { apiKey: apiKey }));
+    await pullFromCloud(false);
+  });
+
+  document.getElementById('syncAutoToggle').addEventListener('change', function() {
+    saveSyncConfig(Object.assign(getSyncConfig(), { autoSync: this.checked }));
   });
 
   // ===== SECURITY: XSS =====
