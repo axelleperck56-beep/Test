@@ -988,6 +988,203 @@
       .recent-project { font-size: .75rem; }
     }
 
+    /* ===== SITE EDITOR ===== */
+    .editor-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--gray-100);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .editor-tab {
+      flex: 1;
+      min-width: 100px;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: all .2s;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .editor-tab svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .editor-tab:hover { color: var(--gray-700); background: var(--gray-200); }
+    .editor-tab.active { background: #fff; color: var(--blue-500); box-shadow: var(--shadow-sm); }
+
+    .editor-panel { display: none; }
+    .editor-panel.active { display: block; }
+
+    .editor-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .editor-section-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editor-section-header h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      flex: 1;
+    }
+
+    .editor-section-header p {
+      font-size: .8rem;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    .editor-section-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .editor-section-icon svg { width: 16px; height: 16px; }
+
+    .editor-section-body {
+      padding: 20px 24px;
+    }
+
+    .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .editor-grid .full { grid-column: 1 / -1; }
+    .editor-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    .editor-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .editor-field label {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .editor-field input, .editor-field textarea, .editor-field select {
+      padding: 9px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .88rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-900);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 3px rgba(29,110,245,.08);
+    }
+
+    .editor-field textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+
+    .editor-divider {
+      height: 1px;
+      background: var(--gray-100);
+      margin: 16px 0;
+    }
+
+    .editor-sublabel {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--gray-600);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .service-editor-card {
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 12px;
+      background: var(--gray-50);
+    }
+
+    .service-editor-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .service-editor-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      font-size: .75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .service-editor-title-display {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      flex: 1;
+    }
+
+    .service-editor-toggle {
+      color: var(--gray-400);
+      transition: transform .2s;
+    }
+
+    .service-editor-toggle.open { transform: rotate(180deg); }
+
+    .service-editor-body { display: none; }
+    .service-editor-body.open { display: block; }
+
+    .stat-editor-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .editor-grid { grid-template-columns: 1fr; }
+      .editor-grid-3 { grid-template-columns: 1fr; }
+      .editor-tabs { gap: 2px; }
+      .editor-tab { font-size: .8rem; padding: 8px 10px; min-width: 0; }
+      .editor-section-body { padding: 16px; }
+    }
+
     /* ===== TARIFS EDITOR ===== */
     .tarif-editor-card {
       background: #fff;
@@ -1245,6 +1442,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         Offres & Tarifs
       </div>
+      <div class="sidebar-nav-item" data-view="siteeditor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Éditeur de site
+      </div>
       <div class="sidebar-section-label" style="margin-top:8px;">Paramètres</div>
       <div class="sidebar-nav-item" data-view="settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1399,6 +1600,254 @@
         <div class="empty-state" id="leadsEmpty" style="display:none;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <p>Aucun lead trouvé</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SITE EDITOR VIEW ===== -->
+    <div class="view" id="view-siteeditor">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Éditeur de site</div>
+        <div class="topbar-actions">
+          <button class="btn-outline" id="previewSiteBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Voir le site
+          </button>
+          <button class="btn-primary" id="saveSiteContentBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Enregistrer & Publier
+          </button>
+        </div>
+      </div>
+      <p style="color:var(--gray-400);font-size:.88rem;margin-bottom:20px;">Modifiez le contenu de votre site ici. Les changements s'appliquent dès que vos visiteurs rechargent la page.</p>
+
+      <!-- Tabs -->
+      <div class="editor-tabs">
+        <button class="editor-tab active" data-tab="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+          Page d'accueil
+        </button>
+        <button class="editor-tab" data-tab="services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          Services
+        </button>
+        <button class="editor-tab" data-tab="about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          À propos
+        </button>
+        <button class="editor-tab" data-tab="contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact
+        </button>
+      </div>
+
+      <!-- HERO PANEL -->
+      <div class="editor-panel active" id="epanel-hero">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></div>
+            <div><h3>Badge d'accroche</h3><p>Petite ligne en haut du héro</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-field">
+              <label>Texte du badge</label>
+              <input type="text" id="se_badge" placeholder="Disponible pour de nouveaux projets" />
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h8M4 18h16"/></svg></div>
+            <div><h3>Titre principal</h3><p>Le grand titre de la page d'accueil</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Ligne 1</label>
+                <input type="text" id="se_title1" placeholder="Je crée des sites web" />
+              </div>
+              <div class="editor-field">
+                <label>Mot mis en valeur (bleu)</label>
+                <input type="text" id="se_highlight" placeholder="qui convertissent" />
+              </div>
+              <div class="editor-field full">
+                <label>Ligne 2</label>
+                <input type="text" id="se_title2" placeholder="& impressionnent" />
+              </div>
+              <div class="editor-field full">
+                <label>Sous-titre</label>
+                <textarea id="se_subtitle" rows="3" placeholder="Designer web freelance spécialisée..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div><h3>Boutons d'action</h3><p>Les 2 boutons sous le titre</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Bouton principal</label>
+                <input type="text" id="se_cta1" placeholder="Voir mon travail" />
+              </div>
+              <div class="editor-field">
+                <label>Bouton secondaire</label>
+                <input type="text" id="se_cta2" placeholder="Démarrer un projet" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><h3>Statistiques</h3><p>Les 3 chiffres clés sous les boutons</p></div>
+          </div>
+          <div class="editor-section-body">
+            <span class="editor-sublabel">Statistique 1</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s1v" placeholder="50+" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s1l" placeholder="Sites livrés" /></div>
+            </div>
+            <span class="editor-sublabel">Statistique 2</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s2v" placeholder="98%" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s2l" placeholder="Clients satisfaits" /></div>
+            </div>
+            <span class="editor-sublabel">Statistique 3</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s3v" placeholder="5 ans" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s3l" placeholder="D'expérience" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES PANEL -->
+      <div class="editor-panel" id="epanel-services">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <div><h3>Les 6 cartes services</h3><p>Titre, description et 3 fonctionnalités par service</p></div>
+          </div>
+          <div class="editor-section-body" id="servicesEditorBody">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT PANEL -->
+      <div class="editor-panel" id="epanel-about">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div><h3>Votre biographie</h3><p>Texte de présentation dans la section À propos</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-field" style="margin-bottom:14px;">
+              <label>Paragraphe 1</label>
+              <textarea id="se_bio1" rows="3" placeholder="Passionnée par le design et le développement web depuis 5 ans..."></textarea>
+            </div>
+            <div class="editor-field">
+              <label>Paragraphe 2</label>
+              <textarea id="se_bio2" rows="3" placeholder="Mon approche : comprendre vos objectifs métier..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h3>Badge d'expérience</h3><p>La pastille bleue sur la photo de profil</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Nombre (ex : 5)</label>
+                <input type="text" id="se_expnum" placeholder="5" />
+              </div>
+              <div class="editor-field">
+                <label>Texte (ex : ans d'expérience)</label>
+                <input type="text" id="se_exptext" placeholder="ans d'expérience" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT PANEL -->
+      <div class="editor-panel" id="epanel-contact">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><h3>Coordonnées</h3><p>Email, téléphone et infos affichés sur la page Contact</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Email</label>
+                <input type="email" id="se_email" placeholder="contact@nebula-design.fr" />
+              </div>
+              <div class="editor-field">
+                <label>Téléphone</label>
+                <input type="tel" id="se_phone" placeholder="+33 6 12 34 56 78" />
+              </div>
+              <div class="editor-field">
+                <label>Délai de réponse</label>
+                <input type="text" id="se_delay" placeholder="Réponse sous 24h ouvrées" />
+              </div>
+              <div class="editor-field">
+                <label>Zone de couverture</label>
+                <input type="text" id="se_location" placeholder="France entière & international" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div><h3>Liens réseaux sociaux</h3><p>URLs complètes (ex : https://linkedin.com/in/...)</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>LinkedIn (URL)</label>
+                <input type="url" id="se_linkedin" placeholder="https://linkedin.com/in/votre-profil" />
+              </div>
+              <div class="editor-field">
+                <label>Behance (URL)</label>
+                <input type="url" id="se_behance" placeholder="https://behance.net/votre-profil" />
+              </div>
+              <div class="editor-field full">
+                <label>Instagram (URL)</label>
+                <input type="url" id="se_instagram" placeholder="https://instagram.com/votre-compte" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <div><h3>Identité & copyright</h3><p>Nom de la société et texte de bas de page</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Nom de la société</label>
+                <input type="text" id="se_company" placeholder="NÉBULA" />
+              </div>
+              <div class="editor-field">
+                <label>Texte copyright footer</label>
+                <input type="text" id="se_copyright" placeholder="© 2024 NÉBULA – Designer Web. Tous droits réservés." />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2073,6 +2522,173 @@
     renderLeadsTable();
     refreshDashboard();
     showToast('Toutes les données ont été supprimées');
+  });
+
+  // ===== SITE EDITOR =====
+  const SITE_KEY = 'nebula_site_content';
+
+  const DEFAULT_SITE = {
+    hero: {
+      badge: 'Disponible pour de nouveaux projets',
+      title1: 'Je crée des sites web',
+      highlight: 'qui convertissent',
+      title2: '& impressionnent',
+      subtitle: "Designer web freelance spécialisée dans la création de sites professionnels sur mesure. De la conception à la mise en ligne, je transforme votre vision en expérience digitale mémorable.",
+      cta1: 'Voir mon travail',
+      cta2: 'Démarrer un projet',
+      s1v: '50+', s1l: 'Sites livrés',
+      s2v: '98%', s2l: 'Clients satisfaits',
+      s3v: '5 ans', s3l: "D'expérience",
+    },
+    services: [
+      { title: 'Site Vitrine', desc: "Un site élégant qui présente votre activité, vos services et renforce votre crédibilité professionnelle auprès de vos clients.", f1: 'Design sur mesure', f2: 'Responsive mobile', f3: 'SEO optimisé' },
+      { title: 'E-Commerce', desc: "Une boutique en ligne performante pour vendre vos produits 24h/24. Interface intuitive, paiement sécurisé et gestion simplifiée.", f1: 'Catalogue produits', f2: 'Paiement sécurisé', f3: 'Tableau de bord' },
+      { title: 'Refonte Web', desc: "Votre site est obsolète ? Je modernise votre présence en ligne avec un design actuel, des performances améliorées et une meilleure expérience utilisateur.", f1: 'Audit complet', f2: 'Redesign moderne', f3: 'Migration sécurisée' },
+      { title: 'Landing Page', desc: "Une page de vente optimisée pour convertir vos visiteurs en clients. Idéale pour le lancement d'un produit ou une campagne marketing.", f1: 'Copywriting inclus', f2: 'A/B testing', f3: 'Tunnel de vente' },
+      { title: 'SEO & Performance', desc: "Améliorez votre visibilité sur Google et accélérez votre site pour offrir la meilleure expérience à vos visiteurs.", f1: 'Audit SEO', f2: 'Optimisation Core Web Vitals', f3: 'Rapport mensuel' },
+      { title: 'Maintenance', desc: "Gardez votre site à jour, sécurisé et performant avec mon service de maintenance mensuel. Mises à jour, sauvegardes et support inclus.", f1: 'Mises à jour CMS', f2: 'Sauvegardes quotidiennes', f3: 'Support prioritaire' },
+    ],
+    about: {
+      bio1: "Passionnée par le design et le développement web depuis 5 ans, je crée des expériences digitales qui allient esthétique et performance.",
+      bio2: "Mon approche : comprendre vos objectifs métier pour concevoir un site qui travaille pour vous, pas seulement pour être beau.",
+      expnum: '5',
+      exptext: "ans d'expérience",
+    },
+    contact: {
+      email: 'contact@nebula-design.fr',
+      phone: '+33 6 12 34 56 78',
+      delay: 'Réponse sous 24h ouvrées',
+      location: 'France entière & international',
+      linkedin: '#',
+      behance: '#',
+      instagram: '#',
+      company: 'NÉBULA',
+      copyright: '© 2024 NÉBULA – Designer Web. Tous droits réservés.',
+    },
+  };
+
+  function getSiteContent() {
+    try { return JSON.parse(localStorage.getItem(SITE_KEY)) || DEFAULT_SITE; } catch(e) { return DEFAULT_SITE; }
+  }
+
+  function saveSiteContent(data) {
+    localStorage.setItem(SITE_KEY, JSON.stringify(data));
+  }
+
+  function collectSiteContent() {
+    var g = function(id) { return (document.getElementById(id) || {}).value || ''; };
+    var content = getSiteContent();
+    // Hero
+    content.hero = {
+      badge: g('se_badge'), title1: g('se_title1'), highlight: g('se_highlight'),
+      title2: g('se_title2'), subtitle: g('se_subtitle'),
+      cta1: g('se_cta1'), cta2: g('se_cta2'),
+      s1v: g('se_s1v'), s1l: g('se_s1l'),
+      s2v: g('se_s2v'), s2l: g('se_s2l'),
+      s3v: g('se_s3v'), s3l: g('se_s3l'),
+    };
+    // Services
+    content.services = Array.from({length: 6}, function(_, i) {
+      return {
+        title: g('sv_title_' + i), desc: g('sv_desc_' + i),
+        f1: g('sv_f1_' + i), f2: g('sv_f2_' + i), f3: g('sv_f3_' + i),
+      };
+    });
+    // About
+    content.about = {
+      bio1: g('se_bio1'), bio2: g('se_bio2'),
+      expnum: g('se_expnum'), exptext: g('se_exptext'),
+    };
+    // Contact
+    content.contact = {
+      email: g('se_email'), phone: g('se_phone'),
+      delay: g('se_delay'), location: g('se_location'),
+      linkedin: g('se_linkedin'), behance: g('se_behance'), instagram: g('se_instagram'),
+      company: g('se_company'), copyright: g('se_copyright'),
+    };
+    return content;
+  }
+
+  function fillSiteEditorFields() {
+    var c = getSiteContent();
+    var h = Object.assign({}, DEFAULT_SITE.hero, c.hero || {});
+    var a = Object.assign({}, DEFAULT_SITE.about, c.about || {});
+    var ct = Object.assign({}, DEFAULT_SITE.contact, c.contact || {});
+    var set = function(id, val) { var el = document.getElementById(id); if(el) el.value = val || ''; };
+
+    // Hero
+    set('se_badge', h.badge); set('se_title1', h.title1); set('se_highlight', h.highlight);
+    set('se_title2', h.title2); set('se_subtitle', h.subtitle);
+    set('se_cta1', h.cta1); set('se_cta2', h.cta2);
+    set('se_s1v', h.s1v); set('se_s1l', h.s1l);
+    set('se_s2v', h.s2v); set('se_s2l', h.s2l);
+    set('se_s3v', h.s3v); set('se_s3l', h.s3l);
+
+    // Services accordion
+    var svcs = c.services || DEFAULT_SITE.services;
+    var body = document.getElementById('servicesEditorBody');
+    if (body) {
+      body.innerHTML = svcs.map(function(s, i) {
+        var def = DEFAULT_SITE.services[i] || {};
+        var title = s.title || def.title || 'Service ' + (i+1);
+        return '<div class="service-editor-card">' +
+          '<div class="service-editor-card-header" onclick="toggleServiceCard(' + i + ')">' +
+            '<div class="service-editor-num">' + (i+1) + '</div>' +
+            '<div class="service-editor-title-display" id="sv_title_display_' + i + '">' + escHtml(title) + '</div>' +
+            '<svg class="service-editor-toggle" id="sv_toggle_' + i + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</div>' +
+          '<div class="service-editor-body" id="sv_body_' + i + '">' +
+            '<div class="editor-grid" style="margin-bottom:10px;">' +
+              '<div class="editor-field"><label>Titre du service</label><input type="text" id="sv_title_' + i + '" value="' + escHtml(s.title || def.title || '') + '" oninput="document.getElementById(\'sv_title_display_' + i + '\').textContent=this.value" /></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 1</label><input type="text" id="sv_f1_' + i + '" value="' + escHtml(s.f1 || def.f1 || '') + '" /></div>' +
+              '<div class="editor-field full"><label>Description</label><textarea id="sv_desc_' + i + '" rows="2">' + escHtml(s.desc || def.desc || '') + '</textarea></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 2</label><input type="text" id="sv_f2_' + i + '" value="' + escHtml(s.f2 || def.f2 || '') + '" /></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 3</label><input type="text" id="sv_f3_' + i + '" value="' + escHtml(s.f3 || def.f3 || '') + '" /></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // About
+    set('se_bio1', a.bio1); set('se_bio2', a.bio2);
+    set('se_expnum', a.expnum); set('se_exptext', a.exptext);
+
+    // Contact
+    set('se_email', ct.email); set('se_phone', ct.phone);
+    set('se_delay', ct.delay); set('se_location', ct.location);
+    set('se_linkedin', ct.linkedin); set('se_behance', ct.behance); set('se_instagram', ct.instagram);
+    set('se_company', ct.company); set('se_copyright', ct.copyright);
+  }
+
+  window.toggleServiceCard = function(i) {
+    var body = document.getElementById('sv_body_' + i);
+    var toggle = document.getElementById('sv_toggle_' + i);
+    if (!body) return;
+    var open = body.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+  };
+
+  // Tab switching
+  document.querySelectorAll('.editor-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.editor-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.editor-panel').forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('epanel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Save
+  document.getElementById('saveSiteContentBtn').addEventListener('click', function() {
+    var data = collectSiteContent();
+    saveSiteContent(data);
+    showToast('Contenu du site mis à jour !', 'success');
+  });
+
+  // Preview
+  document.getElementById('previewSiteBtn').addEventListener('click', function() {
+    window.open('index.html', '_blank');
   });
 
   // ===== TARIFS EDITOR =====
