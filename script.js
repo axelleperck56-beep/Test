@@ -137,6 +137,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const json = await res.json();
 
         if (json.success) {
+          // Save lead to CRM localStorage
+          try {
+            const crmLeads = JSON.parse(localStorage.getItem('nebula_crm_leads') || '[]');
+            crmLeads.unshift({
+              id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+              name: data.name || '',
+              email: data.email || '',
+              phone: data.phone || '',
+              projectType: (data['project-type'] || '').replace(/^(vitrine|ecommerce|refonte|landing|seo|maintenance|autre)$/, s => ({
+                vitrine:'Site vitrine', ecommerce:'E-commerce', refonte:'Refonte de site',
+                landing:'Landing page', seo:'SEO & Performance', maintenance:'Maintenance', autre:'Autre'
+              }[s] || s)),
+              budget: (data.budget || '').replace(/^(starter|pro|business|custom)$/, s => ({
+                starter:'< 1 500€', pro:'1 500€ – 3 000€', business:'3 000€ – 6 000€', custom:'> 6 000€'
+              }[s] || s)),
+              message: data.message || '',
+              status: 'nouveau',
+              date: new Date().toISOString(),
+            });
+            localStorage.setItem('nebula_crm_leads', JSON.stringify(crmLeads));
+          } catch(e) {}
+
           form.style.display = 'none';
           successMsg.style.display = 'block';
         } else {
