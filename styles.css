@@ -265,6 +265,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   height: 100%;
   object-fit: cover;
 }
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.55) saturate(0.7);
+}
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -514,11 +521,25 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 100%;
   height: 100%;
   transition: transform 0.5s ease;
+  overflow: hidden;
 }
+.gallery-img img,
 .gallery-img svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+.img-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark3);
+  color: var(--grey);
+  font-size: 1.2rem;
+  font-family: var(--font-head);
 }
 .gallery-item:hover .gallery-img { transform: scale(1.05); }
 .gallery-overlay {
@@ -573,6 +594,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border: 1px solid rgba(255,255,255,0.06);
 }
 .atelier-svg { width: 100%; height: auto; }
+.atelier-photo { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-lg); }
 .apropos-badge {
   position: absolute;
   bottom: -20px;
