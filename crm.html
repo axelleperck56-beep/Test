@@ -860,6 +860,179 @@
       .form-grid { grid-template-columns: 1fr; }
     }
 
+    /* ===== TARIFS EDITOR ===== */
+    .tarif-editor-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+    }
+
+    .tarif-editor-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tarif-editor-header h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .tarif-featured-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .75rem;
+      color: var(--gray-400);
+      cursor: pointer;
+    }
+
+    .tarif-featured-toggle input[type=checkbox] {
+      accent-color: var(--blue-500);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .tarif-editor-body { padding: 20px; }
+
+    .tarif-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tarif-price-input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 2px solid var(--blue-100);
+      border-radius: var(--radius-sm);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--blue-500);
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      text-align: center;
+      transition: border-color .2s;
+    }
+
+    .tarif-price-input:focus { border-color: var(--blue-500); }
+
+    .tarif-currency {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-400);
+    }
+
+    .tarif-field { margin-bottom: 12px; }
+
+    .tarif-field label {
+      display: block;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 5px;
+    }
+
+    .tarif-field input, .tarif-field textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .85rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-900);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .tarif-field input:focus, .tarif-field textarea:focus { border-color: var(--blue-500); }
+    .tarif-field textarea { resize: vertical; min-height: 60px; }
+
+    .features-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .feature-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-row input[type=text] {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: .82rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .feature-row input[type=text]:focus { border-color: var(--blue-500); }
+
+    .feature-row select {
+      padding: 5px 6px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: .75rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      background: #fff;
+      color: var(--gray-600);
+      cursor: pointer;
+    }
+
+    .feature-remove {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+
+    .feature-remove:hover { background: var(--red-100); color: var(--red-500); }
+    .feature-remove svg { width: 13px; height: 13px; }
+
+    .add-feature-btn {
+      margin-top: 6px;
+      width: 100%;
+      padding: 7px;
+      border: 1px dashed var(--gray-200);
+      border-radius: 6px;
+      background: none;
+      color: var(--gray-400);
+      font-size: .82rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .add-feature-btn:hover { border-color: var(--blue-500); color: var(--blue-500); background: var(--blue-100); }
+
+    @media (max-width: 1100px) {
+      #tarifsEditorGrid { grid-template-columns: 1fr 1fr !important; }
+    }
+
+    @media (max-width: 720px) {
+      #tarifsEditorGrid { grid-template-columns: 1fr !important; }
+    }
+
     /* ===== TOAST ===== */
     .toast {
       position: fixed;
@@ -925,6 +1098,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Leads
         <span id="sidebarLeadsCount" style="margin-left:auto;background:var(--blue-500);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;">0</span>
+      </div>
+      <div class="sidebar-nav-item" data-view="tarifs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Offres & Tarifs
       </div>
       <div class="sidebar-section-label" style="margin-top:8px;">Paramètres</div>
       <div class="sidebar-nav-item" data-view="settings">
@@ -1081,6 +1258,24 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <p>Aucun lead trouvé</p>
         </div>
+      </div>
+    </div>
+
+    <!-- ===== TARIFS VIEW ===== -->
+    <div class="view" id="view-tarifs">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Offres & Tarifs</div>
+        <div class="topbar-actions">
+          <button class="btn-primary" id="saveTarifsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Enregistrer & Publier
+          </button>
+        </div>
+      </div>
+      <p style="color:var(--gray-400);font-size:.9rem;margin-bottom:28px;">Les modifications sont appliquées immédiatement sur la page Tarifs et la page d'accueil du site.</p>
+
+      <div id="tarifsEditorGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <!-- Cards generated by JS -->
       </div>
     </div>
 
@@ -1342,6 +1537,7 @@
     document.getElementById('view-' + view).classList.add('active');
     if (view === 'dashboard') refreshDashboard();
     if (view === 'leads') renderLeadsTable();
+    if (view === 'tarifs') renderTarifsEditor();
   }
 
   // ===== DATA =====
@@ -1717,6 +1913,196 @@
     renderLeadsTable();
     refreshDashboard();
     showToast('Toutes les données ont été supprimées');
+  });
+
+  // ===== TARIFS EDITOR =====
+  const TARIFS_KEY = 'nebula_crm_tarifs';
+
+  const DEFAULT_TARIFS = [
+    {
+      id: 'starter',
+      name: 'Starter',
+      price: '990',
+      desc: 'Idéal pour les indépendants et petites entreprises qui débutent en ligne.',
+      featured: false,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: 'Site vitrine 5 pages', included: true },
+        { text: 'Design personnalisé', included: true },
+        { text: 'Responsive mobile', included: true },
+        { text: 'SEO de base', included: true },
+        { text: 'Formulaire de contact', included: true },
+        { text: 'Livraison en 7 jours', included: true },
+        { text: 'E-commerce', included: false },
+        { text: 'Animations avancées', included: false },
+      ],
+    },
+    {
+      id: 'pro',
+      name: 'Pro',
+      price: '2 490',
+      desc: 'Pour les entreprises qui veulent un site percutant avec plus de fonctionnalités.',
+      featured: true,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: "Site jusqu'à 15 pages", included: true },
+        { text: 'Design premium + animations', included: true },
+        { text: 'Responsive & cross-browser', included: true },
+        { text: 'SEO avancé', included: true },
+        { text: 'Blog intégré', included: true },
+        { text: 'Livraison en 14 jours', included: true },
+        { text: '1 mois de maintenance offert', included: true },
+        { text: 'Boutique e-commerce', included: false },
+      ],
+    },
+    {
+      id: 'business',
+      name: 'Business',
+      price: '4 990',
+      desc: 'Solution complète pour les e-commerçants et entreprises ambitieuses.',
+      featured: false,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: 'Pages illimitées', included: true },
+        { text: 'Boutique e-commerce complète', included: true },
+        { text: 'Design haut de gamme', included: true },
+        { text: 'SEO + stratégie de contenu', included: true },
+        { text: 'Intégrations sur mesure', included: true },
+        { text: 'Livraison en 21 jours', included: true },
+        { text: '3 mois de maintenance offerts', included: true },
+        { text: 'Formation complète incluse', included: true },
+      ],
+    },
+  ];
+
+  function getTarifs() {
+    try { return JSON.parse(localStorage.getItem(TARIFS_KEY)) || DEFAULT_TARIFS; }
+    catch(e) { return DEFAULT_TARIFS; }
+  }
+
+  function saveTarifs(tarifs) {
+    localStorage.setItem(TARIFS_KEY, JSON.stringify(tarifs));
+  }
+
+  function renderTarifsEditor() {
+    const tarifs = getTarifs();
+    const grid = document.getElementById('tarifsEditorGrid');
+    grid.innerHTML = tarifs.map((t, ti) => `
+      <div class="tarif-editor-card" data-tarif-index="${ti}">
+        <div class="tarif-editor-header">
+          <h3>
+            <input type="text" value="${escHtml(t.name)}" data-field="name"
+              style="border:none;outline:none;font-size:.95rem;font-weight:700;font-family:'Inter',sans-serif;background:transparent;width:120px;"
+              placeholder="Nom de l'offre" />
+          </h3>
+          <label class="tarif-featured-toggle">
+            <input type="checkbox" data-field="featured" ${t.featured ? 'checked' : ''} />
+            Mise en avant
+          </label>
+        </div>
+        <div class="tarif-editor-body">
+          <div class="tarif-price-row">
+            <input type="text" class="tarif-price-input" data-field="price" value="${escHtml(t.price)}" placeholder="990" />
+            <span class="tarif-currency">€</span>
+          </div>
+          ${t.featured ? `
+          <div class="tarif-field">
+            <label>Libellé badge "mis en avant"</label>
+            <input type="text" data-field="featuredLabel" value="${escHtml(t.featuredLabel || 'Le plus choisi')}" placeholder="Le plus choisi" />
+          </div>` : ''}
+          <div class="tarif-field">
+            <label>Description</label>
+            <textarea data-field="desc" rows="2">${escHtml(t.desc)}</textarea>
+          </div>
+          <div class="tarif-field">
+            <label>Fonctionnalités</label>
+            <div class="features-list" id="features-${ti}">
+              ${t.features.map((f, fi) => `
+                <div class="feature-row" data-feature-index="${fi}">
+                  <input type="text" value="${escHtml(f.text)}" placeholder="Fonctionnalité..." data-feature-text />
+                  <select data-feature-included>
+                    <option value="true" ${f.included ? 'selected' : ''}>✓ Inclus</option>
+                    <option value="false" ${!f.included ? 'selected' : ''}>✕ Non inclus</option>
+                  </select>
+                  <button class="feature-remove" data-remove-feature="${fi}" data-tarif="${ti}" title="Supprimer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+            <button class="add-feature-btn" data-add-feature="${ti}">+ Ajouter une fonctionnalité</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Remove feature buttons
+    grid.querySelectorAll('[data-remove-feature]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ti2 = parseInt(btn.dataset.tarif);
+        const fi = parseInt(btn.dataset.removeFeature);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].features.splice(fi, 1);
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+      });
+    });
+
+    // Add feature buttons
+    grid.querySelectorAll('[data-add-feature]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ti2 = parseInt(btn.dataset.addFeature);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].features.push({ text: '', included: true });
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+        // Focus the new input
+        const list = document.getElementById('features-' + ti2);
+        const inputs = list.querySelectorAll('input[data-feature-text]');
+        if (inputs.length) inputs[inputs.length - 1].focus();
+      });
+    });
+
+    // Toggle featured -> re-render to show/hide label field
+    grid.querySelectorAll('[data-field="featured"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const card = cb.closest('[data-tarif-index]');
+        const ti2 = parseInt(card.dataset.tarifIndex);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].featured = cb.checked;
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+      });
+    });
+  }
+
+  function collectTarifsFromDOM() {
+    const tarifs = getTarifs();
+    const grid = document.getElementById('tarifsEditorGrid');
+    grid.querySelectorAll('[data-tarif-index]').forEach(card => {
+      const ti = parseInt(card.dataset.tarifIndex);
+      const t = tarifs[ti];
+      // Scalar fields
+      card.querySelectorAll('[data-field]').forEach(el => {
+        const field = el.dataset.field;
+        if (field === 'featured') return; // handled separately
+        if (el.tagName === 'TEXTAREA') t[field] = el.value;
+        else t[field] = el.value;
+      });
+      // Features
+      const featureRows = card.querySelectorAll('.feature-row');
+      t.features = Array.from(featureRows).map(row => ({
+        text: row.querySelector('[data-feature-text]').value,
+        included: row.querySelector('[data-feature-included]').value === 'true',
+      }));
+    });
+    return tarifs;
+  }
+
+  document.getElementById('saveTarifsBtn').addEventListener('click', () => {
+    const tarifs = collectTarifsFromDOM();
+    saveTarifs(tarifs);
+    showToast('Tarifs mis à jour sur le site !', 'success');
   });
 
   // ===== SECURITY: XSS =====

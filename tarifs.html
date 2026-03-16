@@ -244,5 +244,48 @@
   </button>
 
   <script src="script.js"></script>
+  <script>
+  // Inject CRM-configured tarifs into the page
+  (function() {
+    var DEFAULT = [
+      { id:'starter', name:'Starter', price:'990', desc:'Idéal pour les indépendants et petites entreprises qui débutent en ligne.', featured:false, featuredLabel:'Le plus choisi',
+        features:[{text:'Site vitrine 5 pages',included:true},{text:'Design personnalisé',included:true},{text:'Responsive mobile',included:true},{text:'SEO de base',included:true},{text:'Formulaire de contact',included:true},{text:'Livraison en 7 jours',included:true},{text:'E-commerce',included:false},{text:'Animations avancées',included:false}] },
+      { id:'pro', name:'Pro', price:'2 490', desc:'Pour les entreprises qui veulent un site percutant avec plus de fonctionnalités.', featured:true, featuredLabel:'Le plus choisi',
+        features:[{text:"Site jusqu'à 15 pages",included:true},{text:'Design premium + animations',included:true},{text:'Responsive & cross-browser',included:true},{text:'SEO avancé',included:true},{text:'Blog intégré',included:true},{text:'Livraison en 14 jours',included:true},{text:'1 mois de maintenance offert',included:true},{text:'Boutique e-commerce',included:false}] },
+      { id:'business', name:'Business', price:'4 990', desc:'Solution complète pour les e-commerçants et entreprises ambitieuses.', featured:false, featuredLabel:'Le plus choisi',
+        features:[{text:'Pages illimitées',included:true},{text:'Boutique e-commerce complète',included:true},{text:'Design haut de gamme',included:true},{text:'SEO + stratégie de contenu',included:true},{text:'Intégrations sur mesure',included:true},{text:'Livraison en 21 jours',included:true},{text:'3 mois de maintenance offerts',included:true},{text:'Formation complète incluse',included:true}] },
+    ];
+
+    var tarifs;
+    try { tarifs = JSON.parse(localStorage.getItem('nebula_crm_tarifs')) || DEFAULT; } catch(e) { tarifs = DEFAULT; }
+
+    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    var grid = document.querySelector('.pricing-grid');
+    if (!grid) return;
+
+    grid.innerHTML = tarifs.map(function(t) {
+      var featuresHtml = t.features.map(function(f) {
+        return '<li class="' + (f.included ? 'included' : 'not-included') + '">' + esc(f.text) + '</li>';
+      }).join('');
+      var featuredBadge = t.featured ? '<div class="pricing-popular">' + esc(t.featuredLabel || 'Le plus choisi') + '</div>' : '';
+      var featuredClass = t.featured ? ' featured' : '';
+      var btnClass = t.featured ? 'btn btn-primary' : 'btn btn-outline-primary';
+      return '<div class="pricing-card' + featuredClass + '" data-aos>' +
+        featuredBadge +
+        '<div class="pricing-header">' +
+          '<span class="pricing-name">' + esc(t.name) + '</span>' +
+          '<div class="pricing-price">' +
+            '<span class="price-amount">' + esc(t.price) + '</span>' +
+            '<span class="price-currency">€</span>' +
+          '</div>' +
+          '<p class="pricing-desc">' + esc(t.desc) + '</p>' +
+        '</div>' +
+        '<ul class="pricing-features">' + featuresHtml + '</ul>' +
+        '<a href="contact.html" class="' + btnClass + '">Choisir ' + esc(t.name) + '</a>' +
+      '</div>';
+    }).join('');
+  })();
+  </script>
 </body>
 </html>
