@@ -238,6 +238,9 @@
   /* ─────────────────────────────────────
      INTERSECTION OBSERVER (reveal)
   ───────────────────────────────────── */
+  // Marque les country-cards pour animation seulement si JS tourne bien
+  document.querySelectorAll('.country-card').forEach(c => c.classList.add('animate-in'));
+
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -246,7 +249,8 @@
           triggerChapterEffects(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    // Threshold bas pour mobile
+    }, { threshold: 0.05, rootMargin: '0px 0px -60px 0px' });
     chapters.forEach(ch => obs.observe(ch));
   }
 
