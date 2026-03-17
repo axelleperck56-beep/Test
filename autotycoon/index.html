@@ -3,122 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AutoTycoon - Concessionnaire</title>
+    <title>AutoTycoon 3D</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --red: #e94560;
+            --gold: #fbbf24;
+            --blue: #60a5fa;
+            --green: #22c55e;
+            --bg: #07070f;
+            --bg2: #0e0e1c;
+            --bg3: #15152a;
+            --border: #23234a;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0f0f1a;
+            background: var(--bg);
             color: #fff;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* HEADER */
+        /* ─── HEADER ─── */
         .header {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 14px 16px;
-            border-bottom: 2px solid #e94560;
+            background: rgba(10,10,25,0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 200;
         }
-        .header h1 { font-size: 20px; font-weight: 900; color: #e94560; letter-spacing: 2px; }
-        .stats-bar { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+        .header h1 {
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stats-bar { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
         .stat { display: flex; flex-direction: column; }
-        .stat-label { font-size: 10px; color: #777; text-transform: uppercase; letter-spacing: 1px; }
-        .stat-value { font-size: 16px; font-weight: 800; }
-        .stat-value.money { color: #fbbf24; }
-        .stat-value.rep   { color: #60a5fa; }
-        .stat-value.day   { color: #e94560; }
+        .stat-label { font-size: 9px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 15px; font-weight: 800; }
+        .stat-value.money { color: var(--gold); }
+        .stat-value.rep   { color: var(--blue); }
+        .stat-value.day   { color: var(--red); }
         .stat-value.stock { color: #a78bfa; }
 
-        /* TABS */
+        /* ─── 3D CANVAS ─── */
+        #showroom-wrap {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: var(--bg);
+        }
+        #showroom-canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .showroom-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 0; right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 0 12px;
+            pointer-events: none;
+        }
+        .car-pick-btn {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            border: 1px solid var(--border);
+            background: rgba(10,10,25,0.85);
+            color: #aaa;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.2s;
+        }
+        .car-pick-btn.active { border-color: var(--red); color: #fff; background: rgba(233,69,96,0.2); }
+        .showroom-label {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(233,69,96,0.15);
+            border: 1px solid rgba(233,69,96,0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .drag-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #444;
+        }
+
+        /* ─── TABS ─── */
         .tabs {
             display: flex;
-            background: #16213e;
+            background: var(--bg2);
             overflow-x: auto;
-            border-bottom: 1px solid #2a2a3e;
+            border-bottom: 1px solid var(--border);
             scrollbar-width: none;
+            position: sticky;
+            top: 72px;
+            z-index: 100;
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tab {
-            padding: 12px 18px;
-            font-size: 12px;
+            padding: 11px 16px;
+            font-size: 11px;
             font-weight: 700;
-            color: #666;
+            color: #555;
             cursor: pointer;
             white-space: nowrap;
-            border-bottom: 3px solid transparent;
+            border-bottom: 2px solid transparent;
             transition: all 0.2s;
+            letter-spacing: 0.5px;
         }
-        .tab.active { color: #e94560; border-bottom-color: #e94560; }
+        .tab.active { color: var(--red); border-bottom-color: var(--red); }
 
-        /* CONTENT */
+        /* ─── CONTENT ─── */
         .content { padding: 16px; max-width: 600px; margin: 0 auto; padding-bottom: 100px; }
-        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+        .section-title { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
 
-        /* CARD */
+        /* ─── CARD ─── */
         .card {
-            background: #1a1a2e;
-            border-radius: 12px;
+            background: var(--bg3);
+            border-radius: 14px;
             padding: 14px;
             margin-bottom: 12px;
-            border: 1px solid #2a2a3e;
+            border: 1px solid var(--border);
+            animation: slideUp 0.3s ease both;
+        }
+        .card:nth-child(1) { animation-delay: 0.0s; }
+        .card:nth-child(2) { animation-delay: 0.05s; }
+        .card:nth-child(3) { animation-delay: 0.1s; }
+        .card:nth-child(4) { animation-delay: 0.15s; }
+        .card:nth-child(5) { animation-delay: 0.2s; }
+        .card:nth-child(6) { animation-delay: 0.25s; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
 
-        /* BUTTONS */
+        /* ─── CAR PHOTO ─── */
+        .car-photo-wrap {
+            width: 100%;
+            height: 160px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+            background: var(--bg2);
+        }
+        .car-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .card:hover .car-photo { transform: scale(1.04); }
+        .car-photo-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, rgba(7,7,15,0.85));
+        }
+        .car-photo-badge {
+            position: absolute;
+            top: 8px; right: 8px;
+        }
+
+        /* ─── BUTTONS ─── */
         .btn {
             padding: 10px 18px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: none;
             font-size: 13px;
             font-weight: 800;
             cursor: pointer;
-            transition: transform 0.15s;
-            letter-spacing: 0.5px;
+            transition: transform 0.15s, box-shadow 0.15s;
+            letter-spacing: 0.3px;
         }
-        .btn:active { transform: scale(0.96); }
-        .btn-red  { background: #e94560; color: #fff; }
-        .btn-green { background: #22c55e; color: #000; }
-        .btn-blue  { background: #3b82f6; color: #fff; }
-        .btn-gray  { background: #374151; color: #fff; }
+        .btn:active { transform: scale(0.95); }
+        .btn-red   { background: linear-gradient(135deg, #e94560, #b91c3c); color: #fff; box-shadow: 0 4px 15px rgba(233,69,96,0.3); }
+        .btn-green { background: linear-gradient(135deg, #22c55e, #16a34a); color: #000; box-shadow: 0 4px 15px rgba(34,197,94,0.3); }
+        .btn-blue  { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+        .btn-gray  { background: #1e1e35; color: #aaa; border: 1px solid var(--border); }
         .btn-sm    { padding: 7px 14px; font-size: 12px; }
         .btn-full  { width: 100%; margin-top: 10px; }
-        .btn:disabled { background: #2a2a3e !important; color: #555 !important; cursor: not-allowed; }
+        .btn:disabled { background: #1a1a2e !important; color: #333 !important; cursor: not-allowed; box-shadow: none !important; }
 
-        /* FLOATING DAY BUTTON */
+        /* ─── FAB ─── */
         .fab {
             position: fixed;
-            bottom: 24px;
-            right: 20px;
+            bottom: 24px; right: 20px;
             z-index: 300;
-            width: 68px;
-            height: 68px;
+            width: 68px; height: 68px;
             border-radius: 50%;
             background: linear-gradient(135deg, #e94560, #b91c3c);
             border: none;
             color: #fff;
-            font-size: 11px;
-            font-weight: 800;
+            font-size: 10px;
+            font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(233, 69, 96, 0.55);
-            line-height: 1.3;
+            box-shadow: 0 6px 28px rgba(233,69,96,0.6);
+            line-height: 1.4;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4); }
+        .fab:active { transform: scale(0.92); box-shadow: 0 2px 12px rgba(233,69,96,0.4); }
 
-        /* TOAST */
+        /* ─── TOAST ─── */
         .toast {
             position: fixed;
-            top: 80px;
-            left: 50%;
+            top: 80px; left: 50%;
             transform: translateX(-50%);
-            background: #1a1a2e;
-            border: 1px solid #e94560;
+            background: var(--bg3);
+            border: 1px solid var(--red);
             color: #fff;
             padding: 10px 22px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 700;
             z-index: 500;
@@ -129,64 +247,88 @@
         }
         .toast.show { opacity: 1; }
 
-        /* EVENT LOG */
+        /* ─── MONEY PARTICLE ─── */
+        .money-particle {
+            position: fixed;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--gold);
+            pointer-events: none;
+            z-index: 999;
+            animation: floatMoney 1.4s ease-out forwards;
+        }
+        @keyframes floatMoney {
+            0%   { opacity: 1; transform: translateY(0) scale(1); }
+            60%  { opacity: 1; transform: translateY(-80px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-140px) scale(0.8); }
+        }
+
+        /* ─── EVENT LOG ─── */
         .event-log {
-            background: #0f0f1a;
-            border: 1px solid #2a2a3e;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 10px;
-            max-height: 220px;
+            max-height: 200px;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #222 transparent;
         }
-        .ev { padding: 5px 0; border-bottom: 1px solid #1a1a2e; font-size: 12px; color: #aaa; }
+        .ev { padding: 5px 0; border-bottom: 1px solid #11111f; font-size: 12px; color: #555; }
         .ev:last-child { border-bottom: none; }
         .ev.good { color: #4ade80; }
         .ev.bad  { color: #f87171; }
         .ev.info { color: #60a5fa; }
 
-        /* PROGRESS BAR */
-        .progress { background: #2a2a3e; border-radius: 4px; height: 7px; margin-top: 6px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #e94560, #fbbf24); transition: width 0.4s; }
+        /* ─── PROGRESS ─── */
+        .progress { background: #1a1a2e; border-radius: 4px; height: 6px; margin-top: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--red), var(--gold)); transition: width 0.5s; }
 
-        /* BADGE */
+        /* ─── BADGE ─── */
         .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-        .badge-common  { background: #374151; color: #9ca3af; }
-        .badge-rare    { background: #5b21b6; color: #ddd6fe; }
-        .badge-premium { background: #92400e; color: #fde68a; }
-        .badge-trend   { background: #065f46; color: #6ee7b7; }
+        .badge-common  { background: #1e1e35; color: #888; border: 1px solid #2a2a4a; }
+        .badge-rare    { background: rgba(91,33,182,0.3); color: #ddd6fe; border: 1px solid rgba(91,33,182,0.5); }
+        .badge-premium { background: rgba(146,64,14,0.3); color: #fde68a; border: 1px solid rgba(146,64,14,0.5); }
+        .badge-trend   { background: rgba(6,95,70,0.3); color: #6ee7b7; border: 1px solid rgba(6,95,70,0.5); }
 
-        /* EMPTY STATE */
-        .empty { text-align: center; padding: 40px 20px; color: #444; }
-        .empty-icon { font-size: 52px; margin-bottom: 10px; }
+        /* ─── EMPTY ─── */
+        .empty { text-align: center; padding: 40px 20px; color: #333; }
+        .empty-icon { font-size: 48px; margin-bottom: 10px; }
 
-        /* QTY CONTROL */
+        /* ─── QTY ─── */
         .qty-control { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
         .qty-btn {
-            width: 30px; height: 30px;
+            width: 32px; height: 32px;
             border-radius: 50%;
-            border: 1px solid #444;
-            background: #222;
+            border: 1px solid var(--border);
+            background: var(--bg2);
             color: #fff;
             font-size: 18px;
-            line-height: 1;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
         }
-        .qty-display { font-size: 18px; font-weight: 800; min-width: 28px; text-align: center; }
+        .qty-btn:hover { background: var(--border); }
+        .qty-display { font-size: 18px; font-weight: 900; min-width: 28px; text-align: center; color: var(--gold); }
 
-        /* GRID */
-        .cars-grid { display: grid; gap: 12px; }
-
-        /* STAFF CARD */
+        /* ─── STAFF ─── */
         .staff-row { display: flex; align-items: center; gap: 12px; }
-        .staff-count { font-size: 28px; font-weight: 900; color: #fbbf24; min-width: 36px; text-align: center; }
+        .staff-count { font-size: 28px; font-weight: 900; color: var(--gold); min-width: 36px; text-align: center; }
+
+        /* ─── SELL ANIM ─── */
+        @keyframes sellFlash {
+            0%   { opacity: 1; transform: scale(1); }
+            50%  { opacity: 0.3; transform: scale(1.05); }
+            100% { opacity: 0; transform: scale(0.8); }
+        }
+        .selling { animation: sellFlash 0.5s ease forwards; }
     </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
-    <h1>🚗 AUTO TYCOON</h1>
+    <h1>⬡ AUTO TYCOON 3D</h1>
     <div class="stats-bar">
         <div class="stat">
             <span class="stat-label">Argent</span>
@@ -207,53 +349,59 @@
     </div>
 </div>
 
+<!-- 3D SHOWROOM ALWAYS VISIBLE -->
+<div id="showroom-wrap">
+    <canvas id="showroom-canvas"></canvas>
+    <div class="showroom-label">🎮 Showroom 3D</div>
+    <div class="drag-hint">← Glisser pour tourner →</div>
+    <div class="showroom-overlay" id="car-picker"></div>
+</div>
+
 <!-- TABS -->
 <div class="tabs">
     <div class="tab active" data-tab="dashboard">📊 Dashboard</div>
     <div class="tab" data-tab="inventaire">🚘 Inventaire</div>
     <div class="tab" data-tab="marche">🏪 Marché</div>
     <div class="tab" data-tab="personnel">👥 Personnel</div>
-    <div class="tab" data-tab="upgrades">⬆️ Améliorations</div>
+    <div class="tab" data-tab="upgrades">⬆️ Upgrades</div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="content" id="tab-dashboard">
     <h2 class="section-title">Vue d'ensemble</h2>
     <div class="card">
-        <div class="card-header" style="margin-bottom:12px">
+        <div class="card-header" style="margin-bottom:14px">
             <span style="font-weight:800;font-size:15px">Résumé du jour</span>
-            <span style="color:#e94560;font-weight:800" id="d-day">Jour 1</span>
+            <span style="color:var(--red);font-weight:800" id="d-day">Jour 1</span>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
             <div>
-                <div style="font-size:11px;color:#666">Bénéfice du jour</div>
+                <div style="font-size:11px;color:#555">Bénéfice du jour</div>
                 <div style="font-size:22px;font-weight:900;color:#4ade80" id="d-today-earn">+0 €</div>
             </div>
             <div>
-                <div style="font-size:11px;color:#666">Voitures vendues</div>
-                <div style="font-size:22px;font-weight:900;color:#60a5fa" id="d-today-cars">0</div>
+                <div style="font-size:11px;color:#555">Voitures vendues</div>
+                <div style="font-size:22px;font-weight:900;color:var(--blue)" id="d-today-cars">0</div>
             </div>
             <div>
-                <div style="font-size:11px;color:#666">Total gagné</div>
-                <div style="font-size:22px;font-weight:900;color:#fbbf24" id="d-total-earn">0 €</div>
+                <div style="font-size:11px;color:#555">Total gagné</div>
+                <div style="font-size:22px;font-weight:900;color:var(--gold)" id="d-total-earn">0 €</div>
             </div>
             <div>
-                <div style="font-size:11px;color:#666">Total vendu</div>
+                <div style="font-size:11px;color:#555">Total vendu</div>
                 <div style="font-size:22px;font-weight:900;color:#a78bfa" id="d-total-cars">0</div>
             </div>
         </div>
     </div>
-
     <div class="card">
         <div style="font-weight:800;margin-bottom:4px">Réputation</div>
-        <div style="font-size:12px;color:#888" id="d-rep-label">Débutant</div>
+        <div style="font-size:12px;color:#666" id="d-rep-label">Débutant</div>
         <div class="progress"><div class="progress-fill" id="d-rep-bar" style="width:10%"></div></div>
     </div>
-
     <div class="card">
         <div style="font-weight:800;margin-bottom:10px">Journal des événements</div>
         <div class="event-log" id="event-log">
-            <div class="ev info">🚀 Bienvenue dans AutoTycoon ! Achetez vos premières voitures au Marché.</div>
+            <div class="ev info">🚀 Bienvenue dans AutoTycoon 3D ! Achetez des voitures au Marché.</div>
         </div>
     </div>
 </div>
@@ -267,8 +415,8 @@
 <!-- MARCHE -->
 <div class="content" id="tab-marche" style="display:none">
     <h2 class="section-title">Marché Auto</h2>
-    <p style="font-size:12px;color:#666;margin-bottom:14px">Achetez des voitures pour les revendre avec profit</p>
-    <div id="market-list" class="cars-grid"></div>
+    <p style="font-size:12px;color:#444;margin-bottom:14px">Achetez des voitures pour les revendre avec profit</p>
+    <div id="market-list"></div>
 </div>
 
 <!-- PERSONNEL -->
@@ -284,61 +432,391 @@
 </div>
 
 <!-- FAB -->
-<button class="fab" id="fab-day">⏭<br>Jour<br>suivant</button>
+<button class="fab" id="fab-day">⏭<br>JOUR<br>SUIV.</button>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ================================================================
-// DATA
+// CAR DATA (with real Unsplash photo URLs + 3D color)
 // ================================================================
 const CARS = [
-    { id:'citadine',   name:'Citadine',    emoji:'🚗', buy:4000,  sell:6500,  badge:'common',  badgeLabel:'Courant',  unlock:0, desc:'Facile à vendre, petite marge',        demand:0.70 },
-    { id:'berline',    name:'Berline',     emoji:'🚙', buy:10000, sell:15000, badge:'common',  badgeLabel:'Courant',  unlock:0, desc:'Bonne demande, marge correcte',         demand:0.55 },
-    { id:'suv',        name:'SUV',         emoji:'🛻', buy:18000, sell:27000, badge:'common',  badgeLabel:'Populaire',unlock:2, desc:'Très demandé, belle marge',             demand:0.65 },
-    { id:'electrique', name:'Électrique',  emoji:'⚡', buy:28000, sell:40000, badge:'trend',   badgeLabel:'Tendance', unlock:3, desc:'En vogue, ventes rapides',              demand:0.60 },
-    { id:'sport',      name:'Sportive',    emoji:'🏎️', buy:35000, sell:52000, badge:'rare',    badgeLabel:'Rare',     unlock:5, desc:'Rare acheteur, très rentable',          demand:0.30 },
-    { id:'luxe',       name:'Luxe',        emoji:'💎', buy:60000, sell:90000, badge:'premium', badgeLabel:'Premium',  unlock:8, desc:'Clientèle VIP, marge excellente',       demand:0.20 },
+    {
+        id:'citadine', name:'Citadine', buy:4000, sell:6500,
+        badge:'common', badgeLabel:'Courant', unlock:0,
+        desc:'Facile à vendre, petite marge', demand:0.70,
+        color3d: 0xff4477,
+        photo: 'https://source.unsplash.com/600x300/?hatchback,city+car',
+        shape: { bL:3.6, bH:0.65, bW:1.75, cL:2.0, cH:0.95, cW:1.68, wR:0.35, lift:0 }
+    },
+    {
+        id:'berline', name:'Berline', buy:10000, sell:15000,
+        badge:'common', badgeLabel:'Courant', unlock:0,
+        desc:'Bonne demande, marge correcte', demand:0.55,
+        color3d: 0x3366ff,
+        photo: 'https://source.unsplash.com/600x300/?sedan,luxury+sedan+car',
+        shape: { bL:4.6, bH:0.62, bW:1.85, cL:2.8, cH:0.88, cW:1.78, wR:0.37, lift:0 }
+    },
+    {
+        id:'suv', name:'SUV', buy:18000, sell:27000,
+        badge:'common', badgeLabel:'Populaire', unlock:2,
+        desc:'Très demandé, belle marge', demand:0.65,
+        color3d: 0x22aa66,
+        photo: 'https://source.unsplash.com/600x300/?suv,crossover+car',
+        shape: { bL:4.3, bH:0.85, bW:2.0, cL:3.0, cH:1.1, cW:1.92, wR:0.44, lift:0.18 }
+    },
+    {
+        id:'electrique', name:'Électrique', buy:28000, sell:40000,
+        badge:'trend', badgeLabel:'Tendance', unlock:3,
+        desc:'En vogue, ventes rapides', demand:0.60,
+        color3d: 0x00ccff,
+        photo: 'https://source.unsplash.com/600x300/?tesla,electric+car+white',
+        shape: { bL:4.5, bH:0.58, bW:1.88, cL:3.2, cH:0.82, cW:1.8, wR:0.37, lift:0 }
+    },
+    {
+        id:'sport', name:'Sportive', buy:35000, sell:52000,
+        badge:'rare', badgeLabel:'Rare', unlock:5,
+        desc:'Rare acheteur, très rentable', demand:0.30,
+        color3d: 0xff2200,
+        photo: 'https://source.unsplash.com/600x300/?ferrari,supercar+sports',
+        shape: { bL:4.7, bH:0.44, bW:2.0, cL:1.9, cH:0.62, cW:1.72, wR:0.34, lift:-0.06 }
+    },
+    {
+        id:'luxe', name:'Luxe', buy:60000, sell:90000,
+        badge:'premium', badgeLabel:'Premium', unlock:8,
+        desc:'Clientèle VIP, marge excellente', demand:0.20,
+        color3d: 0xccaa33,
+        photo: 'https://source.unsplash.com/600x300/?rolls+royce,bentley+car',
+        shape: { bL:5.4, bH:0.72, bW:2.0, cL:3.5, cH:0.92, cW:1.92, wR:0.41, lift:0 }
+    },
 ];
 
 const STAFF = [
-    { id:'vendeur',    name:'Vendeur',          emoji:'👔', desc:'+15% chance de vente par vendeur',         salary:800,  max:5 },
-    { id:'mecanicien', name:'Mécanicien',        emoji:'🔧', desc:'Réduit le prix d\'achat de 5% par méca',   salary:1000, max:3 },
-    { id:'marketing',  name:'Agent Marketing',   emoji:'📣', desc:'+0.1 réputation par jour par agent',       salary:1200, max:3 },
+    { id:'vendeur',    name:'Vendeur',         emoji:'👔', desc:'+15% chance de vente par vendeur',       salary:800,  max:5 },
+    { id:'mecanicien', name:'Mécanicien',       emoji:'🔧', desc:'Réduit le prix d\'achat de 5%',           salary:1000, max:3 },
+    { id:'marketing',  name:'Agent Marketing',  emoji:'📣', desc:'+0.1 réputation par jour',               salary:1200, max:3 },
 ];
 
 const UPGRADES = [
-    { id:'parking2', name:'Grand Parking',         emoji:'🅿️', desc:'Capacité : 5 → 10 voitures',                cost:5000,  req:null,       effect:'capacity',    val:10 },
-    { id:'parking3', name:'Méga Parking',           emoji:'🏗️', desc:'Capacité : 10 → 20 voitures',               cost:20000, req:'parking2', effect:'capacity',    val:20 },
-    { id:'showroom', name:'Showroom Vitré',         emoji:'🏢', desc:'+20% sur le prix de vente',                  cost:15000, req:null,       effect:'sellBoost',   val:0.20 },
-    { id:'pub',      name:'Panneau Publicitaire',   emoji:'📺', desc:'+2 clients potentiels par jour',             cost:8000,  req:null,       effect:'clientBoost', val:2 },
-    { id:'finance',  name:'Service Financement',    emoji:'💳', desc:'+30% de chances de vente',                   cost:25000, req:null,       effect:'salesBoost',  val:0.30 },
-    { id:'certif',   name:'Certification Qualité',  emoji:'🏅', desc:'+1 réputation immédiatement',                cost:12000, req:null,       effect:'repImmediate',val:1 },
+    { id:'parking2', name:'Grand Parking',       emoji:'🅿️', desc:'Capacité : 5 → 10 voitures',          cost:5000,  req:null,       effect:'capacity',    val:10 },
+    { id:'parking3', name:'Méga Parking',         emoji:'🏗️', desc:'Capacité : 10 → 20 voitures',         cost:20000, req:'parking2', effect:'capacity',    val:20 },
+    { id:'showroom', name:'Showroom Vitré',       emoji:'🏢', desc:'+20% sur le prix de vente',            cost:15000, req:null,       effect:'sellBoost',   val:0.20 },
+    { id:'pub',      name:'Panneau Publicitaire', emoji:'📺', desc:'+2 clients potentiels par jour',       cost:8000,  req:null,       effect:'clientBoost', val:2 },
+    { id:'finance',  name:'Service Financement',  emoji:'💳', desc:'+30% de chances de vente',             cost:25000, req:null,       effect:'salesBoost',  val:0.30 },
+    { id:'certif',   name:'Certification Qualité',emoji:'🏅', desc:'+1 réputation immédiatement',          cost:12000, req:null,       effect:'repImmediate',val:1 },
 ];
 
 const RANDOM_EVENTS = [
-    { chance:0.05, msg:'📺 Reportage TV sur votre concession ! +0.3 réputation', fn: g => { g.rep = Math.min(10, g.rep + 0.3); } },
-    { chance:0.05, msg:'😡 Mauvais avis en ligne... -0.2 réputation',            fn: g => { g.rep = Math.max(1, g.rep - 0.2); } },
-    { chance:0.04, msg:'🎁 Bonus de fin de mois ! +1 000 €',                     fn: g => { g.money += 1000; } },
-    { chance:0.04, msg:'🏆 Lauréat "Meilleur concessionnaire" ! +0.5 réputation',fn: g => { g.rep = Math.min(10, g.rep + 0.5); } },
-    { chance:0.03, msg:'🌧️ Météo morose — les clients sont moins sortis',        fn: g => {} },
+    { chance:0.05, msg:'📺 Reportage TV ! +0.3 réputation',          fn: g => { g.rep = Math.min(10, g.rep + 0.3); } },
+    { chance:0.05, msg:'😡 Mauvais avis en ligne... -0.2 réputation', fn: g => { g.rep = Math.max(1, g.rep - 0.2); } },
+    { chance:0.04, msg:'🎁 Bonus de fin de mois ! +1 000 €',          fn: g => { g.money += 1000; } },
+    { chance:0.04, msg:'🏆 Meilleur concessionnaire ! +0.5 réputation',fn: g => { g.rep = Math.min(10, g.rep + 0.5); } },
+    { chance:0.03, msg:'🌧️ Météo morose — clients moins actifs',      fn: g => {} },
 ];
 
 // ================================================================
 // STATE
 // ================================================================
 let G = {
-    money: 10000,
-    day: 1,
-    rep: 1.0,
-    inventory: [],     // [{ id, paid }]
+    money: 10000, day: 1, rep: 1.0,
+    inventory: [],
     staff: { vendeur:0, mecanicien:0, marketing:0 },
-    upgrades: {},
-    capacity: 5,
+    upgrades: {}, capacity: 5,
     stats: { todayEarn:0, todayCars:0, totalEarn:0, totalCars:0 },
-    qty: {},           // buyQty per car
+    qty: {},
+    selectedCar3D: 'citadine',
 };
+
+// ================================================================
+// THREE.JS SETUP
+// ================================================================
+let threeScene, threeCamera, threeRenderer, carGroup;
+let theta = 0.6, phi = 0.38, radius = 9;
+let autoSpin = true, isDragging = false, prevX = 0, prevY = 0, spinVel = 0;
+
+function initThree() {
+    const wrap = document.getElementById('showroom-wrap');
+    const canvas = document.getElementById('showroom-canvas');
+    canvas.width  = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
+
+    threeScene = new THREE.Scene();
+    threeScene.background = new THREE.Color(0x07070f);
+    threeScene.fog = new THREE.FogExp2(0x07070f, 0.045);
+
+    threeCamera = new THREE.PerspectiveCamera(42, canvas.width / canvas.height, 0.1, 100);
+    updateCamera();
+
+    threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    threeRenderer.setSize(canvas.width, canvas.height, false);
+    threeRenderer.shadowMap.enabled = true;
+    threeRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Lights
+    const ambient = new THREE.AmbientLight(0x223355, 0.6);
+    threeScene.add(ambient);
+
+    const mainSpot = new THREE.SpotLight(0xffffff, 2.2, 30, Math.PI / 7, 0.5, 1.5);
+    mainSpot.position.set(0, 12, 2);
+    mainSpot.castShadow = true;
+    mainSpot.shadow.mapSize.width = 1024;
+    mainSpot.shadow.mapSize.height = 1024;
+    threeScene.add(mainSpot);
+
+    const redPoint = new THREE.PointLight(0xe94560, 1.8, 20);
+    redPoint.position.set(-7, 4, 0);
+    threeScene.add(redPoint);
+
+    const bluePoint = new THREE.PointLight(0x3355ff, 1.2, 18);
+    bluePoint.position.set(7, 3, -5);
+    threeScene.add(bluePoint);
+
+    const backLight = new THREE.DirectionalLight(0x8899ff, 0.4);
+    backLight.position.set(0, 3, -10);
+    threeScene.add(backLight);
+
+    // Floor
+    const floorGeo = new THREE.PlaneGeometry(30, 30);
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x090915, metalness: 0.5, roughness: 0.7 });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true;
+    threeScene.add(floor);
+
+    // Grid lines
+    const grid = new THREE.GridHelper(30, 30, 0x1a1a3a, 0x111125);
+    grid.position.y = 0.005;
+    threeScene.add(grid);
+
+    // Podium
+    const podGeo = new THREE.CylinderGeometry(2.8, 3.1, 0.22, 48);
+    const podMat = new THREE.MeshStandardMaterial({ color: 0x15152a, metalness: 0.9, roughness: 0.15 });
+    const pod = new THREE.Mesh(podGeo, podMat);
+    pod.position.y = 0.11;
+    pod.receiveShadow = true;
+    threeScene.add(pod);
+
+    // Podium ring glow
+    const ringGeo = new THREE.TorusGeometry(2.9, 0.08, 8, 48);
+    const ringMat = new THREE.MeshStandardMaterial({ color: 0xe94560, emissive: 0xe94560, emissiveIntensity: 0.6 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = 0.22;
+    threeScene.add(ring);
+
+    // Initial car
+    loadCar3D(G.selectedCar3D);
+
+    // Touch / mouse orbit
+    canvas.addEventListener('mousedown',  e => { autoSpin = false; isDragging = true; prevX = e.clientX; });
+    canvas.addEventListener('mousemove',  e => {
+        if (!isDragging) return;
+        const dx = e.clientX - prevX;
+        spinVel = dx * 0.008;
+        theta += spinVel;
+        prevX = e.clientX;
+        updateCamera();
+    });
+    canvas.addEventListener('mouseup',    () => { isDragging = false; });
+    canvas.addEventListener('touchstart', e => { autoSpin = false; isDragging = true; prevX = e.touches[0].clientX; }, { passive:true });
+    canvas.addEventListener('touchmove',  e => {
+        if (!isDragging) return;
+        const dx = e.touches[0].clientX - prevX;
+        spinVel = dx * 0.01;
+        theta += spinVel;
+        prevX = e.touches[0].clientX;
+        updateCamera();
+    }, { passive:true });
+    canvas.addEventListener('touchend',   () => { isDragging = false; });
+
+    // Resize
+    window.addEventListener('resize', () => {
+        canvas.width  = wrap.clientWidth;
+        canvas.height = wrap.clientHeight;
+        threeCamera.aspect = canvas.width / canvas.height;
+        threeCamera.updateProjectionMatrix();
+        threeRenderer.setSize(canvas.width, canvas.height, false);
+    });
+
+    animateThree();
+}
+
+function updateCamera() {
+    threeCamera.position.set(
+        radius * Math.sin(theta) * Math.cos(phi),
+        radius * Math.sin(phi) + 0.8,
+        radius * Math.cos(theta) * Math.cos(phi)
+    );
+    threeCamera.lookAt(0, 1.0, 0);
+}
+
+function loadCar3D(carId) {
+    if (carGroup) {
+        threeScene.remove(carGroup);
+        carGroup.traverse(obj => {
+            if (obj.geometry) obj.geometry.dispose();
+            if (obj.material) obj.material.dispose();
+        });
+    }
+    const carDef = CARS.find(c => c.id === carId);
+    carGroup = buildCar3D(carDef);
+    carGroup.position.y = 0.22;
+    threeScene.add(carGroup);
+}
+
+function buildCar3D(carDef) {
+    const group = new THREE.Group();
+    const s = carDef.shape;
+    const col = carDef.color3d;
+    const lift = s.lift || 0;
+
+    const bodyMat = new THREE.MeshStandardMaterial({ color: col, metalness: 0.75, roughness: 0.22 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x050510, metalness: 0.1, roughness: 0.9 });
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0x223344, metalness: 0.1, roughness: 0.0, transparent: true, opacity: 0.7 });
+    const rimMat  = new THREE.MeshStandardMaterial({ color: 0xbbbbbb, metalness: 0.95, roughness: 0.05 });
+    const lightFMat = new THREE.MeshStandardMaterial({ color: 0xffffcc, emissive: 0xffffcc, emissiveIntensity: 0.9 });
+    const lightRMat = new THREE.MeshStandardMaterial({ color: 0xff2200, emissive: 0xff2200, emissiveIntensity: 0.7 });
+
+    const yBase = 0.38 + lift;
+
+    // --- CHASSIS ---
+    const chassis = new THREE.Mesh(new THREE.BoxGeometry(s.bL, s.bH, s.bW), bodyMat);
+    chassis.position.y = yBase + s.bH / 2;
+    chassis.castShadow = true;
+    group.add(chassis);
+
+    // --- CABIN ---
+    const cabinY = yBase + s.bH + s.cH / 2;
+    const cabin = new THREE.Mesh(new THREE.BoxGeometry(s.cL, s.cH, s.cW), bodyMat);
+    cabin.position.set(0, cabinY, 0);
+    cabin.castShadow = true;
+    group.add(cabin);
+
+    // --- WINDSHIELDS (glass) ---
+    const wH = s.cH * 0.75;
+    const wW = s.cW * 0.95;
+    // Front
+    const winF = new THREE.Mesh(new THREE.BoxGeometry(0.05, wH, wW), glassMat);
+    winF.position.set(s.cL / 2, cabinY - s.cH * 0.08, 0);
+    winF.rotation.z = -0.22;
+    group.add(winF);
+    // Rear
+    const winR = new THREE.Mesh(new THREE.BoxGeometry(0.05, wH, wW), glassMat);
+    winR.position.set(-s.cL / 2, cabinY - s.cH * 0.08, 0);
+    winR.rotation.z = 0.22;
+    group.add(winR);
+    // Side windows
+    [-1, 1].forEach(side => {
+        const winS = new THREE.Mesh(new THREE.BoxGeometry(s.cL * 0.65, s.cH * 0.7, 0.04), glassMat);
+        winS.position.set(0, cabinY, side * (s.cW / 2));
+        group.add(winS);
+    });
+
+    // --- WHEELS ---
+    const wheelPos = [
+        [-s.bL * 0.3, yBase, s.bW / 2 + 0.04],
+        [ s.bL * 0.3, yBase, s.bW / 2 + 0.04],
+        [-s.bL * 0.3, yBase, -(s.bW / 2 + 0.04)],
+        [ s.bL * 0.3, yBase, -(s.bW / 2 + 0.04)],
+    ];
+    wheelPos.forEach(pos => {
+        const tyre = new THREE.Mesh(new THREE.CylinderGeometry(s.wR, s.wR, 0.26, 20), darkMat);
+        tyre.rotation.x = Math.PI / 2;
+        tyre.position.set(...pos);
+        tyre.castShadow = true;
+        group.add(tyre);
+
+        const rim = new THREE.Mesh(new THREE.CylinderGeometry(s.wR * 0.58, s.wR * 0.58, 0.28, 8), rimMat);
+        rim.rotation.x = Math.PI / 2;
+        rim.position.set(...pos);
+        group.add(rim);
+    });
+
+    // --- HEADLIGHTS ---
+    [-s.bW * 0.3, s.bW * 0.3].forEach(z => {
+        const hl = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.18, 0.32), lightFMat);
+        hl.position.set(s.bL / 2, yBase + s.bH * 0.55, z);
+        group.add(hl);
+    });
+    // --- TAILLIGHTS ---
+    [-s.bW * 0.3, s.bW * 0.3].forEach(z => {
+        const tl = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.16, 0.3), lightRMat);
+        tl.position.set(-s.bL / 2, yBase + s.bH * 0.55, z);
+        group.add(tl);
+    });
+
+    // --- GRILL ---
+    const grill = new THREE.Mesh(new THREE.BoxGeometry(0.08, s.bH * 0.4, s.bW * 0.45), darkMat);
+    grill.position.set(s.bL / 2, yBase + s.bH * 0.38, 0);
+    group.add(grill);
+
+    // --- SPORT: REAR WING ---
+    if (carDef.id === 'sport') {
+        const wingMat = new THREE.MeshStandardMaterial({ color: col, metalness: 0.5, roughness: 0.3 });
+        const wing = new THREE.Mesh(new THREE.BoxGeometry(s.bW * 0.9, 0.07, 0.5), wingMat);
+        wing.position.set(-s.bL * 0.44, yBase + s.bH + s.cH * 0.7, 0);
+        group.add(wing);
+        // Wing posts
+        [-s.bW * 0.36, s.bW * 0.36].forEach(z => {
+            const post = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.38, 0.06), wingMat);
+            post.position.set(-s.bL * 0.44, yBase + s.bH + s.cH * 0.52, z);
+            group.add(post);
+        });
+    }
+
+    // --- SUV: ROOF RAILS ---
+    if (carDef.id === 'suv') {
+        const railMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.8, roughness: 0.2 });
+        [-s.cW * 0.43, s.cW * 0.43].forEach(z => {
+            const rail = new THREE.Mesh(new THREE.BoxGeometry(s.cL * 0.85, 0.06, 0.06), railMat);
+            rail.position.set(0, cabinY + s.cH / 2 + 0.05, z);
+            group.add(rail);
+        });
+    }
+
+    // --- ELECTRIC: NO GRILL, SMOOTH FRONT ---
+    if (carDef.id === 'electrique') {
+        // remove grill visual — just add smooth bumper highlight
+        const bump = new THREE.Mesh(new THREE.BoxGeometry(0.1, s.bH * 0.2, s.bW * 0.6),
+            new THREE.MeshStandardMaterial({ color: 0x001122, metalness: 0.1, roughness: 0.8 }));
+        bump.position.set(s.bL / 2, yBase + s.bH * 0.2, 0);
+        group.add(bump);
+    }
+
+    return group;
+}
+
+let threeTime = 0;
+function animateThree() {
+    requestAnimationFrame(animateThree);
+    threeTime += 0.016;
+
+    // Auto spin with inertia
+    if (!isDragging) {
+        if (autoSpin) {
+            spinVel = 0.006;
+        } else {
+            spinVel *= 0.94;
+            if (Math.abs(spinVel) > 0.0003) {
+                theta += spinVel;
+                updateCamera();
+            } else {
+                autoSpin = true;
+            }
+        }
+        if (autoSpin) {
+            theta += spinVel;
+            updateCamera();
+        }
+    }
+
+    // Slight car bob
+    if (carGroup) carGroup.position.y = 0.22 + Math.sin(threeTime * 1.4) * 0.04;
+
+    threeRenderer.render(threeScene, threeCamera);
+}
 
 // ================================================================
 // HELPERS
@@ -362,18 +840,25 @@ function addLog(msg, type = '') {
     while (log.children.length > 40) log.removeChild(log.lastChild);
 }
 
+function spawnMoneyParticle(x, y, amount) {
+    const el = document.createElement('div');
+    el.className = 'money-particle';
+    el.textContent = '+' + fmt(amount);
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+}
+
 function getBuyDiscount()   { return 1 - G.staff.mecanicien * 0.05; }
 function getSellBoost()     { return 1 + (G.upgrades.showroom ? 0.20 : 0); }
 function getSalesBonus()    { return G.staff.vendeur * 0.15 + (G.upgrades.finance ? 0.30 : 0); }
 function getClientsPerDay() { return 2 + Math.floor(G.rep * 1.5) + (G.upgrades.pub ? 2 : 0); }
 function getRepLevel()      { return Math.floor(G.rep); }
-
-function dailySalary() {
-    return G.staff.vendeur * 800 + G.staff.mecanicien * 1000 + G.staff.marketing * 1200;
-}
+function dailySalary()      { return G.staff.vendeur * 800 + G.staff.mecanicien * 1000 + G.staff.marketing * 1200; }
 
 // ================================================================
-// HEADER UPDATE
+// HEADER
 // ================================================================
 function updateHeader() {
     document.getElementById('s-money').textContent = fmt(G.money);
@@ -399,6 +884,25 @@ function updateHeader() {
 }
 
 // ================================================================
+// CAR PICKER (3D showroom selector)
+// ================================================================
+function renderCarPicker() {
+    const el = document.getElementById('car-picker');
+    el.innerHTML = CARS.map(car => {
+        const unlocked = getRepLevel() >= car.unlock;
+        const active   = G.selectedCar3D === car.id;
+        if (!unlocked) return '';
+        return `<button class="car-pick-btn ${active ? 'active' : ''}" onclick="pickCar3D('${car.id}')">${car.name}</button>`;
+    }).join('');
+}
+
+function pickCar3D(carId) {
+    G.selectedCar3D = carId;
+    loadCar3D(carId);
+    renderCarPicker();
+}
+
+// ================================================================
 // TABS
 // ================================================================
 document.querySelectorAll('.tab').forEach(tab => {
@@ -421,7 +925,7 @@ document.querySelectorAll('.tab').forEach(tab => {
 function renderInventory() {
     const el = document.getElementById('inventory-list');
     if (!G.inventory.length) {
-        el.innerHTML = `<div class="empty"><div class="empty-icon">🅿️</div><p>Parking vide</p><p style="font-size:12px;margin-top:6px;color:#555">Achetez des voitures au Marché</p></div>`;
+        el.innerHTML = `<div class="empty"><div class="empty-icon">🅿️</div><p style="color:#444">Parking vide</p><p style="font-size:12px;margin-top:6px;color:#333">Achetez des voitures au Marché</p></div>`;
         return;
     }
     el.innerHTML = G.inventory.map((car, i) => {
@@ -429,41 +933,49 @@ function renderInventory() {
         const sell = Math.floor(t.sell * getSellBoost());
         const profit = sell - car.paid;
         return `
-        <div class="card">
+        <div class="card" id="inv-card-${i}">
+            <div class="car-photo-wrap">
+                <img class="car-photo" src="${t.photo}" alt="${t.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22300%22%3E%3Crect fill=%22%230e0e1c%22 width=%22600%22 height=%22300%22/%3E%3Ctext x=%22300%22 y=%22160%22 text-anchor=%22middle%22 fill=%22%23444%22 font-size=%2280%22%3E🚗%3C/text%3E%3C/svg%3E'">
+                <div class="car-photo-overlay"></div>
+                <div class="car-photo-badge"><span class="badge badge-${t.badge}">${t.badgeLabel}</span></div>
+            </div>
             <div class="card-header">
-                <div style="display:flex;align-items:center;gap:10px">
-                    <span style="font-size:36px">${t.emoji}</span>
-                    <div>
-                        <div style="font-weight:800;font-size:16px">${t.name}</div>
-                        <div style="font-size:12px;color:#666;margin-top:2px">Acheté ${fmt(car.paid)}</div>
-                    </div>
+                <div>
+                    <div style="font-weight:800;font-size:16px">${t.name}</div>
+                    <div style="font-size:12px;color:#555;margin-top:2px">Acheté ${fmt(car.paid)}</div>
                 </div>
                 <div style="text-align:right">
-                    <div style="font-size:18px;font-weight:900;color:#fbbf24">${fmt(sell)}</div>
-                    <div style="font-size:12px;color:#4ade80;font-weight:700">+${fmt(profit)}</div>
+                    <div style="font-size:20px;font-weight:900;color:var(--gold)">${fmt(sell)}</div>
+                    <div style="font-size:13px;color:#4ade80;font-weight:700">+${fmt(profit)}</div>
                 </div>
             </div>
-            <button class="btn btn-green btn-sm btn-full" onclick="sellCarManual(${i})">Vendre maintenant</button>
+            <button class="btn btn-green btn-sm btn-full" onclick="sellCarManual(${i}, event)">💰 Vendre maintenant</button>
         </div>`;
     }).join('');
 }
 
-function sellCarManual(i) {
+function sellCarManual(i, event) {
+    const card = document.getElementById('inv-card-' + i);
+    if (card) card.classList.add('selling');
     const car = G.inventory[i];
-    const t = CARS.find(c => c.id === car.id);
-    const sell = Math.floor(t.sell * getSellBoost());
+    const t   = CARS.find(c => c.id === car.id);
+    const sell   = Math.floor(t.sell * getSellBoost());
     const profit = sell - car.paid;
-    G.money += sell;
-    G.stats.totalEarn += profit;
-    G.stats.totalCars++;
-    G.stats.todayEarn += profit;
-    G.stats.todayCars++;
-    G.rep = Math.min(10, G.rep + 0.05);
-    G.inventory.splice(i, 1);
-    addLog(`✅ ${t.emoji} ${t.name} vendue ${fmt(sell)} (+${fmt(profit)} bénéfice)`, 'good');
-    toast(`💰 Vendue ! +${fmt(profit)} de bénéfice`);
-    updateHeader();
-    renderInventory();
+    setTimeout(() => {
+        G.money += sell;
+        G.stats.totalEarn += profit;
+        G.stats.totalCars++;
+        G.stats.todayEarn += profit;
+        G.stats.todayCars++;
+        G.rep = Math.min(10, G.rep + 0.05);
+        G.inventory.splice(i, 1);
+        addLog(`✅ ${t.name} vendue ${fmt(sell)} (+${fmt(profit)})`, 'good');
+        toast(`💰 Vendue ! +${fmt(profit)} de bénéfice`);
+        if (event) spawnMoneyParticle(event.clientX, event.clientY, profit);
+        updateHeader();
+        renderInventory();
+        renderCarPicker();
+    }, 450);
 }
 
 // ================================================================
@@ -477,48 +989,50 @@ function renderMarket() {
         const realSell = Math.floor(car.sell * getSellBoost());
         const profit   = realSell - realBuy;
         if (!G.qty[car.id]) G.qty[car.id] = 1;
-        const qty = G.qty[car.id];
-        const total = realBuy * qty;
+        const qty     = G.qty[car.id];
+        const total   = realBuy * qty;
         const canAfford = G.money >= total;
         const hasSpace  = G.inventory.length + qty <= G.capacity;
 
         return `
-        <div class="card" style="${!unlocked ? 'opacity:0.38' : ''}">
+        <div class="card" style="${!unlocked ? 'opacity:0.32' : ''}">
+            <div class="car-photo-wrap">
+                <img class="car-photo" src="${car.photo}" alt="${car.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22300%22%3E%3Crect fill=%22%230e0e1c%22 width=%22600%22 height=%22300%22/%3E%3Ctext x=%22300%22 y=%22160%22 text-anchor=%22middle%22 fill=%22%23444%22 font-size=%2280%22%3E🚗%3C/text%3E%3C/svg%3E'">
+                <div class="car-photo-overlay"></div>
+                <div class="car-photo-badge"><span class="badge badge-${car.badge}">${car.badgeLabel}</span></div>
+            </div>
             <div class="card-header">
-                <div style="display:flex;align-items:center;gap:10px">
-                    <span style="font-size:40px">${car.emoji}</span>
-                    <div>
-                        <div style="font-weight:800;font-size:15px">${car.name} <span class="badge badge-${car.badge}">${car.badgeLabel}</span></div>
-                        <div style="font-size:11px;color:#666;margin-top:3px">${car.desc}</div>
-                    </div>
+                <div>
+                    <div style="font-weight:800;font-size:16px">${car.name}</div>
+                    <div style="font-size:11px;color:#555;margin-top:2px">${car.desc}</div>
                 </div>
             </div>
-            <div style="display:flex;justify-content:space-between;margin:10px 0 0">
-                <div>
-                    <div style="font-size:10px;color:#666">Achat</div>
-                    <div style="font-weight:800;color:#fbbf24">${fmt(realBuy)}</div>
-                    ${getBuyDiscount() < 1 ? '<div style="font-size:10px;color:#4ade80">Remise méca ✓</div>' : ''}
+            <div style="display:flex;justify-content:space-between;margin:12px 0 0;gap:8px">
+                <div style="text-align:center">
+                    <div style="font-size:10px;color:#555">Achat</div>
+                    <div style="font-weight:900;color:var(--gold);font-size:14px">${fmt(realBuy)}</div>
+                    ${getBuyDiscount() < 1 ? '<div style="font-size:9px;color:#4ade80">Remise ✓</div>' : ''}
                 </div>
-                <div>
-                    <div style="font-size:10px;color:#666">Vente</div>
-                    <div style="font-weight:800;color:#60a5fa">${fmt(realSell)}</div>
+                <div style="text-align:center">
+                    <div style="font-size:10px;color:#555">Vente</div>
+                    <div style="font-weight:900;color:var(--blue);font-size:14px">${fmt(realSell)}</div>
                 </div>
-                <div>
-                    <div style="font-size:10px;color:#666">Profit</div>
-                    <div style="font-weight:800;color:#4ade80">+${fmt(profit)}</div>
+                <div style="text-align:center">
+                    <div style="font-size:10px;color:#555">Profit</div>
+                    <div style="font-weight:900;color:#4ade80;font-size:14px">+${fmt(profit)}</div>
                 </div>
             </div>
             ${!unlocked
-                ? `<div style="color:#e94560;font-size:12px;text-align:center;padding:8px 0">🔒 Requiert réputation ${car.unlock}.0</div>`
+                ? `<div style="color:var(--red);font-size:12px;text-align:center;padding:10px 0;font-weight:700">🔒 Requiert réputation ${car.unlock}.0</div>`
                 : `<div class="qty-control">
                     <button class="qty-btn" onclick="chQty('${car.id}',-1)">−</button>
                     <div class="qty-display">${qty}</div>
                     <button class="qty-btn" onclick="chQty('${car.id}',1)">+</button>
-                    <span style="font-size:12px;color:#888;margin-left:6px">Total: ${fmt(total)}</span>
+                    <span style="font-size:12px;color:#555;margin-left:4px">= ${fmt(total)}</span>
                    </div>
-                   <button class="btn btn-red btn-sm btn-full" onclick="buyCar('${car.id}')"
+                   <button class="btn btn-red btn-sm btn-full" onclick="buyCar('${car.id}', event)"
                     ${!canAfford || !hasSpace ? 'disabled' : ''}>
-                    ${!hasSpace ? '🅿️ Parking plein' : !canAfford ? '💸 Pas assez d\'argent' : `Acheter ×${qty}`}
+                    ${!hasSpace ? '🅿️ Parking plein' : !canAfford ? '💸 Pas assez' : `🛒 Acheter ×${qty}`}
                    </button>`
             }
         </div>`;
@@ -530,17 +1044,21 @@ function chQty(id, delta) {
     renderMarket();
 }
 
-function buyCar(id) {
-    const car = CARS.find(c => c.id === id);
+function buyCar(id, event) {
+    const car    = CARS.find(c => c.id === id);
     const realBuy = Math.floor(car.buy * getBuyDiscount());
-    const qty = G.qty[id] || 1;
-    const total = realBuy * qty;
+    const qty    = G.qty[id] || 1;
+    const total  = realBuy * qty;
     if (G.money < total) { toast('💸 Pas assez d\'argent !'); return; }
     if (G.inventory.length + qty > G.capacity) { toast('🅿️ Parking plein !'); return; }
     G.money -= total;
     for (let i = 0; i < qty; i++) G.inventory.push({ id, paid: realBuy });
-    addLog(`🛒 Achat ${qty}× ${car.emoji} ${car.name} → ${fmt(total)}`, 'info');
-    toast(`${car.emoji} ${qty}× ${car.name} acheté(es) !`);
+    addLog(`🛒 Achat ${qty}× ${car.name} → ${fmt(total)}`, 'info');
+    toast(`${qty}× ${car.name} acheté(es) !`);
+    // Switch 3D view to bought car
+    G.selectedCar3D = id;
+    loadCar3D(id);
+    renderCarPicker();
     updateHeader();
     renderMarket();
 }
@@ -552,8 +1070,8 @@ function renderStaff() {
     const salary = dailySalary();
     const el = document.getElementById('staff-list');
     el.innerHTML = `
-    <div class="card" style="border-color:#e94560;background:#1a0d12;margin-bottom:16px">
-        <div style="font-size:11px;color:#888">Masse salariale quotidienne</div>
+    <div class="card" style="border-color:var(--red);background:rgba(233,69,96,0.06);margin-bottom:16px">
+        <div style="font-size:11px;color:#777">Masse salariale quotidienne</div>
         <div style="font-size:24px;font-weight:900;color:#f87171">-${fmt(salary)} / jour</div>
     </div>
     ${STAFF.map(s => {
@@ -561,11 +1079,11 @@ function renderStaff() {
         return `
         <div class="card">
             <div class="staff-row">
-                <span style="font-size:36px">${s.emoji}</span>
+                <span style="font-size:38px">${s.emoji}</span>
                 <div style="flex:1;margin:0 10px">
                     <div style="font-weight:800;font-size:15px">${s.name}</div>
-                    <div style="font-size:11px;color:#666;margin-top:2px">${s.desc}</div>
-                    <div style="font-size:11px;color:#fbbf24;margin-top:2px">${fmt(s.salary)}/jour · Max ${s.max}</div>
+                    <div style="font-size:11px;color:#555;margin-top:2px">${s.desc}</div>
+                    <div style="font-size:11px;color:var(--gold);margin-top:3px">${fmt(s.salary)}/jour · Max ${s.max}</div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
                     <button class="btn btn-green btn-sm" onclick="hire('${s.id}')"
@@ -584,11 +1102,10 @@ function hire(id) {
     if (G.staff[id] >= s.max) { toast('Maximum atteint !'); return; }
     if (G.money < s.salary) { toast('💸 Pas assez d\'argent !'); return; }
     G.staff[id]++;
-    addLog(`👤 ${s.emoji} ${s.name} embauché(e)`, 'info');
+    addLog(`${s.emoji} ${s.name} embauché(e)`, 'info');
     toast(`${s.emoji} ${s.name} rejoint l'équipe !`);
     updateHeader(); renderStaff();
 }
-
 function fire(id) {
     const s = STAFF.find(x => x.id === id);
     if (G.staff[id] <= 0) return;
@@ -604,23 +1121,23 @@ function fire(id) {
 function renderUpgrades() {
     const el = document.getElementById('upgrades-list');
     el.innerHTML = UPGRADES.map(u => {
-        const owned   = !!G.upgrades[u.id];
-        const reqOk   = !u.req || !!G.upgrades[u.req];
-        const canBuy  = !owned && reqOk && G.money >= u.cost;
+        const owned  = !!G.upgrades[u.id];
+        const reqOk  = !u.req || !!G.upgrades[u.req];
+        const canBuy = !owned && reqOk && G.money >= u.cost;
         return `
-        <div class="card" style="${owned ? 'border-color:#22c55e;opacity:0.7' : ''}">
+        <div class="card" style="${owned ? 'border-color:#22c55e;' : ''}">
             <div class="card-header">
-                <div style="display:flex;align-items:center;gap:10px">
+                <div style="display:flex;align-items:center;gap:12px">
                     <span style="font-size:36px">${u.emoji}</span>
                     <div>
                         <div style="font-weight:800;font-size:15px">${u.name} ${owned ? '✅' : ''}</div>
-                        <div style="font-size:11px;color:#666;margin-top:2px">${u.desc}</div>
+                        <div style="font-size:11px;color:#555;margin-top:2px">${u.desc}</div>
                     </div>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#fbbf24;white-space:nowrap">${fmt(u.cost)}</div>
+                <div style="font-size:15px;font-weight:900;color:var(--gold);white-space:nowrap">${fmt(u.cost)}</div>
             </div>
             ${owned
-                ? '<div style="color:#4ade80;font-size:12px;margin-top:8px">✅ Déjà activé</div>'
+                ? '<div style="color:#4ade80;font-size:12px;margin-top:8px">✅ Activé</div>'
                 : !reqOk
                     ? `<div style="color:#f87171;font-size:12px;margin-top:8px">🔒 Requiert: ${UPGRADES.find(x=>x.id===u.req)?.name}</div>`
                     : `<button class="btn btn-blue btn-sm btn-full" onclick="buyUpgrade('${u.id}')" ${!canBuy?'disabled':''}>
@@ -637,9 +1154,9 @@ function buyUpgrade(id) {
     if (G.money < u.cost) { toast('💸 Pas assez d\'argent !'); return; }
     G.money -= u.cost;
     G.upgrades[id] = true;
-    if (u.effect === 'capacity')    G.capacity = u.val;
+    if (u.effect === 'capacity')     G.capacity = u.val;
     if (u.effect === 'repImmediate') G.rep = Math.min(10, G.rep + u.val);
-    addLog(`⬆️ ${u.emoji} ${u.name} activé !`, 'good');
+    addLog(`⬆️ ${u.name} activé !`, 'good');
     toast(`${u.emoji} ${u.name} activé !`);
     updateHeader(); renderUpgrades();
 }
@@ -662,19 +1179,14 @@ function nextDay() {
         if (G.money === 0) addLog('⚠️ Vous êtes à découvert !', 'bad');
     }
 
-    // Marketing rep boost
-    if (G.staff.marketing > 0) {
-        G.rep = Math.min(10, G.rep + G.staff.marketing * 0.1);
-    }
-
-    // Natural slow rep decay
+    // Marketing rep
+    if (G.staff.marketing > 0) G.rep = Math.min(10, G.rep + G.staff.marketing * 0.1);
     G.rep = Math.max(1, G.rep - 0.02);
 
     // Auto sales
     if (G.inventory.length > 0) {
         const clients = getClientsPerDay();
         let sold = 0, earn = 0;
-
         for (let c = 0; c < clients && G.inventory.length > 0; c++) {
             const idx  = Math.floor(Math.random() * G.inventory.length);
             const car  = G.inventory[idx];
@@ -694,11 +1206,10 @@ function nextDay() {
                 G.rep = Math.min(10, G.rep + 0.03);
             }
         }
-
-        if (sold > 0) addLog(`📅 Jour ${G.day}: ${sold} voiture(s) vendue(s) → +${fmt(earn)} bénéfice`, 'good');
-        else addLog(`📅 Jour ${G.day}: Aucune vente. ${clients} client(s) de passage.`, '');
+        if (sold > 0) addLog(`📅 Jour ${G.day}: ${sold} voiture(s) vendue(s) → +${fmt(earn)}`, 'good');
+        else          addLog(`📅 Jour ${G.day}: Aucune vente. ${clients} client(s) de passage.`, '');
     } else {
-        addLog(`📅 Jour ${G.day}: Parking vide — les clients repartent sans acheter !`, 'bad');
+        addLog(`📅 Jour ${G.day}: Parking vide !`, 'bad');
     }
 
     // Événements aléatoires
@@ -710,8 +1221,9 @@ function nextDay() {
     });
 
     updateHeader();
+    renderCarPicker();
 
-    // Revenir au dashboard
+    // Go to dashboard
     document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
     document.getElementById('tab-dashboard').style.display = 'block';
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -721,8 +1233,10 @@ function nextDay() {
 // ================================================================
 // INIT
 // ================================================================
+initThree();
 updateHeader();
 renderMarket();
+renderCarPicker();
 </script>
 </body>
 </html>
