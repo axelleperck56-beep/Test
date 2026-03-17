@@ -287,6 +287,12 @@ body {
 .split-media.no-photo {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
+/* Fallbacks thématiques par chapitre */
+#ch-mesopotamie .split-media.no-photo  { background: linear-gradient(150deg, #2c1810 0%, #5c3317 50%, #8b5e3c 100%); }
+#ch-creation    .split-media.no-photo  { background: linear-gradient(150deg, #1a2e1a 0%, #2d4a1e 50%, #4a6741 100%); }
+#ch-guerres     .split-media.no-photo  { background: linear-gradient(150deg, #1a0a0a 0%, #3d1a0a 50%, #6b3010 100%); }
+#ch-chaos       .split-media.no-photo  { background: linear-gradient(150deg, #0d0d0d 0%, #1a1a1a 50%, #2d2d2d 100%); }
+#ch-aujourd-hui .split-media.no-photo  { background: linear-gradient(150deg, #0a1a2e 0%, #1a3a5c 50%, #2a5a8e 100%); }
 
 .split-media figcaption {
   position: absolute;
