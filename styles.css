@@ -72,7 +72,7 @@ body { font-family: var(--font-b); background: var(--dark); color: var(--text); 
   position: relative; overflow: hidden;
   /* Photo ONU + fallback gradient dramatique */
   background-image:
-    url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Headquarters_of_the_United_Nations%2C_New_York_City.jpg');
+    url('https://commons.wikimedia.org/wiki/Special:FilePath/Headquarters_of_the_United_Nations,_New_York_City.jpg');
   background-size: cover;
   background-position: center;
 }

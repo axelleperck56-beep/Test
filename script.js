@@ -7,6 +7,54 @@
   'use strict';
 
   /* ─────────────────────────────────────
+     FALLBACK IMAGE LOADER
+     Essaie plusieurs URLs pour chaque image
+  ───────────────────────────────────── */
+  const IMAGE_FALLBACKS = {
+    'chirac-img': [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Jacques_Chirac.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Jacques_Chirac_2005.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/c/c4/Jacques_Chirac_%282005%29.jpg',
+    ],
+    'villepin-img': [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Dominique_de_Villepin_(2).jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Dominique_de_Villepin.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/a/a0/Dominique_de_Villepin_%282%29.jpg',
+    ],
+    'powell-img': [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Colin_Powell_presents_evidence_to_the_UN_Security_Council.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Colin_Powell.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/a/a9/Colin_Powell_presents_evidence_to_the_UN_Security_Council.jpg',
+    ],
+    'freedom-img': [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Freedom_fries.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/f/f5/Freedom_fries.jpg',
+    ],
+    'rumsfeld-img': [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Donald_Rumsfeld_2002.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/b/b8/Donald_Rumsfeld_2002.jpg',
+    ],
+  };
+
+  function initImageFallbacks() {
+    Object.entries(IMAGE_FALLBACKS).forEach(([id, urls]) => {
+      const img = document.getElementById(id);
+      if (!img) return;
+      let attempt = 0;
+      img.src = urls[0];
+      img.onerror = function () {
+        attempt++;
+        if (attempt < urls.length) {
+          img.src = urls[attempt];
+        } else {
+          img.style.display = 'none';
+          if (img.parentElement) img.parentElement.classList.add('no-photo');
+        }
+      };
+    });
+  }
+
+  /* ─────────────────────────────────────
      PARTICULES HERO
   ───────────────────────────────────── */
   (function initParticles() {
@@ -259,6 +307,7 @@
   ───────────────────────────────────── */
   window.addEventListener('load', () => {
     onScroll();
+    initImageFallbacks();
     if (chapters[0]) {
       chapters[0].classList.add('revealed');
       triggerChapterEffects(chapters[0]);
