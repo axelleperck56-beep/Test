@@ -12,27 +12,33 @@
   ───────────────────────────────────── */
   const IMAGE_FALLBACKS = {
     'chirac-img': [
+      'https://upload.wikimedia.org/wikipedia/commons/a/a8/Jacques_Chirac_%282008%29.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Jacques_Chirac_(2008).jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Jacques_Chirac.jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Jacques_Chirac_2005.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/c/c4/Jacques_Chirac_%282005%29.jpg',
     ],
     'villepin-img': [
+      'https://upload.wikimedia.org/wikipedia/commons/e/e8/Dominique_de_Villepin_2021.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Dominique_de_Villepin_2021.jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Dominique_de_Villepin_(2).jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Dominique_de_Villepin.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/a/a0/Dominique_de_Villepin_%282%29.jpg',
     ],
     'powell-img': [
+      'https://upload.wikimedia.org/wikipedia/commons/5/57/Colin_Powell_presents_at_the_UN.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Colin_Powell_presents_at_the_UN.jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Colin_Powell_presents_evidence_to_the_UN_Security_Council.jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Colin_Powell.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/a/a9/Colin_Powell_presents_evidence_to_the_UN_Security_Council.jpg',
     ],
     'freedom-img': [
+      'https://upload.wikimedia.org/wikipedia/commons/1/19/Freedom_Fries.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Freedom_Fries.jpg',
       'https://commons.wikimedia.org/wiki/Special:FilePath/Freedom_fries.jpg',
       'https://upload.wikimedia.org/wikipedia/commons/f/f5/Freedom_fries.jpg',
     ],
     'rumsfeld-img': [
       'https://commons.wikimedia.org/wiki/Special:FilePath/Donald_Rumsfeld_2002.jpg',
       'https://upload.wikimedia.org/wikipedia/commons/b/b8/Donald_Rumsfeld_2002.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Rumsfeld1.jpg',
     ],
   };
 
@@ -42,11 +48,16 @@
       if (!img) return;
       let attempt = 0;
       img.src = urls[0];
+      img.onload = function () {
+        console.log('[IMG OK]', id, '→', img.src);
+      };
       img.onerror = function () {
+        console.warn('[IMG FAIL]', id, 'attempt', attempt, '→', img.src);
         attempt++;
         if (attempt < urls.length) {
           img.src = urls[attempt];
         } else {
+          console.error('[IMG GIVE UP]', id);
           img.style.display = 'none';
           if (img.parentElement) img.parentElement.classList.add('no-photo');
         }
