@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AutoTycoon - Concessionnaire</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f0f1a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 14px 16px;
+            border-bottom: 2px solid #e94560;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 20px; font-weight: 900; color: #e94560; letter-spacing: 2px; }
+        .stats-bar { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+        .stat { display: flex; flex-direction: column; }
+        .stat-label { font-size: 10px; color: #777; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 16px; font-weight: 800; }
+        .stat-value.money { color: #fbbf24; }
+        .stat-value.rep   { color: #60a5fa; }
+        .stat-value.day   { color: #e94560; }
+        .stat-value.stock { color: #a78bfa; }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            background: #16213e;
+            overflow-x: auto;
+            border-bottom: 1px solid #2a2a3e;
+            scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab {
+            padding: 12px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab.active { color: #e94560; border-bottom-color: #e94560; }
+
+        /* CONTENT */
+        .content { padding: 16px; max-width: 600px; margin: 0 auto; padding-bottom: 100px; }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+
+        /* CARD */
+        .card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #2a2a3e;
+        }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+
+        /* BUTTONS */
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.15s;
+            letter-spacing: 0.5px;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn-red  { background: #e94560; color: #fff; }
+        .btn-green { background: #22c55e; color: #000; }
+        .btn-blue  { background: #3b82f6; color: #fff; }
+        .btn-gray  { background: #374151; color: #fff; }
+        .btn-sm    { padding: 7px 14px; font-size: 12px; }
+        .btn-full  { width: 100%; margin-top: 10px; }
+        .btn:disabled { background: #2a2a3e !important; color: #555 !important; cursor: not-allowed; }
+
+        /* FLOATING DAY BUTTON */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 20px;
+            z-index: 300;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #b91c3c);
+            border: none;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 24px rgba(233, 69, 96, 0.55);
+            line-height: 1.3;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4); }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            border: 1px solid #e94560;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            z-index: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; }
+
+        /* EVENT LOG */
+        .event-log {
+            background: #0f0f1a;
+            border: 1px solid #2a2a3e;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .ev { padding: 5px 0; border-bottom: 1px solid #1a1a2e; font-size: 12px; color: #aaa; }
+        .ev:last-child { border-bottom: none; }
+        .ev.good { color: #4ade80; }
+        .ev.bad  { color: #f87171; }
+        .ev.info { color: #60a5fa; }
+
+        /* PROGRESS BAR */
+        .progress { background: #2a2a3e; border-radius: 4px; height: 7px; margin-top: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #e94560, #fbbf24); transition: width 0.4s; }
+
+        /* BADGE */
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 800; }
+        .badge-common  { background: #374151; color: #9ca3af; }
+        .badge-rare    { background: #5b21b6; color: #ddd6fe; }
+        .badge-premium { background: #92400e; color: #fde68a; }
+        .badge-trend   { background: #065f46; color: #6ee7b7; }
+
+        /* EMPTY STATE */
+        .empty { text-align: center; padding: 40px 20px; color: #444; }
+        .empty-icon { font-size: 52px; margin-bottom: 10px; }
+
+        /* QTY CONTROL */
+        .qty-control { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .qty-btn {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .qty-display { font-size: 18px; font-weight: 800; min-width: 28px; text-align: center; }
+
+        /* GRID */
+        .cars-grid { display: grid; gap: 12px; }
+
+        /* STAFF CARD */
+        .staff-row { display: flex; align-items: center; gap: 12px; }
+        .staff-count { font-size: 28px; font-weight: 900; color: #fbbf24; min-width: 36px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>🚗 AUTO TYCOON</h1>
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-label">Argent</span>
+            <span class="stat-value money" id="s-money">10 000 €</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Jour</span>
+            <span class="stat-value day" id="s-day">1</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Réputation</span>
+            <span class="stat-value rep" id="s-rep">⭐ 1.0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Stock</span>
+            <span class="stat-value stock" id="s-stock">0 / 5</span>
+        </div>
+    </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+    <div class="tab active" data-tab="dashboard">📊 Dashboard</div>
+    <div class="tab" data-tab="inventaire">🚘 Inventaire</div>
+    <div class="tab" data-tab="marche">🏪 Marché</div>
+    <div class="tab" data-tab="personnel">👥 Personnel</div>
+    <div class="tab" data-tab="upgrades">⬆️ Améliorations</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="content" id="tab-dashboard">
+    <h2 class="section-title">Vue d'ensemble</h2>
+    <div class="card">
+        <div class="card-header" style="margin-bottom:12px">
+            <span style="font-weight:800;font-size:15px">Résumé du jour</span>
+            <span style="color:#e94560;font-weight:800" id="d-day">Jour 1</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+                <div style="font-size:11px;color:#666">Bénéfice du jour</div>
+                <div style="font-size:22px;font-weight:900;color:#4ade80" id="d-today-earn">+0 €</div>
+            </div>
+            <div>
+                <div style="font-size:11px;color:#666">Voitures vendues</div>
+                <div style="font-size:22px;font-weight:900;color:#60a5fa" id="d-today-cars">0</div>
+            </div>
+            <div>
+                <div style="font-size:11px;color:#666">Total gagné</div>
+                <div style="font-size:22px;font-weight:900;color:#fbbf24" id="d-total-earn">0 €</div>
+            </div>
+            <div>
+                <div style="font-size:11px;color:#666">Total vendu</div>
+                <div style="font-size:22px;font-weight:900;color:#a78bfa" id="d-total-cars">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div style="font-weight:800;margin-bottom:4px">Réputation</div>
+        <div style="font-size:12px;color:#888" id="d-rep-label">Débutant</div>
+        <div class="progress"><div class="progress-fill" id="d-rep-bar" style="width:10%"></div></div>
+    </div>
+
+    <div class="card">
+        <div style="font-weight:800;margin-bottom:10px">Journal des événements</div>
+        <div class="event-log" id="event-log">
+            <div class="ev info">🚀 Bienvenue dans AutoTycoon ! Achetez vos premières voitures au Marché.</div>
+        </div>
+    </div>
+</div>
+
+<!-- INVENTAIRE -->
+<div class="content" id="tab-inventaire" style="display:none">
+    <h2 class="section-title">Mon Inventaire</h2>
+    <div id="inventory-list"></div>
+</div>
+
+<!-- MARCHE -->
+<div class="content" id="tab-marche" style="display:none">
+    <h2 class="section-title">Marché Auto</h2>
+    <p style="font-size:12px;color:#666;margin-bottom:14px">Achetez des voitures pour les revendre avec profit</p>
+    <div id="market-list" class="cars-grid"></div>
+</div>
+
+<!-- PERSONNEL -->
+<div class="content" id="tab-personnel" style="display:none">
+    <h2 class="section-title">Mon Équipe</h2>
+    <div id="staff-list"></div>
+</div>
+
+<!-- UPGRADES -->
+<div class="content" id="tab-upgrades" style="display:none">
+    <h2 class="section-title">Améliorations</h2>
+    <div id="upgrades-list"></div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fab-day">⏭<br>Jour<br>suivant</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+const CARS = [
+    { id:'citadine',   name:'Citadine',    emoji:'🚗', buy:4000,  sell:6500,  badge:'common',  badgeLabel:'Courant',  unlock:0, desc:'Facile à vendre, petite marge',        demand:0.70 },
+    { id:'berline',    name:'Berline',     emoji:'🚙', buy:10000, sell:15000, badge:'common',  badgeLabel:'Courant',  unlock:0, desc:'Bonne demande, marge correcte',         demand:0.55 },
+    { id:'suv',        name:'SUV',         emoji:'🛻', buy:18000, sell:27000, badge:'common',  badgeLabel:'Populaire',unlock:2, desc:'Très demandé, belle marge',             demand:0.65 },
+    { id:'electrique', name:'Électrique',  emoji:'⚡', buy:28000, sell:40000, badge:'trend',   badgeLabel:'Tendance', unlock:3, desc:'En vogue, ventes rapides',              demand:0.60 },
+    { id:'sport',      name:'Sportive',    emoji:'🏎️', buy:35000, sell:52000, badge:'rare',    badgeLabel:'Rare',     unlock:5, desc:'Rare acheteur, très rentable',          demand:0.30 },
+    { id:'luxe',       name:'Luxe',        emoji:'💎', buy:60000, sell:90000, badge:'premium', badgeLabel:'Premium',  unlock:8, desc:'Clientèle VIP, marge excellente',       demand:0.20 },
+];
+
+const STAFF = [
+    { id:'vendeur',    name:'Vendeur',          emoji:'👔', desc:'+15% chance de vente par vendeur',         salary:800,  max:5 },
+    { id:'mecanicien', name:'Mécanicien',        emoji:'🔧', desc:'Réduit le prix d\'achat de 5% par méca',   salary:1000, max:3 },
+    { id:'marketing',  name:'Agent Marketing',   emoji:'📣', desc:'+0.1 réputation par jour par agent',       salary:1200, max:3 },
+];
+
+const UPGRADES = [
+    { id:'parking2', name:'Grand Parking',         emoji:'🅿️', desc:'Capacité : 5 → 10 voitures',                cost:5000,  req:null,       effect:'capacity',    val:10 },
+    { id:'parking3', name:'Méga Parking',           emoji:'🏗️', desc:'Capacité : 10 → 20 voitures',               cost:20000, req:'parking2', effect:'capacity',    val:20 },
+    { id:'showroom', name:'Showroom Vitré',         emoji:'🏢', desc:'+20% sur le prix de vente',                  cost:15000, req:null,       effect:'sellBoost',   val:0.20 },
+    { id:'pub',      name:'Panneau Publicitaire',   emoji:'📺', desc:'+2 clients potentiels par jour',             cost:8000,  req:null,       effect:'clientBoost', val:2 },
+    { id:'finance',  name:'Service Financement',    emoji:'💳', desc:'+30% de chances de vente',                   cost:25000, req:null,       effect:'salesBoost',  val:0.30 },
+    { id:'certif',   name:'Certification Qualité',  emoji:'🏅', desc:'+1 réputation immédiatement',                cost:12000, req:null,       effect:'repImmediate',val:1 },
+];
+
+const RANDOM_EVENTS = [
+    { chance:0.05, msg:'📺 Reportage TV sur votre concession ! +0.3 réputation', fn: g => { g.rep = Math.min(10, g.rep + 0.3); } },
+    { chance:0.05, msg:'😡 Mauvais avis en ligne... -0.2 réputation',            fn: g => { g.rep = Math.max(1, g.rep - 0.2); } },
+    { chance:0.04, msg:'🎁 Bonus de fin de mois ! +1 000 €',                     fn: g => { g.money += 1000; } },
+    { chance:0.04, msg:'🏆 Lauréat "Meilleur concessionnaire" ! +0.5 réputation',fn: g => { g.rep = Math.min(10, g.rep + 0.5); } },
+    { chance:0.03, msg:'🌧️ Météo morose — les clients sont moins sortis',        fn: g => {} },
+];
+
+// ================================================================
+// STATE
+// ================================================================
+let G = {
+    money: 10000,
+    day: 1,
+    rep: 1.0,
+    inventory: [],     // [{ id, paid }]
+    staff: { vendeur:0, mecanicien:0, marketing:0 },
+    upgrades: {},
+    capacity: 5,
+    stats: { todayEarn:0, todayCars:0, totalEarn:0, totalCars:0 },
+    qty: {},           // buyQty per car
+};
+
+// ================================================================
+// HELPERS
+// ================================================================
+const fmt = n => n.toLocaleString('fr-FR') + ' €';
+
+function toast(msg, ms = 2500) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+function addLog(msg, type = '') {
+    const log = document.getElementById('event-log');
+    const div = document.createElement('div');
+    div.className = 'ev ' + type;
+    div.textContent = msg;
+    log.insertBefore(div, log.firstChild);
+    while (log.children.length > 40) log.removeChild(log.lastChild);
+}
+
+function getBuyDiscount()   { return 1 - G.staff.mecanicien * 0.05; }
+function getSellBoost()     { return 1 + (G.upgrades.showroom ? 0.20 : 0); }
+function getSalesBonus()    { return G.staff.vendeur * 0.15 + (G.upgrades.finance ? 0.30 : 0); }
+function getClientsPerDay() { return 2 + Math.floor(G.rep * 1.5) + (G.upgrades.pub ? 2 : 0); }
+function getRepLevel()      { return Math.floor(G.rep); }
+
+function dailySalary() {
+    return G.staff.vendeur * 800 + G.staff.mecanicien * 1000 + G.staff.marketing * 1200;
+}
+
+// ================================================================
+// HEADER UPDATE
+// ================================================================
+function updateHeader() {
+    document.getElementById('s-money').textContent = fmt(G.money);
+    document.getElementById('s-day').textContent   = G.day;
+    document.getElementById('s-rep').textContent   = '⭐ ' + G.rep.toFixed(1);
+    document.getElementById('s-stock').textContent = G.inventory.length + ' / ' + G.capacity;
+
+    document.getElementById('d-day').textContent        = 'Jour ' + G.day;
+    document.getElementById('d-today-earn').textContent = '+' + fmt(G.stats.todayEarn);
+    document.getElementById('d-today-cars').textContent = G.stats.todayCars;
+    document.getElementById('d-total-earn').textContent = fmt(G.stats.totalEarn);
+    document.getElementById('d-total-cars').textContent = G.stats.totalCars;
+
+    const pct = Math.min(100, (G.rep / 10) * 100);
+    document.getElementById('d-rep-bar').style.width = pct + '%';
+
+    let repLabel = 'Débutant — Peu de clients vous connaissent';
+    if (G.rep >= 8) repLabel = 'Légende — Les clients font la queue !';
+    else if (G.rep >= 6) repLabel = 'Expert — Excellente réputation';
+    else if (G.rep >= 4) repLabel = 'Confirmé — Bonne clientèle';
+    else if (G.rep >= 2) repLabel = 'En développement — Clientèle croissante';
+    document.getElementById('d-rep-label').textContent = repLabel;
+}
+
+// ================================================================
+// TABS
+// ================================================================
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
+        tab.classList.add('active');
+        const name = tab.dataset.tab;
+        document.getElementById('tab-' + name).style.display = 'block';
+        if (name === 'inventaire') renderInventory();
+        if (name === 'marche')     renderMarket();
+        if (name === 'personnel')  renderStaff();
+        if (name === 'upgrades')   renderUpgrades();
+    });
+});
+
+// ================================================================
+// INVENTORY
+// ================================================================
+function renderInventory() {
+    const el = document.getElementById('inventory-list');
+    if (!G.inventory.length) {
+        el.innerHTML = `<div class="empty"><div class="empty-icon">🅿️</div><p>Parking vide</p><p style="font-size:12px;margin-top:6px;color:#555">Achetez des voitures au Marché</p></div>`;
+        return;
+    }
+    el.innerHTML = G.inventory.map((car, i) => {
+        const t = CARS.find(c => c.id === car.id);
+        const sell = Math.floor(t.sell * getSellBoost());
+        const profit = sell - car.paid;
+        return `
+        <div class="card">
+            <div class="card-header">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:36px">${t.emoji}</span>
+                    <div>
+                        <div style="font-weight:800;font-size:16px">${t.name}</div>
+                        <div style="font-size:12px;color:#666;margin-top:2px">Acheté ${fmt(car.paid)}</div>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <div style="font-size:18px;font-weight:900;color:#fbbf24">${fmt(sell)}</div>
+                    <div style="font-size:12px;color:#4ade80;font-weight:700">+${fmt(profit)}</div>
+                </div>
+            </div>
+            <button class="btn btn-green btn-sm btn-full" onclick="sellCarManual(${i})">Vendre maintenant</button>
+        </div>`;
+    }).join('');
+}
+
+function sellCarManual(i) {
+    const car = G.inventory[i];
+    const t = CARS.find(c => c.id === car.id);
+    const sell = Math.floor(t.sell * getSellBoost());
+    const profit = sell - car.paid;
+    G.money += sell;
+    G.stats.totalEarn += profit;
+    G.stats.totalCars++;
+    G.stats.todayEarn += profit;
+    G.stats.todayCars++;
+    G.rep = Math.min(10, G.rep + 0.05);
+    G.inventory.splice(i, 1);
+    addLog(`✅ ${t.emoji} ${t.name} vendue ${fmt(sell)} (+${fmt(profit)} bénéfice)`, 'good');
+    toast(`💰 Vendue ! +${fmt(profit)} de bénéfice`);
+    updateHeader();
+    renderInventory();
+}
+
+// ================================================================
+// MARKET
+// ================================================================
+function renderMarket() {
+    const el = document.getElementById('market-list');
+    el.innerHTML = CARS.map(car => {
+        const unlocked = getRepLevel() >= car.unlock;
+        const realBuy  = Math.floor(car.buy * getBuyDiscount());
+        const realSell = Math.floor(car.sell * getSellBoost());
+        const profit   = realSell - realBuy;
+        if (!G.qty[car.id]) G.qty[car.id] = 1;
+        const qty = G.qty[car.id];
+        const total = realBuy * qty;
+        const canAfford = G.money >= total;
+        const hasSpace  = G.inventory.length + qty <= G.capacity;
+
+        return `
+        <div class="card" style="${!unlocked ? 'opacity:0.38' : ''}">
+            <div class="card-header">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:40px">${car.emoji}</span>
+                    <div>
+                        <div style="font-weight:800;font-size:15px">${car.name} <span class="badge badge-${car.badge}">${car.badgeLabel}</span></div>
+                        <div style="font-size:11px;color:#666;margin-top:3px">${car.desc}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin:10px 0 0">
+                <div>
+                    <div style="font-size:10px;color:#666">Achat</div>
+                    <div style="font-weight:800;color:#fbbf24">${fmt(realBuy)}</div>
+                    ${getBuyDiscount() < 1 ? '<div style="font-size:10px;color:#4ade80">Remise méca ✓</div>' : ''}
+                </div>
+                <div>
+                    <div style="font-size:10px;color:#666">Vente</div>
+                    <div style="font-weight:800;color:#60a5fa">${fmt(realSell)}</div>
+                </div>
+                <div>
+                    <div style="font-size:10px;color:#666">Profit</div>
+                    <div style="font-weight:800;color:#4ade80">+${fmt(profit)}</div>
+                </div>
+            </div>
+            ${!unlocked
+                ? `<div style="color:#e94560;font-size:12px;text-align:center;padding:8px 0">🔒 Requiert réputation ${car.unlock}.0</div>`
+                : `<div class="qty-control">
+                    <button class="qty-btn" onclick="chQty('${car.id}',-1)">−</button>
+                    <div class="qty-display">${qty}</div>
+                    <button class="qty-btn" onclick="chQty('${car.id}',1)">+</button>
+                    <span style="font-size:12px;color:#888;margin-left:6px">Total: ${fmt(total)}</span>
+                   </div>
+                   <button class="btn btn-red btn-sm btn-full" onclick="buyCar('${car.id}')"
+                    ${!canAfford || !hasSpace ? 'disabled' : ''}>
+                    ${!hasSpace ? '🅿️ Parking plein' : !canAfford ? '💸 Pas assez d\'argent' : `Acheter ×${qty}`}
+                   </button>`
+            }
+        </div>`;
+    }).join('');
+}
+
+function chQty(id, delta) {
+    G.qty[id] = Math.max(1, Math.min(10, (G.qty[id] || 1) + delta));
+    renderMarket();
+}
+
+function buyCar(id) {
+    const car = CARS.find(c => c.id === id);
+    const realBuy = Math.floor(car.buy * getBuyDiscount());
+    const qty = G.qty[id] || 1;
+    const total = realBuy * qty;
+    if (G.money < total) { toast('💸 Pas assez d\'argent !'); return; }
+    if (G.inventory.length + qty > G.capacity) { toast('🅿️ Parking plein !'); return; }
+    G.money -= total;
+    for (let i = 0; i < qty; i++) G.inventory.push({ id, paid: realBuy });
+    addLog(`🛒 Achat ${qty}× ${car.emoji} ${car.name} → ${fmt(total)}`, 'info');
+    toast(`${car.emoji} ${qty}× ${car.name} acheté(es) !`);
+    updateHeader();
+    renderMarket();
+}
+
+// ================================================================
+// STAFF
+// ================================================================
+function renderStaff() {
+    const salary = dailySalary();
+    const el = document.getElementById('staff-list');
+    el.innerHTML = `
+    <div class="card" style="border-color:#e94560;background:#1a0d12;margin-bottom:16px">
+        <div style="font-size:11px;color:#888">Masse salariale quotidienne</div>
+        <div style="font-size:24px;font-weight:900;color:#f87171">-${fmt(salary)} / jour</div>
+    </div>
+    ${STAFF.map(s => {
+        const count = G.staff[s.id];
+        return `
+        <div class="card">
+            <div class="staff-row">
+                <span style="font-size:36px">${s.emoji}</span>
+                <div style="flex:1;margin:0 10px">
+                    <div style="font-weight:800;font-size:15px">${s.name}</div>
+                    <div style="font-size:11px;color:#666;margin-top:2px">${s.desc}</div>
+                    <div style="font-size:11px;color:#fbbf24;margin-top:2px">${fmt(s.salary)}/jour · Max ${s.max}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                    <button class="btn btn-green btn-sm" onclick="hire('${s.id}')"
+                        ${count >= s.max || G.money < s.salary ? 'disabled' : ''}>+ Embaucher</button>
+                    <div class="staff-count">${count}</div>
+                    <button class="btn btn-gray btn-sm" onclick="fire('${s.id}')"
+                        ${count <= 0 ? 'disabled' : ''}>− Licencier</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('')}`;
+}
+
+function hire(id) {
+    const s = STAFF.find(x => x.id === id);
+    if (G.staff[id] >= s.max) { toast('Maximum atteint !'); return; }
+    if (G.money < s.salary) { toast('💸 Pas assez d\'argent !'); return; }
+    G.staff[id]++;
+    addLog(`👤 ${s.emoji} ${s.name} embauché(e)`, 'info');
+    toast(`${s.emoji} ${s.name} rejoint l'équipe !`);
+    updateHeader(); renderStaff();
+}
+
+function fire(id) {
+    const s = STAFF.find(x => x.id === id);
+    if (G.staff[id] <= 0) return;
+    G.staff[id]--;
+    addLog(`👋 ${s.name} licencié(e)`, 'bad');
+    toast(`${s.name} a quitté l'équipe.`);
+    updateHeader(); renderStaff();
+}
+
+// ================================================================
+// UPGRADES
+// ================================================================
+function renderUpgrades() {
+    const el = document.getElementById('upgrades-list');
+    el.innerHTML = UPGRADES.map(u => {
+        const owned   = !!G.upgrades[u.id];
+        const reqOk   = !u.req || !!G.upgrades[u.req];
+        const canBuy  = !owned && reqOk && G.money >= u.cost;
+        return `
+        <div class="card" style="${owned ? 'border-color:#22c55e;opacity:0.7' : ''}">
+            <div class="card-header">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:36px">${u.emoji}</span>
+                    <div>
+                        <div style="font-weight:800;font-size:15px">${u.name} ${owned ? '✅' : ''}</div>
+                        <div style="font-size:11px;color:#666;margin-top:2px">${u.desc}</div>
+                    </div>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#fbbf24;white-space:nowrap">${fmt(u.cost)}</div>
+            </div>
+            ${owned
+                ? '<div style="color:#4ade80;font-size:12px;margin-top:8px">✅ Déjà activé</div>'
+                : !reqOk
+                    ? `<div style="color:#f87171;font-size:12px;margin-top:8px">🔒 Requiert: ${UPGRADES.find(x=>x.id===u.req)?.name}</div>`
+                    : `<button class="btn btn-blue btn-sm btn-full" onclick="buyUpgrade('${u.id}')" ${!canBuy?'disabled':''}>
+                         ${G.money < u.cost ? '💸 Pas assez d\'argent' : 'Acheter'}
+                       </button>`
+            }
+        </div>`;
+    }).join('');
+}
+
+function buyUpgrade(id) {
+    const u = UPGRADES.find(x => x.id === id);
+    if (!u || G.upgrades[id]) return;
+    if (G.money < u.cost) { toast('💸 Pas assez d\'argent !'); return; }
+    G.money -= u.cost;
+    G.upgrades[id] = true;
+    if (u.effect === 'capacity')    G.capacity = u.val;
+    if (u.effect === 'repImmediate') G.rep = Math.min(10, G.rep + u.val);
+    addLog(`⬆️ ${u.emoji} ${u.name} activé !`, 'good');
+    toast(`${u.emoji} ${u.name} activé !`);
+    updateHeader(); renderUpgrades();
+}
+
+// ================================================================
+// NEXT DAY
+// ================================================================
+document.getElementById('fab-day').addEventListener('click', nextDay);
+
+function nextDay() {
+    G.day++;
+    G.stats.todayEarn = 0;
+    G.stats.todayCars = 0;
+
+    // Salaires
+    const salary = dailySalary();
+    if (salary > 0) {
+        G.money = Math.max(0, G.money - salary);
+        addLog(`💼 Salaires payés: -${fmt(salary)}`, 'bad');
+        if (G.money === 0) addLog('⚠️ Vous êtes à découvert !', 'bad');
+    }
+
+    // Marketing rep boost
+    if (G.staff.marketing > 0) {
+        G.rep = Math.min(10, G.rep + G.staff.marketing * 0.1);
+    }
+
+    // Natural slow rep decay
+    G.rep = Math.max(1, G.rep - 0.02);
+
+    // Auto sales
+    if (G.inventory.length > 0) {
+        const clients = getClientsPerDay();
+        let sold = 0, earn = 0;
+
+        for (let c = 0; c < clients && G.inventory.length > 0; c++) {
+            const idx  = Math.floor(Math.random() * G.inventory.length);
+            const car  = G.inventory[idx];
+            const type = CARS.find(x => x.id === car.id);
+            const chance = Math.min(0.95, type.demand + getSalesBonus() + G.rep * 0.04);
+            if (Math.random() < chance) {
+                const sell   = Math.floor(type.sell * getSellBoost());
+                const profit = sell - car.paid;
+                G.money += sell;
+                G.stats.totalEarn += profit;
+                G.stats.totalCars++;
+                G.stats.todayEarn += profit;
+                G.stats.todayCars++;
+                earn += profit;
+                G.inventory.splice(idx, 1);
+                sold++;
+                G.rep = Math.min(10, G.rep + 0.03);
+            }
+        }
+
+        if (sold > 0) addLog(`📅 Jour ${G.day}: ${sold} voiture(s) vendue(s) → +${fmt(earn)} bénéfice`, 'good');
+        else addLog(`📅 Jour ${G.day}: Aucune vente. ${clients} client(s) de passage.`, '');
+    } else {
+        addLog(`📅 Jour ${G.day}: Parking vide — les clients repartent sans acheter !`, 'bad');
+    }
+
+    // Événements aléatoires
+    RANDOM_EVENTS.forEach(ev => {
+        if (Math.random() < ev.chance) {
+            addLog('✨ ÉVÉNEMENT: ' + ev.msg, 'info');
+            ev.fn(G);
+        }
+    });
+
+    updateHeader();
+
+    // Revenir au dashboard
+    document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
+    document.getElementById('tab-dashboard').style.display = 'block';
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('[data-tab="dashboard"]').classList.add('active');
+}
+
+// ================================================================
+// INIT
+// ================================================================
+updateHeader();
+renderMarket();
+</script>
+</body>
+</html>
