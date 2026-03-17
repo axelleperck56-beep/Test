@@ -827,6 +827,16 @@ li.crossed { color: #888; }
   .verdict-box { grid-template-columns: 1fr; }
   #chapter-nav { display: none; }
   #chapter-indicator { display: none; }
+  /* Nav mobile visible */
+  #mobile-chapter-nav { display: flex; }
+  /* Espace pour la barre basse */
+  .chapter:last-child { padding-bottom: 70px; }
+  .chapter-conclusion { padding-bottom: 80px; }
+  /* Réduire padding video hero */
+  .video-hero-content {
+    padding-top: clamp(50px, 8vh, 80px);
+    padding-bottom: 70px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -835,4 +845,93 @@ li.crossed { color: #888; }
   .counter-overlay { bottom: 30px; gap: 16px; }
   .counter-num { font-size: 1.4rem; }
   .ticker-track span { padding: 0 24px; font-size: 0.8rem; }
+}
+
+/* ── Navigation mobile barre basse ── */
+#mobile-chapter-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  background: rgba(8,8,16,0.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 12px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+}
+#mobile-chapter-nav::-webkit-scrollbar { display: none; }
+#mobile-chapter-nav .mnav-inner {
+  display: flex; gap: 6px;
+  width: max-content; min-width: 100%;
+}
+#mobile-chapter-nav a {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+  padding: 7px 11px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  white-space: nowrap; text-decoration: none;
+  transition: all 0.2s; flex-shrink: 0;
+  min-height: 34px; display: flex; align-items: center;
+}
+#mobile-chapter-nav a.active {
+  color: var(--gold);
+  border-color: rgba(200,168,75,0.45);
+  background: rgba(200,168,75,0.1);
+}
+
+/* ── 480px — petits smartphones ── */
+@media (max-width: 480px) {
+  /* Hero */
+  .hero-content { padding: 40px 18px 50px; }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.12em; }
+  .hero-tags span { font-size: 0.72rem; padding: 4px 12px; }
+  .scroll-cta { display: none; }
+
+  /* Split text */
+  .split-text { padding: 28px 18px; }
+
+  /* Timeline — date en haut sur une ligne */
+  .tl-mini-item { flex-direction: column; gap: 3px; }
+  .tl-date-mini { min-width: auto; }
+
+  /* Vote grid — sièges plus petits */
+  .vote-seat { width: 36px; height: 36px; font-size: 1.1rem; }
+  .vote-seat::after { font-size: 0.5rem; bottom: -20px; }
+
+  /* Villepin photo masquée sur très petit écran */
+  .villepin-photo-col { display: none; }
+  .video-photo-row { grid-template-columns: 1fr; }
+
+  /* Map/conclusion padding */
+  .map-content { padding: 36px 18px 70px; }
+  .fullbleed-content { padding: 50px 18px 70px; }
+  .chapter-conclusion { padding: 40px 18px 80px; }
+
+  /* Counter overlay */
+  .counter-overlay { bottom: 20px; gap: 10px; }
+  .counter-num { font-size: 1.3rem; }
+  .counter-label { font-size: 0.62rem; }
+
+  /* big-year moins envahissant */
+  .big-year { font-size: clamp(3.5rem, 16vw, 7rem); }
+
+  /* Camps en colonne déjà, juste espacement */
+  .camp { padding: 16px; }
+
+  /* Rumsfeld image plus petite */
+  .rumsfeld-img { width: 72px; height: 90px; }
+}
+
+/* ── 360px — très petits écrans ── */
+@media (max-width: 360px) {
+  .hero-non { font-size: clamp(5.5rem, 22vw, 8rem); }
+  .hero-content { padding: 30px 14px 50px; }
+  .split-text { padding: 22px 14px; }
+  .video-hero-content { padding: 36px 14px 65px; }
+  .map-content { padding: 28px 14px 65px; }
+  .fullbleed-content { padding: 40px 14px 65px; }
+  .chapter-conclusion { padding: 30px 14px 70px; }
+  .two-facts { gap: 10px; }
+  .fact-card { padding: 12px; }
+  .lesson { padding: 14px 16px; }
 }

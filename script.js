@@ -122,6 +122,7 @@
   ───────────────────────────────────── */
   const progressBar   = document.getElementById('progress-bar');
   const dots          = document.querySelectorAll('#chapter-nav .dot');
+  const mobileDots    = document.querySelectorAll('#mobile-chapter-nav a');
   const chapters      = document.querySelectorAll('.chapter');
   const chNum         = document.getElementById('ch-num');
   const chTitleEl     = document.getElementById('ch-title-display');
@@ -142,6 +143,11 @@
         if (chNum)    chNum.textContent    = ch.dataset.num  || '01';
         if (chTitleEl) chTitleEl.textContent = ch.dataset.name || '';
         dots.forEach(d => d.classList.toggle('active', d.getAttribute('href') === `#${ch.id}`));
+        mobileDots.forEach(d => {
+          const isActive = d.getAttribute('href') === `#${ch.id}`;
+          d.classList.toggle('active', isActive);
+          if (isActive) d.scrollIntoView({ inline: 'center', block: 'nearest' });
+        });
         ch.classList.add('revealed');
         triggerChapterEffects(ch);
       }
