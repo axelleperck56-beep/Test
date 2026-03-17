@@ -3,501 +3,578 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>L'Irak — Histoire & Enjeux</title>
+  <title>La France dit Non — 2003, le refus qui a changé la diplomatie</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- ── BARRE DE PROGRESSION ── -->
   <div id="progress-bar"></div>
 
-  <!-- ── NAVIGATION CHAPITRES (sidebar) ── -->
   <nav id="chapter-nav">
-    <a href="#ch-intro"       class="dot" data-label="Introduction"     title="Introduction"></a>
-    <a href="#ch-mesopotamie" class="dot" data-label="Mésopotamie"      title="Mésopotamie"></a>
-    <a href="#ch-creation"    class="dot" data-label="Création de l'État" title="Création de l'État"></a>
-    <a href="#ch-saddam"      class="dot" data-label="Saddam Hussein"   title="Saddam Hussein"></a>
-    <a href="#ch-guerres"     class="dot" data-label="Deux Guerres"     title="Deux Guerres"></a>
-    <a href="#ch-france"      class="dot" data-label="La France dit Non" title="La France dit Non"></a>
-    <a href="#ch-2003"        class="dot" data-label="Invasion 2003"    title="Invasion 2003"></a>
-    <a href="#ch-chaos"       class="dot" data-label="Le Chaos"         title="Le Chaos"></a>
-    <a href="#ch-daech"       class="dot" data-label="Daech"            title="Daech"></a>
-    <a href="#ch-aujourd-hui" class="dot" data-label="Aujourd'hui"      title="Aujourd'hui"></a>
-    <a href="#ch-conclusion"  class="dot" data-label="Conclusion"       title="Conclusion"></a>
+    <a href="#ch-intro"        class="dot" data-label="Non"                 title="Non"></a>
+    <a href="#ch-contexte"     class="dot" data-label="Le contexte 2003"    title="Le contexte"></a>
+    <a href="#ch-chirac"       class="dot" data-label="Chirac résiste"      title="Chirac résiste"></a>
+    <a href="#ch-discours"     class="dot" data-label="Le discours Villepin" title="Le discours"></a>
+    <a href="#ch-powell"       class="dot" data-label="Powell & les ADM"    title="Powell & ADM"></a>
+    <a href="#ch-division"     class="dot" data-label="Le monde se divise"  title="Le monde se divise"></a>
+    <a href="#ch-symboles"     class="dot" data-label="Freedom Fries"       title="Freedom Fries"></a>
+    <a href="#ch-multilateral" class="dot" data-label="Multilatéralisme"    title="Multilatéralisme"></a>
+    <a href="#ch-histoire"     class="dot" data-label="L'histoire juge"     title="L'histoire juge"></a>
+    <a href="#ch-lecons"       class="dot" data-label="Leçons"              title="Leçons diplomatiques"></a>
   </nav>
 
-  <!-- ── INDICATEUR CHAPITRE (bas gauche) ── -->
   <div id="chapter-indicator">
     <span id="ch-num">01</span>
     <span id="ch-title-display">Introduction</span>
   </div>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 0 — INTRO / TITRE
-  ══════════════════════════════════════ -->
-  <section class="chapter" id="ch-intro"
-    data-num="01" data-name="Introduction"
-    style="background: linear-gradient(160deg, #050d1a 0%, #0d1b3e 40%, #1a3a5c 70%, #07111e 100%)">
-    <div class="chapter-bg" style="background-image: none"></div>
-    <div class="intro-content">
-      <p class="intro-eyebrow">Exposé oral · Géopolitique</p>
-      <h1 class="intro-title">L'<em>Irak</em></h1>
-      <p class="intro-sub">Du berceau de la civilisation aux crises du XXI<sup>e</sup> siècle</p>
-      <div class="intro-meta">
-        <span>🇮🇶 Bagdad</span>
-        <span>43 millions d'habitants</span>
-        <span>5<sup>e</sup> réserves pétrolières mondiales</span>
-        <span>40 ans de guerres</span>
+  <!-- ════ HERO ════ -->
+  <section class="chapter" id="ch-intro" data-num="01" data-name="Le Refus Français">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-flag-bg">
+      <div class="flag-stripe blue"></div>
+      <div class="flag-stripe white"></div>
+      <div class="flag-stripe red"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">14 Février 2003 · Conseil de Sécurité de l'ONU</p>
+      <h1 class="hero-title"><span class="hero-non">Non.</span></h1>
+      <p class="hero-sub">Le jour où la France a dit non aux États-Unis<br/>et ce que ça révèle sur la diplomatie mondiale</p>
+      <div class="hero-tags">
+        <span>🇫🇷 France</span>
+        <span>🇺🇸 États-Unis</span>
+        <span>🇮🇶 Irak</span>
+        <span>🌐 Multilatéralisme</span>
       </div>
-      <a href="#ch-mesopotamie" class="scroll-cta">
-        <span>Commencer</span>
+      <a href="#ch-contexte" class="scroll-cta">
+        <span>Découvrir</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </a>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 1 — MÉSOPOTAMIE
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-split" id="ch-mesopotamie"
-    data-num="02" data-name="Mésopotamie">
-    <div class="split-media">
+  <!-- ════ CONTEXTE ════ -->
+  <section class="chapter chapter-split" id="ch-contexte" data-num="02" data-name="L'Amérique en guerre">
+    <div class="split-media split-dark">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Ishtar_gate_in_Pergamon_museum_2.jpg"
-        alt="La porte d'Ishtar reconstituée, Musée de Pergame, Berlin"
+        src="https://upload.wikimedia.org/wikipedia/commons/4/4c/US_Navy_030120-N-9693M-004_A_U.S._Marine_Corps_AV-8B_Harrier_assigned_to_Marine_Attack_Squadron_231_%28VMA-231%29_is_launched_from_the_flight_deck_of_the_amphibious_assault_ship_USS_Nassau_%28LHA_4%29.jpg"
+        alt="Avion militaire américain, 2003"
         loading="lazy"
         class="chapter-photo"
         onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
       />
-      <figcaption>La porte d'Ishtar reconstituée · Musée de Pergame, Berlin · ~575 av. J.-C.</figcaption>
+      <div class="media-overlay-text"><span class="big-year">2003</span></div>
+      <figcaption>USS Nassau — Marine Corps — 2003 · US Navy / Wikimedia Commons</figcaption>
     </div>
     <div class="split-text">
-      <div class="chapter-tag">Chapitre I · ~3500 av. J.-C.</div>
-      <h2>Le Berceau de l'Humanité</h2>
-      <p class="lead">Avant d'être un État en crise, l'Irak était le centre du monde.</p>
-      <p>Entre le <strong>Tigre et l'Euphrate</strong>, la Mésopotamie invente tout : l'écriture cunéiforme (3200 av. J.-C.), les premières lois (Code d'Hammurabi, 1750 av. J.-C.), les mathématiques, l'astronomie, les villes.</p>
-      <p>En 762 ap. J.-C., le calife Al-Mansur fonde <strong>Bagdad</strong>. Elle devient la plus grande ville du monde — 1 million d'habitants — et le centre mondial du savoir. La <em>Maison de la Sagesse</em> traduit et préserve tout le patrimoine antique grec, perse, indien.</p>
-      <p>En 1258, les Mongols de Hulagu Khan rasent Bagdad. Des milliers de livres sont jetés dans le Tigre. Le khalifat abbasside prend fin. <strong>C'est une catastrophe dont la région ne se relève pas avant des siècles.</strong></p>
-      <div class="callout">
-        <span class="callout-icon">💡</span>
-        <p>Pour l'oral : insister sur le contraste — ce pays aujourd'hui associé à la guerre était autrefois le centre intellectuel du monde. Cela explique la blessure identitaire profonde de l'Irak moderne.</p>
-      </div>
-    </div>
-  </section>
+      <div class="chapter-tag">Chapitre I · Sept. 2001 → Mars 2003</div>
+      <h2>L'Amérique Traumatisée Veut la Guerre</h2>
+      <p class="lead">Après le 11 septembre 2001, Washington cherche un ennemi à frapper. L'Irak devient la cible — sans lien avéré avec Al-Qaïda.</p>
+      <p>L'administration Bush — Cheney, Rumsfeld, Wolfowitz — théorise depuis les années 1990 que l'Irak doit être "changé de régime". Le 11 septembre leur donne le prétexte politique pour passer à l'acte.</p>
 
-
-  <!-- ══════════════════════════════════════
-       CHAPITRE 2 — CRÉATION ARTIFICIELLE
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-split chapter-split--reverse" id="ch-creation"
-    data-num="03" data-name="Création de l'État">
-    <div class="split-media">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/f/f9/MPK1-426_Sykes_Picot_Agreement_Map_signed_8_May_1916.jpg"
-        alt="Carte de l'accord Sykes-Picot, 1916"
-        loading="lazy"
-        class="chapter-photo"
-        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
-      />
-      <figcaption>La carte originale de l'accord Sykes-Picot · 8 mai 1916</figcaption>
-    </div>
-    <div class="split-text">
-      <div class="chapter-tag">Chapitre II · 1916–1932</div>
-      <h2>Un État Dessiné à la Règle</h2>
-      <p class="lead">En 1916, deux diplomates — un Britannique et un Français — découpent le Moyen-Orient sur une carte, sans consulter personne.</p>
-      <p>L'<strong>accord Sykes-Picot</strong> partage secrètement l'empire ottoman entre la France et la Grande-Bretagne. La Grande-Bretagne obtient le mandat sur ce qui deviendra l'Irak.</p>
-      <p>En 1920, le <strong>traité de Sèvres</strong> puis les accords de San Remo créent officiellement l'Irak en regroupant <em>trois vilayets ottomans</em> qui n'ont rien en commun : les sunnites du nord (Mossoul), les sunnites du centre (Bagdad) et les chiites du sud (Bassorah) — plus les Kurdes, à qui on avait promis un État.</p>
-      <div class="quote-pull">
-        <blockquote>"Nous avons créé un pays artificiel en réunissant sous un même toit trois communautés qui ne voulaient pas vivre ensemble."</blockquote>
-        <cite>— Faisal I<sup>er</sup>, premier roi d'Irak, 1932</cite>
-      </div>
-      <p>Les Kurdes sont trahis. Les chiites, majoritaires, sont gouvernés par une élite sunnite. <strong>Ces fractures originelles alimentent tous les conflits ultérieurs.</strong></p>
-    </div>
-  </section>
-
-
-  <!-- ══════════════════════════════════════
-       CHAPITRE 3 — SADDAM HUSSEIN
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-fullbleed" id="ch-saddam"
-    data-num="04" data-name="Saddam Hussein"
-    style="--bg: url('https://upload.wikimedia.org/wikipedia/commons/f/f6/Saddam_Hussein_at_trial%2C_July_2004-edit1.JPEG')">
-    <div class="chapter-bg dark-heavy"></div>
-    <div class="fullbleed-content">
-      <div class="chapter-tag light">Chapitre III · 1979–2003</div>
-      <h2 class="light">Saddam Hussein<br/><em>L'Homme Fort</em></h2>
-      <div class="two-col-text">
-        <div>
-          <p class="light-p">En 1979, Saddam Hussein prend officiellement le pouvoir. Sa première action : <strong>convoquer le Congrès du Parti Baas et faire lire devant tous les "traîtres"</strong> qu'il a fait arrêter. La scène est filmée. Les présents voient leurs collègues emmenés un par un. Ils savent ce qui les attend s'ils ne montrent pas assez d'enthousiasme.</p>
-          <p class="light-p">Saddam modernise l'Irak — éducation gratuite, émancipation des femmes, nationalisation du pétrole — mais gouverne par la terreur. Sa police secrète, la <em>Mukhabarat</em>, surveille tout.</p>
+      <div class="timeline-mini">
+        <div class="tl-mini-item">
+          <span class="tl-date-mini">11 sept. 2001</span>
+          <p>Attentats. Al-Qaïda vise les USA. L'Irak n'est pas impliqué.</p>
         </div>
-        <div>
-          <p class="light-p">En 1988, l'opération <strong>Anfal</strong> massacre entre 50 000 et 182 000 Kurdes. Le 16 mars, le village de <strong>Halabja</strong> est attaqué aux armes chimiques : gaz moutarde et sarin. 5 000 civils morts en quelques heures. Des enfants dans les rues.</p>
-          <p class="light-p">Paradoxe majeur : pendant cette période, <strong>les États-Unis soutiennent Saddam</strong>, lui fournissant renseignements et précurseurs chimiques, pour contrer l'Iran islamiste de Khomeini.</p>
+        <div class="tl-mini-item">
+          <span class="tl-date-mini">Janv. 2002</span>
+          <p>Bush nomme l'Irak dans l'"axe du mal" avec l'Iran et la Corée du Nord.</p>
+        </div>
+        <div class="tl-mini-item">
+          <span class="tl-date-mini">5 fév. 2003</span>
+          <p>Colin Powell présente des "preuves" d'ADM à l'ONU. La mise en scène du siècle.</p>
+        </div>
+        <div class="tl-mini-item">
+          <span class="tl-date-mini">14 fév. 2003</span>
+          <p>Villepin répond. Le monde s'arrête.</p>
         </div>
       </div>
-      <div class="fact-strip">
-        <div class="fact"><span>25 ans</span>Au pouvoir</div>
-        <div class="fact"><span>5 000</span>Civils tués à Halabja</div>
-        <div class="fact"><span>182 000</span>Kurdes tués — opération Anfal</div>
-        <div class="fact"><span>1979</span>Année de la purge du Parti Baas</div>
-      </div>
-    </div>
-    <div class="photo-credit">Photo : Saddam Hussein lors de son procès, juillet 2004 · AP / Wikimedia Commons</div>
-  </section>
 
-
-  <!-- ══════════════════════════════════════
-       CHAPITRE 4 — DEUX GUERRES
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-split" id="ch-guerres"
-    data-num="05" data-name="Deux Guerres">
-    <div class="split-media">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/3/33/Kuwaitfire.jpg"
-        alt="Puits de pétrole en feu au Koweït, 1991 — Guerre du Golfe"
-        loading="lazy"
-        class="chapter-photo"
-        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
-      />
-      <figcaption>Puits de pétrole en feu au Koweït · Guerre du Golfe, 1991 · USAF / Wikimedia Commons</figcaption>
-    </div>
-    <div class="split-text">
-      <div class="chapter-tag">Chapitre IV · 1980–1991</div>
-      <h2>Deux Décennies de Guerres</h2>
-
-      <div class="war-entry">
-        <h3>1980–1988 · Guerre Iran-Irak</h3>
-        <p>Saddam attaque l'Iran révolutionnaire de Khomeini, craignant que ses chiites irakiens se soulèvent. Huit ans de guerre d'usure, de tranchées, de gaz de combat. <strong>Plus d'un million de morts.</strong> Aucun vainqueur. L'Irak sort endetté de 80 milliards de dollars, notamment envers le Koweït.</p>
-      </div>
-
-      <div class="war-entry">
-        <h3>1990–1991 · Guerre du Golfe</h3>
-        <p>Pour effacer sa dette et accuser le Koweït de "voler" son pétrole, Saddam envahit le Koweït le 2 août 1990. Une coalition de 35 nations, mandatée par l'ONU, riposte. <strong>La France participe à la coalition</strong> avec 10 000 soldats. L'opération <em>Tempête du Désert</em> libère le Koweït en 100 heures de combat terrestre.</p>
-        <p>Saddam survit. En se retirant, ses soldats incendient <strong>700 puits de pétrole koweïtiens</strong> — une catastrophe écologique mondiale. L'Irak subit des sanctions économiques de l'ONU pendant 12 ans. Résultat : malnutrition, effondrement du système de santé.</p>
-      </div>
-
-      <div class="callout callout-red">
+      <div class="callout callout-warning">
         <span class="callout-icon">⚠️</span>
-        <p><strong>Les sanctions tuent :</strong> L'UNICEF estime que 500 000 enfants irakiens meurent entre 1991 et 2003 à cause des privations induites par l'embargo.</p>
+        <p><strong>Le problème :</strong> aucune preuve solide n'existe. Les inspecteurs de l'ONU (Hans Blix) signalent qu'ils ne trouvent rien en Irak. Les renseignements américains et britanniques sont gonflés, voire fabriqués.</p>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 5 — LA FRANCE DIT NON
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-quote-hero" id="ch-france"
-    data-num="06" data-name="La France dit Non">
-    <div class="quote-hero-bg" style="background: linear-gradient(135deg, #001f5b 0%, #0d1b4b 50%, #002395 100%)"></div>
-    <div class="quote-hero-content">
-      <div class="chapter-tag light">Chapitre V · 14 Février 2003</div>
-      <div class="france-flags">🇫🇷 &nbsp; 🇺🇳</div>
-      <h2 class="light">Villepin à l'ONU :<br/><em>"La guerre n'est pas inévitable"</em></h2>
+  <!-- ════ CHIRAC ════ -->
+  <section class="chapter chapter-split chapter-split--reverse" id="ch-chirac" data-num="03" data-name="Chirac résiste">
+    <div class="split-media split-dark">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Jacques_Chirac_1995.jpg"
+        alt="Jacques Chirac, Président de la République française"
+        loading="lazy"
+        class="chapter-photo"
+        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
+      />
+      <figcaption>Jacques Chirac · Président de la République · 1995–2007 · Wikimedia Commons</figcaption>
+    </div>
+    <div class="split-text">
+      <div class="chapter-tag">Chapitre II · Janvier–Février 2003</div>
+      <h2>Chirac : <em>"La France dira Non"</em></h2>
+      <p class="lead">À rebours de la pression américaine, Jacques Chirac choisit de s'opposer publiquement. Une décision de principe, pas un caprice.</p>
+      <p>Le 20 janvier 2003, lors d'une conférence de presse commune avec Gerhard Schröder à l'Elysée, Chirac affirme que la France et l'Allemagne s'opposeront à toute résolution autorisant la guerre. La pression de Washington est immense.</p>
 
-      <div class="big-quote">
-        <blockquote>
-          "Rien ne justifie aujourd'hui d'envisager une action militaire pouvant remettre en cause la stabilité de cette région, au risque d'aggraver les fractures entre les sociétés, les cultures, les peuples — fractures dont se nourrit le terrorisme."
-        </blockquote>
-        <cite>— Dominique de Villepin, Conseil de Sécurité de l'ONU, 14 février 2003</cite>
+      <div class="quote-pull">
+        <blockquote>"Quand on voit la situation actuelle, on considère qu'il n'y a pas lieu de faire la guerre pour atteindre l'objectif qu'on s'est fixé, c'est-à-dire le désarmement de l'Irak."</blockquote>
+        <cite>— Jacques Chirac, conférence de presse franco-allemande, 22 janvier 2003</cite>
       </div>
 
-      <div class="france-context">
-        <div class="france-fact">
-          <h4>Le contexte</h4>
-          <p>Les États-Unis font pression pour obtenir une résolution de l'ONU autorisant l'invasion de l'Irak, sous prétexte que Saddam possède des armes de destruction massive (ADM). Colin Powell présente des "preuves" devant le Conseil de Sécurité le 5 février 2003.</p>
+      <p>La France dispose d'un <strong>droit de veto</strong> au Conseil de Sécurité en tant que membre permanent des P5. Chirac est prêt à l'utiliser. C'est une première dans l'histoire des relations franco-américaines modernes.</p>
+
+      <div class="two-facts">
+        <div class="fact-card">
+          <span class="fact-emoji">🗳️</span>
+          <h4>Le veto en jeu</h4>
+          <p>Les USA avaient besoin d'une 2<sup>e</sup> résolution pour légitimer l'invasion. La France a rendu cela impossible.</p>
         </div>
-        <div class="france-fact">
-          <h4>La position française</h4>
-          <p>Chirac et Villepin jugent les preuves insuffisantes et estiment qu'une invasion créerait plus de chaos qu'elle n'en résoudrait. La France menace d'opposer son <strong>veto</strong>. Le discours de Villepin reçoit des <strong>applaudissements spontanés</strong> — chose rarissime au Conseil de Sécurité.</p>
-        </div>
-        <div class="france-fact">
-          <h4>La suite</h4>
-          <p>Les États-Unis passent outre. L'invasion a lieu <strong>sans mandat de l'ONU</strong>, avec la "coalition of the willing" (USA, Royaume-Uni, Australie). La France avait raison : <strong>aucune ADM ne sera jamais trouvée.</strong></p>
+        <div class="fact-card">
+          <span class="fact-emoji">🤝</span>
+          <h4>L'axe Paris-Berlin-Moscou</h4>
+          <p>Chirac, Schröder et Poutine forment un front du refus inattendu — trois capitales majeures contre Washington.</p>
         </div>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 6 — INVASION 2003
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-fullbleed" id="ch-2003"
-    data-num="07" data-name="Invasion 2003"
-    style="--bg: url('https://upload.wikimedia.org/wikipedia/commons/2/25/Marines_pull_down_Saddam_Hussein_statue_2003.jpg')">
-    <div class="chapter-bg dark-heavy"></div>
-    <div class="fullbleed-content">
-      <div class="chapter-tag light">Chapitre VI · 20 Mars 2003</div>
-      <h2 class="light">L'Invasion — <em>Opération Iraqi Freedom</em></h2>
+  <!-- ════ DISCOURS VILLEPIN (VIDEO) ════ -->
+  <section class="chapter chapter-video-hero" id="ch-discours" data-num="04" data-name="Le Discours de Villepin">
+    <div class="video-hero-bg"></div>
+    <div class="video-hero-content">
+      <div class="chapter-tag light">Chapitre III · 14 Février 2003 · New York</div>
+      <h2 class="light">Le Discours qui a fait<br/><em>applaudir le Conseil de Sécurité</em></h2>
 
-      <div class="timeline-horizontal">
-        <div class="tl-item">
-          <span class="tl-date">20 mars 2003</span>
-          <p>Bombardements sur Bagdad. "Shock and Awe" — 3 000 bombes en 48h.</p>
+      <div class="video-photo-row">
+        <div class="video-wrapper">
+          <div class="video-container">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/oBNO-vWgm-s"
+              title="Discours de Villepin au Conseil de Sécurité de l'ONU, 14 février 2003"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <p class="video-caption">Discours complet · Dominique de Villepin · Conseil de Sécurité · 14 fév. 2003</p>
         </div>
-        <div class="tl-item">
-          <span class="tl-date">9 avril 2003</span>
-          <p>Chute de Bagdad. La statue de Saddam est renversée place Al-Firdos.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1<sup>er</sup> mai 2003</span>
-          <p>Bush déclare "Mission accomplie". La vraie guerre commence.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">Mai 2003</span>
-          <p>Paul Bremer dissout l'armée irakienne. 400 000 soldats à la rue.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">Déc. 2003</span>
-          <p>Capture de Saddam Hussein dans un trou près de Tikrit.</p>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">30 déc. 2006</span>
-          <p>Exécution de Saddam par pendaison. Filmée sur téléphone portable.</p>
+
+        <div class="villepin-photo-col">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Dominique_de_Villepin_%282%29.jpg"
+            alt="Dominique de Villepin, Ministre des Affaires étrangères"
+            loading="lazy"
+            class="villepin-img"
+            onerror="this.style.display='none'"
+          />
+          <div class="villepin-caption">
+            <strong>Dominique de Villepin</strong>
+            <span>Ministre des Affaires Étrangères · 2002–2004</span>
+          </div>
         </div>
       </div>
 
-      <div class="split-callouts">
-        <div class="callout-dark">
-          <h4>Le prétexte officiel</h4>
-          <p>Armes de destruction massive (ADM), liens supposés avec Al-Qaïda. Colin Powell présente des fioles à l'ONU. <strong>Aucune ADM ne sera jamais trouvée.</strong> Powell qualifiera lui-même ce discours de "tache" dans sa carrière.</p>
+      <div class="typewriter-box">
+        <p class="typewriter-label">Extrait du discours — en direct</p>
+        <blockquote class="typewriter-quote" id="typewriter-text"></blockquote>
+        <span class="cursor-blink">|</span>
+      </div>
+
+      <div class="reaction-strip">
+        <div class="reaction">
+          <span class="reaction-icon">👏</span>
+          <p>Applaudissements spontanés dans la salle — <strong>chose rarissime au Conseil de Sécurité</strong></p>
         </div>
-        <div class="callout-dark">
-          <h4>Les raisons réelles (débattues)</h4>
-          <p>Contrôle du pétrole irakien (3<sup>e</sup> réserves mondiales) · Remodeler le Moyen-Orient · Terminer le travail commencé en 1991 · Capitaliser politiquement après le 11 septembre.</p>
+        <div class="reaction">
+          <span class="reaction-icon">🗞️</span>
+          <p>Le <em>New York Times</em> titre : <strong>"France Threatens Veto on Iraq War"</strong></p>
+        </div>
+        <div class="reaction">
+          <span class="reaction-icon">🌍</span>
+          <p>Retransmis en direct dans le monde entier — devient viral avant l'ère des réseaux sociaux</p>
         </div>
       </div>
     </div>
-    <div class="photo-credit">Photo : Marines américains en Irak · USMC / Wikimedia Commons</div>
   </section>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 7 — LE CHAOS
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-split chapter-split--reverse" id="ch-chaos"
-    data-num="08" data-name="Le Chaos Post-Invasion">
+  <!-- ════ POWELL ════ -->
+  <section class="chapter chapter-split" id="ch-powell" data-num="05" data-name="Powell & le mensonge des ADM">
+    <div class="split-media split-dark">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Colin_Powell_presents_evidence_to_the_UN_Security_Council.jpg"
+        alt="Colin Powell présentant des preuves d'ADM à l'ONU, 5 février 2003"
+        loading="lazy"
+        class="chapter-photo"
+        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
+      />
+      <figcaption>Colin Powell au Conseil de Sécurité · 5 fév. 2003 · US State Department / Wikimedia</figcaption>
+    </div>
+    <div class="split-text">
+      <div class="chapter-tag">Chapitre IV · 5 Février 2003</div>
+      <h2>Colin Powell : <em>La Mise en Scène</em></h2>
+      <p class="lead">Le 5 février 2003, le Secrétaire d'État américain présente au monde les "preuves irréfutables" des ADM irakiennes. La France reste sceptique.</p>
+      <p>Powell montre des photos satellites floues, des transcriptions d'écoutes, agite une fiole de poudre blanche. La CIA et le MI6 ont monté un dossier. L'ambassadeur de France écoute en silence. <strong>La France exige la poursuite des inspections.</strong></p>
+
+      <div class="verdict-box">
+        <div class="verdict-then">
+          <h4>5 fév. 2003 — Ce que dit Powell</h4>
+          <ul>
+            <li>Laboratoires mobiles d'armes biologiques</li>
+            <li>Usines chimiques actives en Irak</li>
+            <li>Collaboration Saddam ↔ Al-Qaïda</li>
+            <li>Des tonnes d'anthrax stockées</li>
+          </ul>
+        </div>
+        <div class="verdict-now">
+          <h4>2004 — La réalité</h4>
+          <ul>
+            <li class="crossed">❌ Aucun laboratoire mobile</li>
+            <li class="crossed">❌ Aucune usine chimique</li>
+            <li class="crossed">❌ Aucun lien Saddam-Al-Qaïda</li>
+            <li class="crossed">❌ Zéro gramme d'anthrax</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="powell-quote">
+        <blockquote>"C'est une tache dans mon bilan — ce sera toujours une partie douloureuse de ma vie."</blockquote>
+        <cite>— Colin Powell, rétrospective sur ce discours, 2005</cite>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ LE MONDE SE DIVISE ════ -->
+  <section class="chapter chapter-map" id="ch-division" data-num="06" data-name="Le monde se divise">
+    <div class="map-content">
+      <div class="chapter-tag">Chapitre V · Février–Mars 2003</div>
+      <h2>Le Monde se Divise</h2>
+      <p class="lead-dark">15 membres au Conseil de Sécurité. Il fallait 9 voix et aucun veto. La menace du veto français rend l'objectif impossible.</p>
+
+      <div class="un-vote">
+        <h3>Simulation du vote — Conseil de Sécurité</h3>
+        <div class="vote-grid" id="vote-grid"></div>
+        <div class="vote-legend">
+          <span class="legend-item for">■ Pour l'invasion (4)</span>
+          <span class="legend-item against">■ Contre (6 + veto)</span>
+          <span class="legend-item abstain">■ Indécis (5)</span>
+        </div>
+        <p class="vote-note">Les USA renoncent à soumettre la résolution au vote — sachant qu'elle échouerait.</p>
+      </div>
+
+      <div class="camps">
+        <div class="camp camp-against">
+          <h3>🚫 La Coalition du Non</h3>
+          <div class="country-list">
+            <div class="country-card" style="--delay:0.1s">
+              <span class="country-flag">🇫🇷</span>
+              <div><strong>France</strong><p>Veto menacé · Chef de file du refus</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.2s">
+              <span class="country-flag">🇩🇪</span>
+              <div><strong>Allemagne</strong><p>Membre temporaire · Vote Non</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.3s">
+              <span class="country-flag">🇷🇺</span>
+              <div><strong>Russie</strong><p>Veto menacé · Soutien à la France</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.4s">
+              <span class="country-flag">🇨🇳</span>
+              <div><strong>Chine</strong><p>Opposition discrète · Veto potentiel</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.5s">
+              <span class="country-flag">🇸🇾</span>
+              <div><strong>Syrie</strong><p>Vote Non</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="camp camp-for">
+          <h3>✅ Coalition of the Willing</h3>
+          <div class="country-list">
+            <div class="country-card" style="--delay:0.1s">
+              <span class="country-flag">🇺🇸</span>
+              <div><strong>États-Unis</strong><p>Passent outre l'ONU</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.2s">
+              <span class="country-flag">🇬🇧</span>
+              <div><strong>Royaume-Uni</strong><p>Blair suit Bush — au coût de sa légitimité</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.3s">
+              <span class="country-flag">🇪🇸</span>
+              <div><strong>Espagne</strong><p>Aznar soutient l'invasion — battu aux élections de 2004</p></div>
+            </div>
+            <div class="country-card" style="--delay:0.4s">
+              <span class="country-flag">🇦🇺</span>
+              <div><strong>Australie</strong><p>Envoi de troupes malgré l'opinion populaire</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rumsfeld-quote-box">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Donald_Rumsfeld_2002.jpg"
+          alt="Donald Rumsfeld, Secrétaire à la Défense américain"
+          class="rumsfeld-img"
+          onerror="this.style.display='none'"
+          loading="lazy"
+        />
+        <div>
+          <blockquote>"Vous pensez à l'Europe comme à la France et à l'Allemagne. Ce n'est pas l'Europe. C'est la <strong>vieille Europe</strong>."</blockquote>
+          <cite>— Donald Rumsfeld, conférence de presse, janvier 2003</cite>
+          <p class="rumsfeld-context">En tentant de diviser l'Europe, Rumsfeld réveille le projet d'autonomie stratégique européenne. L'insulte se retourne contre lui.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ FREEDOM FRIES ════ -->
+  <section class="chapter chapter-split" id="ch-symboles" data-num="07" data-name="Freedom Fries">
     <div class="split-media">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Freedom_fries.jpg"
+        alt="Menu Freedom Fries à la cafétéria du Congrès américain, 2003"
+        loading="lazy"
+        class="chapter-photo"
+        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
+      />
+      <figcaption>"Freedom Fries" · Cafétéria du Congrès américain · 2003 · Wikimedia Commons</figcaption>
+    </div>
+    <div class="split-text">
+      <div class="chapter-tag">Chapitre VI · Mars 2003 — La Crise Diplomatique</div>
+      <h2>Freedom Fries — <em>La Crise de l'Absurde au Sérieux</em></h2>
+      <p class="lead">Le refus français déclenche une crise diplomatique sans précédent entre alliés. Des symboles absurdes cachent de vraies fractures.</p>
+
+      <div class="crisis-ticker-wrap">
+        <div class="ticker-label">📰 LES TITRES DE L'ÉPOQUE</div>
+        <div class="crisis-ticker">
+          <div class="ticker-track" id="ticker">
+            <span>🍟 La cafétéria du Congrès renomme les "French fries" en "Freedom fries"</span>
+            <span>🍞 Les "French toasts" deviennent "Freedom toasts"</span>
+            <span>🍷 Des élus américains versent du vin français dans les caniveaux en direct TV</span>
+            <span>📺 Fox News présente la France comme un pays traître et ingrat</span>
+            <span>🦃 Boycott de produits français — ventes de vin chutent de 26%</span>
+            <span>✈️ Tourisme américain en France chute de 20% en 2003</span>
+            <span>🗞️ Time Magazine : "What is France thinking?"</span>
+            <span>🗽 Des panneaux "French people go home" dans des villes américaines</span>
+            <span>🍟 La cafétéria du Congrès renomme les "French fries" en "Freedom fries"</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="diplo-list">
+        <div class="diplo-item serious">
+          <span class="diplo-level">Grave</span>
+          <h4>L'ambassadeur rappelé pour consultations</h4>
+          <p>Washington rappelle son ambassadeur à Paris — signal diplomatique fort entre alliés de l'OTAN.</p>
+        </div>
+        <div class="diplo-item serious">
+          <span class="diplo-level">Grave</span>
+          <h4>France exclue de la reconstruction irakienne</h4>
+          <p>Paris et Berlin sont explicitement exclus des 18,6 milliards $ de contrats de reconstruction post-invasion.</p>
+        </div>
+        <div class="diplo-item medium">
+          <span class="diplo-level">OTAN</span>
+          <h4>Blocage au sein de l'OTAN</h4>
+          <p>La France bloque pendant plusieurs semaines une décision de l'OTAN d'aider militairement la Turquie — tension structurelle.</p>
+        </div>
+        <div class="diplo-item medium">
+          <span class="diplo-level">Long terme</span>
+          <h4>Fracture durable transatlantique</h4>
+          <p>La méfiance entre Paris et Washington prend des années à se résorber. Elle alimente le débat sur l'autonomie stratégique de l'Europe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ MULTILATÉRALISME ════ -->
+  <section class="chapter chapter-fullbleed chapter-multilateral" id="ch-multilateral" data-num="08" data-name="Multilatéralisme vs Unilatéralisme">
+    <div class="multi-bg"></div>
+    <div class="fullbleed-content">
+      <div class="chapter-tag light">Chapitre VII · Le Fond du Débat</div>
+      <h2 class="light">Multilatéralisme <em>contre</em> Unilatéralisme</h2>
+      <p class="light-p lead-light">Ce n'est pas qu'une dispute franco-américaine. C'est un débat fondamental sur comment le monde doit être gouverné.</p>
+
+      <div class="versus-grid">
+        <div class="versus-card versus-fr">
+          <div class="versus-header">
+            <span class="versus-flag">🇫🇷</span>
+            <h3>La vision française</h3>
+            <span class="versus-tag">Multilatéralisme</span>
+          </div>
+          <ul>
+            <li>L'ONU est l'organe légitime pour autoriser la force</li>
+            <li>Aucune nation ne peut décider seule d'une guerre préventive</li>
+            <li>Les inspecteurs doivent finir leur travail</li>
+            <li>Un monde unipolaire américain est dangereux</li>
+            <li>La guerre créera plus de terrorisme qu'elle n'en résoudra</li>
+          </ul>
+          <div class="versus-quote">"L'usage de la force n'est pas justifié aujourd'hui."</div>
+        </div>
+        <div class="versus-vs">VS</div>
+        <div class="versus-card versus-us">
+          <div class="versus-header">
+            <span class="versus-flag">🇺🇸</span>
+            <h3>La vision américaine</h3>
+            <span class="versus-tag">Unilatéralisme</span>
+          </div>
+          <ul>
+            <li>Les USA ont le droit d'agir seuls pour leur sécurité</li>
+            <li>La "guerre préventive" est légitime face à une menace</li>
+            <li>L'ONU est trop lente et politiquement bloquée</li>
+            <li>La démocratie peut être imposée par la force</li>
+            <li>Saddam Hussein représente une menace existentielle</li>
+          </ul>
+          <div class="versus-quote">"Vous êtes avec nous ou contre nous."</div>
+        </div>
+      </div>
+
+      <div class="un-charter-box">
+        <h4>📜 La Charte de l'ONU — Article 51</h4>
+        <p>La Charte autorise l'usage de la force uniquement en cas de <strong>légitime défense</strong> ou avec l'autorisation du Conseil de Sécurité. L'invasion de 2003 ne remplit aucune de ces conditions selon la quasi-totalité des juristes internationaux.</p>
+        <p class="illegality-note">→ Kofi Annan (Secrétaire Général ONU) a déclaré en 2004 que la guerre en Irak était <strong>illégale au regard du droit international.</strong></p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ L'HISTOIRE DONNE RAISON ════ -->
+  <section class="chapter chapter-split chapter-split--reverse" id="ch-histoire" data-num="09" data-name="L'histoire donne raison">
+    <div class="split-media split-dark">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/2/25/Marines_pull_down_Saddam_Hussein_statue_2003.jpg"
-        alt="Route de la mort - véhicules détruits en Irak"
+        alt="Marines américains renversant la statue de Saddam Hussein, Bagdad 2003"
         loading="lazy"
         class="chapter-photo"
         onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
       />
-      <figcaption>Débris de guerre sur l'autoroute 80, Irak · Wikimedia Commons</figcaption>
+      <div class="counter-overlay">
+        <div class="counter-item">
+          <span class="counter-num" data-target="200000">0</span>
+          <span class="counter-label">civils tués</span>
+        </div>
+        <div class="counter-item">
+          <span class="counter-num" data-target="0">0</span>
+          <span class="counter-label">ADM trouvées</span>
+        </div>
+        <div class="counter-item">
+          <span class="counter-num" data-target="2000">0</span>
+          <span class="counter-label">Mds $ dépensés</span>
+        </div>
+      </div>
+      <figcaption>Bagdad, 9 avril 2003 · Marines américains · Wikimedia Commons</figcaption>
     </div>
     <div class="split-text">
-      <div class="chapter-tag">Chapitre VII · 2003–2011</div>
-      <h2>Le Chaos — <em>Mission NOT Accomplie</em></h2>
-      <p class="lead">La chute de Saddam crée un vide de pouvoir catastrophique. Ce que personne n'avait prévu — ou voulu voir.</p>
+      <div class="chapter-tag">Chapitre VIII · 2004–aujourd'hui</div>
+      <h2>L'Histoire donne<br/>Raison à la France</h2>
+      <p class="lead">Point par point, les préoccupations françaises se sont révélées exactes. Les prétextes américains, faux.</p>
 
-      <div class="chaos-list">
-        <div class="chaos-entry">
-          <span class="chaos-num">01</span>
+      <div class="verdict-timeline">
+        <div class="vt-item vindicated">
+          <span class="vt-year">2004</span>
           <div>
-            <h4>Pillage généralisé</h4>
-            <p>Immédiatement après la chute de Bagdad, ministères, hôpitaux, musées sont pillés. Le Musée national de Bagdad perd 15 000 pièces d'antiquité. Les Américains protègent le Ministère du Pétrole — et rien d'autre.</p>
+            <h4>✅ Aucune ADM trouvée</h4>
+            <p>La commission Duelfer (CIA) confirme : l'Irak avait détruit ses ADM dès 1991. Powell reconnaît lui-même l'erreur.</p>
           </div>
         </div>
-        <div class="chaos-entry">
-          <span class="chaos-num">02</span>
+        <div class="vt-item vindicated">
+          <span class="vt-year">2004</span>
           <div>
-            <h4>La dissolution de l'armée — L'erreur fatale</h4>
-            <p>Paul Bremer dissout l'armée irakienne du jour au lendemain. 400 000 soldats armés, humiliés, sans salaire. Beaucoup rejoignent la résistance. <strong>C'est la décision qui crée les conditions de naissance de Daech.</strong></p>
+            <h4>✅ Chaos sécuritaire comme prédit</h4>
+            <p>Insurrection armée, guerre civile sectaire, scandale Abu Ghraib. Tout ce que la France avait anticipé se produit.</p>
           </div>
         </div>
-        <div class="chaos-entry">
-          <span class="chaos-num">03</span>
+        <div class="vt-item vindicated">
+          <span class="vt-year">2006–2013</span>
           <div>
-            <h4>Guerre civile sectaire (2006–2008)</h4>
-            <p>Chiites contre sunnites. Bagdad est une ville de check-points, de voitures piégées et de morgues débordées. On retrouve des dizaines de corps par jour dans les rues.</p>
+            <h4>✅ Plus de terrorisme, pas moins</h4>
+            <p>L'invasion crée Al-Qaïda en Irak, qui devient Daech en 2013. Le terrorisme international explose.</p>
           </div>
         </div>
-        <div class="chaos-entry">
-          <span class="chaos-num">04</span>
+        <div class="vt-item vindicated">
+          <span class="vt-year">2016</span>
           <div>
-            <h4>Abu Ghraib — Le scandale mondial (2004)</h4>
-            <p>Des photos de soldats américains torturant et humiliant des détenus irakiens font le tour du monde. La légitimité morale de la guerre s'effondre.</p>
+            <h4>✅ Rapport Chilcot (Royaume-Uni)</h4>
+            <p>L'enquête officielle britannique conclut que l'invasion était injustifiée et que Blair avait menti. La France n'a jamais eu ce problème.</p>
           </div>
         </div>
-      </div>
-
-      <div class="bilan-chiffres">
-        <div class="bilan-item"><strong>200 000+</strong><span>civils tués (Iraq Body Count)</span></div>
-        <div class="bilan-item"><strong>4 millions</strong><span>déplacés internes</span></div>
-        <div class="bilan-item"><strong>$2 000 Mds</strong><span>coût total pour les USA</span></div>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════
-       CHAPITRE 8 — DAECH
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-fullbleed" id="ch-daech"
-    data-num="09" data-name="Daech"
-    style="--bg: url('https://upload.wikimedia.org/wikipedia/commons/6/66/Mosul_after_liberation_from_ISIL.jpg')">
-    <div class="chapter-bg dark-heavy"></div>
-    <div class="fullbleed-content">
-      <div class="chapter-tag light">Chapitre VIII · 2013–2019</div>
-      <h2 class="light">Daech — <em>Le Monstre né du Chaos</em></h2>
-      <p class="light-p lead-light">L'État Islamique n'est pas tombé du ciel. Il est le produit direct de l'invasion de 2003 et du chaos qu'elle a engendré.</p>
-
-      <div class="daech-steps">
-        <div class="daech-step">
-          <span>2004</span>
-          <p><strong>Al-Qaïda en Irak</strong> se forme dans le vide sécuritaire post-invasion.</p>
-        </div>
-        <div class="daech-arrow">→</div>
-        <div class="daech-step">
-          <span>2011</span>
-          <p>La guerre civile syrienne offre un territoire d'expansion.</p>
-        </div>
-        <div class="daech-arrow">→</div>
-        <div class="daech-step">
-          <span>Juin 2014</span>
-          <p><strong>Mossoul tombe</strong> en 4 jours. Al-Baghdadi proclame le "califat".</p>
-        </div>
-        <div class="daech-arrow">→</div>
-        <div class="daech-step">
-          <span>Nov. 2015</span>
-          <p><strong>Attentats de Paris</strong> : 130 morts. Daech exporte sa terreur en Europe.</p>
-        </div>
-        <div class="daech-arrow">→</div>
-        <div class="daech-step">
-          <span>2017–2019</span>
-          <p><strong>Défaite militaire</strong>. Mossoul libérée. Le califat s'effondre.</p>
-        </div>
-      </div>
-
-      <div class="split-callouts">
-        <div class="callout-dark">
-          <h4>L'étendue du territoire (pic 2014)</h4>
-          <p>Un territoire grand comme le Royaume-Uni. 8 millions de personnes sous contrôle de l'EI. Revenus : pétrole, rançons, pillage d'antiquités, taxes sur la population.</p>
-        </div>
-        <div class="callout-dark">
-          <h4>Génocide des Yézidis</h4>
-          <p>Des milliers d'hommes yézidis exécutés. Des milliers de femmes réduites en esclavage sexuel. Des enfants enrôlés de force. Reconnu comme <strong>génocide</strong> par l'ONU en 2016.</p>
-        </div>
-      </div>
-    </div>
-    <div class="photo-credit">Photo : Mossoul avant et après · Wikimedia Commons</div>
-  </section>
-
-
-  <!-- ══════════════════════════════════════
-       CHAPITRE 9 — AUJOURD'HUI
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-split" id="ch-aujourd-hui"
-    data-num="10" data-name="Aujourd'hui">
-    <div class="split-media">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/7/76/Baghdad_-_Karada_at_night.jpg"
-        alt="Skyline de Bagdad, 2016"
-        loading="lazy"
-        class="chapter-photo"
-        onerror="this.style.display='none';this.parentElement.classList.add('no-photo')"
-      />
-      <figcaption>Bagdad · Horizons contemporains · Wikimedia Commons</figcaption>
-    </div>
-    <div class="split-text">
-      <div class="chapter-tag">Chapitre IX · 2020–2024</div>
-      <h2>L'Irak Aujourd'hui</h2>
-      <p class="lead">Un pays qui se reconstruit — lentement, difficilement — entre espoir et fragilité.</p>
-
-      <div class="today-balance">
-        <div class="today-pos">
-          <h4>✅ Ce qui va mieux</h4>
-          <ul>
-            <li>Daech territorialement vaincu</li>
-            <li>Élections régulières depuis 2005</li>
-            <li>Reconstruction de Mossoul en cours</li>
-            <li>Croissance économique portée par le pétrole</li>
-            <li>Normalisation des relations avec l'Arabie Saoudite et l'Iran</li>
-          </ul>
-        </div>
-        <div class="today-neg">
-          <h4>⚠️ Ce qui reste difficile</h4>
-          <ul>
-            <li>Corruption massive — 157<sup>e</sup>/180 pays</li>
-            <li>Forte influence iranienne via les milices chiites</li>
-            <li>Cellules dormantes de Daech</li>
-            <li>Tensions entre Bagdad et le Kurdistan</li>
-            <li>25%+ de chômage chez les jeunes</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="callout">
-        <span class="callout-icon">🔥</span>
-        <p><strong>Mouvement Tishreen (2019) :</strong> Des millions d'Irakiens, surtout des jeunes, descendent dans la rue contre la corruption et l'ingérence iranienne. La répression fait <strong>600 morts</strong>. Un signal que la population veut une rupture avec le passé.</p>
-      </div>
-
-      <p>L'Irak reste au cœur d'un bras de fer entre <strong>États-Unis</strong> et <strong>Iran</strong>, chacun cherchant à utiliser le pays comme levier régional. L'assassinat du général iranien <strong>Qassem Soleimani</strong> à Bagdad par les Américains en janvier 2020 illustre ce que l'Irak subit encore : être le théâtre des guerres des autres.</p>
-    </div>
-  </section>
-
-
-  <!-- ══════════════════════════════════════
-       CHAPITRE 10 — CONCLUSION
-  ══════════════════════════════════════ -->
-  <section class="chapter chapter-conclusion" id="ch-conclusion"
-    data-num="11" data-name="Conclusion">
+  <!-- ════ LEÇONS ════ -->
+  <section class="chapter chapter-conclusion" id="ch-lecons" data-num="10" data-name="Leçons diplomatiques">
     <div class="conclusion-wrap">
-      <div class="chapter-tag">Conclusion</div>
-      <h2>Ce que l'Histoire de l'Irak nous Apprend</h2>
-      <p class="lead-conclusion">Quatre clés pour comprendre</p>
+      <div class="chapter-tag">Conclusion · Leçons Diplomatiques</div>
+      <h2>Ce que ce Moment nous dit<br/>sur la Diplomatie Mondiale</h2>
+      <p class="lead-conclusion">Cinq enseignements durables</p>
 
       <div class="key-lessons">
-        <div class="lesson">
+        <div class="lesson lesson-animate" style="--i:1">
           <span class="lesson-num">I</span>
           <div>
-            <h4>Les frontières artificielles ont des conséquences durables</h4>
-            <p>Le découpage de 1920 par Sykes-Picot a regroupé des communautés antagonistes dans un État sans légitimité historique. C'est la racine de toutes les tensions qui suivront.</p>
+            <h4>La légitimité internationale reste cruciale</h4>
+            <p>Sans mandat ONU, l'invasion américaine a souffert d'un déficit de légitimité permanent qui a miné l'effort de guerre et la reconstruction.</p>
           </div>
         </div>
-        <div class="lesson">
+        <div class="lesson lesson-animate" style="--i:2">
           <span class="lesson-num">II</span>
           <div>
-            <h4>Le pétrole est une malédiction autant qu'une richesse</h4>
-            <p>Les réserves irakiennes attirent les puissances étrangères et corrompent les élites locales. Un pays qui devrait être prospère reste instable précisément à cause de sa richesse.</p>
+            <h4>Dire Non à un allié dominant est possible — et parfois nécessaire</h4>
+            <p>La France a montré qu'un pays peut résister à la pression hégémonique américaine sans rompre l'alliance. La relation franco-américaine s'est reconstruite en quelques années.</p>
           </div>
         </div>
-        <div class="lesson">
+        <div class="lesson lesson-animate" style="--i:3">
           <span class="lesson-num">III</span>
           <div>
-            <h4>La guerre de 2003 a créé les crises qu'elle prétendait résoudre</h4>
-            <p>Basée sur des mensonges, l'invasion a produit Daech, des millions de réfugiés, et a déstabilisé toute la région pour des décennies. La France avait raison de dire non.</p>
+            <h4>L'autonomie stratégique européenne comme priorité</h4>
+            <p>L'épisode renforce l'idée que l'Europe doit pouvoir définir sa propre politique étrangère, indépendamment de Washington. Ce débat reste central dans la construction européenne.</p>
           </div>
         </div>
-        <div class="lesson">
+        <div class="lesson lesson-animate" style="--i:4">
           <span class="lesson-num">IV</span>
           <div>
-            <h4>La jeunesse irakienne veut tourner la page</h4>
-            <p>60% de la population a moins de 25 ans. Le mouvement Tishreen de 2019 montre une génération qui refuse d'hériter de guerres qu'elle n'a pas choisies et d'une corruption qu'elle ne cautionne pas.</p>
+            <h4>La "diplomatie du discours" peut avoir un impact réel</h4>
+            <p>Villepin a cristallisé l'opposition mondiale à la guerre. Il a changé l'atmosphère politique internationale et renforcé les doutes au sein même des pays favorables à l'invasion.</p>
+          </div>
+        </div>
+        <div class="lesson lesson-animate" style="--i:5">
+          <span class="lesson-num">V</span>
+          <div>
+            <h4>Les conséquences imprévues de la "guerre humanitaire"</h4>
+            <p>L'Irak post-2003 est la démonstration que la "démocratie par les armes" ne fonctionne pas. Ce débat structure encore les interventions occidentales — Libye, Syrie, Mali.</p>
           </div>
         </div>
       </div>
 
-      <div class="final-quote">
-        <blockquote>"L'Irak n'est pas qu'un pays en guerre. C'est la plus vieille civilisation du monde qui cherche à renaître."</blockquote>
+      <div class="final-quote animated-quote">
+        <div class="quote-marks">"</div>
+        <blockquote>Rien ne justifie aujourd'hui d'envisager une action militaire qui remettrait en cause la stabilité de cette région — fractures dont se nourrit le terrorisme.</blockquote>
+        <cite>— Dominique de Villepin · 14 février 2003 · Il avait raison.</cite>
       </div>
 
       <div class="sources-mini">
-        <p>Sources principales :</p>
+        <p>Sources principales</p>
         <ul>
-          <li>Patrick Cockburn, <em>The Rise of Islamic State</em> (2015)</li>
-          <li>Hans Blix, <em>Irak : les armes introuvables</em> (2004)</li>
-          <li>Iraq Body Count · UNHCR · Human Rights Watch · Transparency International</li>
-          <li>ONU – Résolutions du Conseil de Sécurité sur l'Irak</li>
+          <li>Rapport Chilcot (Royaume-Uni) · 2016 — <em>The Iraq Inquiry</em></li>
+          <li>Hans Blix, <em>Irak : les armes introuvables</em> · 2004</li>
+          <li>Iraq Survey Group (CIA) — Rapport Duelfer · 2004</li>
+          <li>ONU — Résolutions 1441 (2002) et débats du Conseil de Sécurité</li>
+          <li>Bob Woodward, <em>Plan of Attack</em> · 2004</li>
+          <li>Dominique de Villepin, <em>L'Animal politique</em> · 2008</li>
         </ul>
       </div>
     </div>
