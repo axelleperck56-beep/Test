@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SubTracker — Suivi de tes abonnements</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header>
+      <h1>📦 SubTracker</h1>
+      <p class="subtitle">Suis tes abonnements, reprends le contrôle</p>
+    </header>
+
+    <!-- Total -->
+    <section class="total-card">
+      <div class="total-block">
+        <span class="total-label">Par mois</span>
+        <span class="total-amount" id="totalMonthly">0,00 €</span>
+      </div>
+      <div class="divider"></div>
+      <div class="total-block">
+        <span class="total-label">Par an</span>
+        <span class="total-amount" id="totalYearly">0,00 €</span>
+      </div>
+    </section>
+
+    <!-- Bouton ajouter -->
+    <button class="btn-add" id="btnOpenModal">+ Ajouter un abonnement</button>
+
+    <!-- Filtres catégories -->
+    <div class="filters" id="filters">
+      <button class="filter active" data-cat="all">Tous</button>
+      <button class="filter" data-cat="streaming">Streaming</button>
+      <button class="filter" data-cat="musique">Musique</button>
+      <button class="filter" data-cat="logiciel">Logiciel</button>
+      <button class="filter" data-cat="sport">Sport</button>
+      <button class="filter" data-cat="autre">Autre</button>
+    </div>
+
+    <!-- Liste des abonnements -->
+    <section class="subs-list" id="subsList">
+      <p class="empty-state" id="emptyState">Aucun abonnement pour l'instant.<br/>Clique sur + pour commencer.</p>
+    </section>
+
+  </div>
+
+  <!-- Modal ajout -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h2 id="modalTitle">Nouvel abonnement</h2>
+
+      <label>Nom du service</label>
+      <input type="text" id="inputName" placeholder="Netflix, Spotify…" />
+
+      <label>Prix</label>
+      <div class="price-row">
+        <input type="number" id="inputPrice" placeholder="9.99" step="0.01" min="0" />
+        <select id="inputCycle">
+          <option value="monthly">/ mois</option>
+          <option value="yearly">/ an</option>
+        </select>
+      </div>
+
+      <label>Catégorie</label>
+      <select id="inputCategory">
+        <option value="streaming">Streaming</option>
+        <option value="musique">Musique</option>
+        <option value="logiciel">Logiciel</option>
+        <option value="sport">Sport</option>
+        <option value="autre">Autre</option>
+      </select>
+
+      <label>Date de renouvellement</label>
+      <input type="date" id="inputRenewal" />
+
+      <label>Couleur</label>
+      <div class="color-picker" id="colorPicker">
+        <span class="color-dot selected" data-color="#6C63FF" style="background:#6C63FF"></span>
+        <span class="color-dot" data-color="#FF6584" style="background:#FF6584"></span>
+        <span class="color-dot" data-color="#43C59E" style="background:#43C59E"></span>
+        <span class="color-dot" data-color="#F9A826" style="background:#F9A826"></span>
+        <span class="color-dot" data-color="#4FC3F7" style="background:#4FC3F7"></span>
+        <span class="color-dot" data-color="#EF5350" style="background:#EF5350"></span>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btnCancel">Annuler</button>
+        <button class="btn-save" id="btnSave">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

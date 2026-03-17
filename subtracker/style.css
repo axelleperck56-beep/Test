@@ -1,0 +1,351 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0F0F1A;
+  --card: #1A1A2E;
+  --card2: #16213E;
+  --accent: #6C63FF;
+  --text: #EAEAEA;
+  --muted: #8888AA;
+  --danger: #EF5350;
+  --radius: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Total card */
+.total-card {
+  background: linear-gradient(135deg, #6C63FF, #4FC3F7);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.total-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.total-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.total-amount {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.divider {
+  width: 1px;
+  height: 48px;
+  background: rgba(255,255,255,0.3);
+}
+
+/* Bouton ajouter */
+.btn-add {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+
+.btn-add:hover { opacity: 0.85; }
+
+/* Filtres */
+.filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 20px;
+  scrollbar-width: none;
+}
+.filters::-webkit-scrollbar { display: none; }
+
+.filter {
+  background: var(--card);
+  color: var(--muted);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* Liste abonnements */
+.subs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin-top: 40px;
+}
+
+/* Carte abonnement */
+.sub-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-left: 4px solid var(--accent);
+  position: relative;
+}
+
+.sub-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.sub-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sub-name {
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.sub-renewal {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.sub-renewal.soon {
+  color: #F9A826;
+  font-weight: 600;
+}
+
+.sub-price {
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sub-price .per {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--muted);
+  display: block;
+}
+
+.sub-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: var(--muted);
+}
+
+.btn-icon:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+.btn-icon.delete:hover { color: var(--danger); }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: var(--card2);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 28px 20px 40px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal h2 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.modal label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.modal input:focus,
+.modal select:focus {
+  border-color: var(--accent);
+}
+
+.price-row {
+  display: flex;
+  gap: 10px;
+}
+
+.price-row input { flex: 1; }
+.price-row select { width: 120px; flex-shrink: 0; }
+
+/* Color picker */
+.color-picker {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s;
+}
+
+.color-dot.selected {
+  border-color: white;
+  transform: scale(1.2);
+}
+
+/* Modal actions */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btn-cancel, .btn-save {
+  flex: 1;
+  padding: 14px;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-cancel {
+  background: var(--card);
+  color: var(--muted);
+}
+
+.btn-save {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-save:hover { opacity: 0.9; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--card); border-radius: 4px; }
