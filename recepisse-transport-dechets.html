@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Récépissé de Transport de Déchets</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      background: #f5f5f5;
+      padding: 20px;
+      color: #111;
+    }
+
+    .page {
+      background: #fff;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 15mm 15mm 15mm 15mm;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    /* ===== EN-TÊTE ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid #1a6b3a;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .header-logo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .company-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a6b3a;
+      letter-spacing: 1px;
+    }
+
+    .company-sub {
+      font-size: 10px;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    .company-contact {
+      font-size: 9px;
+      color: #444;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .header-title {
+      text-align: right;
+    }
+
+    .header-title h1 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1a6b3a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title .doc-ref {
+      font-size: 10px;
+      color: #333;
+      margin-top: 4px;
+    }
+
+    .header-title .doc-date {
+      font-size: 10px;
+      color: #333;
+    }
+
+    /* ===== SECTION GÉNÉRIQUE ===== */
+    .section {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      background: #1a6b3a;
+      color: #fff;
+      font-weight: bold;
+      font-size: 10px;
+      padding: 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-body {
+      padding: 8px 10px;
+    }
+
+    /* ===== GRILLE DE CHAMPS ===== */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 12px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px 10px; }
+
+    .field { display: flex; flex-direction: column; }
+
+    .field label {
+      font-size: 8.5px;
+      font-weight: bold;
+      color: #555;
+      text-transform: uppercase;
+      margin-bottom: 1px;
+      letter-spacing: 0.3px;
+    }
+
+    .field .value {
+      font-size: 10.5px;
+      border-bottom: 1px solid #aaa;
+      padding: 2px 0;
+      min-height: 16px;
+      color: #111;
+    }
+
+    .field .value.bold { font-weight: bold; }
+
+    /* ===== TABLEAU DÉCHETS ===== */
+    .waste-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5px;
+    }
+
+    .waste-table thead th {
+      background: #e8f5e9;
+      border: 1px solid #bbb;
+      padding: 4px 6px;
+      text-align: center;
+      font-size: 8.5px;
+      font-weight: bold;
+      color: #1a6b3a;
+      text-transform: uppercase;
+    }
+
+    .waste-table tbody td {
+      border: 1px solid #ccc;
+      padding: 4px 6px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .waste-table tbody tr:nth-child(even) { background: #fafafa; }
+
+    .waste-table .td-left { text-align: left; }
+
+    /* ===== CONDITIONS DE TRANSPORT ===== */
+    .conditions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .condition-item {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 5px 7px;
+      font-size: 9px;
+    }
+
+    .condition-item .ci-label {
+      font-size: 8px;
+      font-weight: bold;
+      color: #777;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .condition-item .ci-value {
+      font-size: 10px;
+      font-weight: bold;
+      color: #111;
+    }
+
+    /* ===== CASES À COCHER ===== */
+    .checkbox-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 4px 0;
+    }
+
+    .cb-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9.5px;
+    }
+
+    .cb-box {
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid #555;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: #1a6b3a;
+      flex-shrink: 0;
+    }
+
+    /* ===== BLOC SIGNATURES ===== */
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .sig-block {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .sig-block .sig-title {
+      font-size: 9px;
+      font-weight: bold;
+      color: #1a6b3a;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 3px;
+    }
+
+    .sig-block .sig-name {
+      font-size: 10px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .sig-block .sig-quality {
+      font-size: 9px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .sig-block .sig-date {
+      font-size: 8.5px;
+      color: #444;
+      margin-bottom: 6px;
+    }
+
+    .sig-area {
+      height: 35px;
+      border: 1px dashed #bbb;
+      border-radius: 2px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 8px;
+      font-style: italic;
+    }
+
+    /* ===== OBSERVATIONS ===== */
+    .obs-box {
+      border: 1px dashed #bbb;
+      border-radius: 3px;
+      padding: 6px 8px;
+      min-height: 40px;
+      font-size: 10px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* ===== MENTIONS LÉGALES ===== */
+    .legal {
+      margin-top: 10px;
+      padding: 6px 8px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 8px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .legal strong { color: #444; }
+
+    /* ===== PIED DE PAGE ===== */
+    .footer {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 8px;
+      color: #999;
+      border-top: 1px solid #ddd;
+      padding-top: 6px;
+    }
+
+    /* ===== BADGE STATUT ===== */
+    .status-badge {
+      display: inline-block;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 3px;
+      padding: 2px 8px;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== IMPRESSION ===== */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { box-shadow: none; margin: 0; }
+      .print-btn { display: none; }
+    }
+
+    .print-btn {
+      display: block;
+      margin: 12px auto;
+      padding: 8px 24px;
+      background: #1a6b3a;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+
+    .print-btn:hover { background: #145230; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Imprimer / Exporter PDF</button>
+
+<div class="page">
+
+  <!-- ========== EN-TÊTE ========== -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="company-name">ECOTRA SAS</div>
+      <div class="company-sub">Transport & Valorisation de Déchets</div>
+      <div class="company-contact">
+        12 Route Industrielle – ZAC du Moulin – 59000 LILLE<br>
+        Tél. : 03 20 45 67 89 &nbsp;|&nbsp; contact@ecotra.fr<br>
+        SIRET : 412 345 678 00021 &nbsp;|&nbsp; N° TVA : FR 12 412345678
+      </div>
+    </div>
+    <div class="header-title">
+      <h1>Récépissé de Transport<br>de Déchets</h1>
+      <div class="doc-ref"><strong>N° :</strong> RTD-2026-03-0047</div>
+      <div class="doc-date"><strong>Date d'émission :</strong> 18/03/2026</div>
+      <div style="margin-top:6px;"><span class="status-badge">ORIGINAL</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PRODUCTEUR / DÉTENTEUR ========== -->
+  <div class="section">
+    <div class="section-title">1. Producteur / Détenteur du déchet</div>
+    <div class="section-body">
+      <div class="grid-2" style="margin-bottom:6px;">
+        <div class="field">
+          <label>Raison sociale / Nom</label>
+          <div class="value bold">BÂTIMENTS DUPONT & FILS SARL</div>
+        </div>
+        <div class="field">
+          <label>SIRET</label>
+          <div class="value">531 879 210 00015</div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:6px;">
+        <div class="field">
+          <label>Adresse du chantier / site de production</label>
+          <div class="value">8 Allée des Marronniers</div>
+        </div>
+        <div class="field">
+          <label>Code postal</label>
+          <div class="value">62300</div>
+        </div>
+        <div class="field">
+          <label>Commune</label>
+          <div class="value">LENS</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Nom du responsable</label>
+          <div class="value">M. Jean-Pierre DUPONT</div>
+        </div>
+        <div class="field">
+          <label>Téléphone</label>
+          <div class="value">06 12 34 56 78</div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <div class="value">jp.dupont@batdupont.fr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TRANSPORTEUR ========== -->
+  <div class="section">
+    <div class="section-title">2. Transporteur</div>
+    <div class="section-body">
+      <div class="grid-2" style="margin-bottom:6px;">
+        <div class="field">
+          <label>Raison sociale</label>
+          <div class="value bold">ECOTRA SAS</div>
+        </div>
+        <div class="field">
+          <label>N° de récépissé préfectoral</label>
+          <div class="value bold">59-2024-TRANS-0312</div>
+        </div>
+      </div>
+      <div class="grid-4" style="margin-bottom:6px;">
+        <div class="field">
+          <label>Département(s) concerné(s)</label>
+          <div class="value">59, 62, 02, 80</div>
+        </div>
+        <div class="field">
+          <label>Validité du récépissé</label>
+          <div class="value">15/06/2029</div>
+        </div>
+        <div class="field">
+          <label>Immatriculation du véhicule</label>
+          <div class="value bold">EK-452-LM</div>
+        </div>
+        <div class="field">
+          <label>Type de véhicule</label>
+          <div class="value">Benne 26T</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Nom du chauffeur</label>
+          <div class="value">M. Karim BENALI</div>
+        </div>
+        <div class="field">
+          <label>N° permis de conduire</label>
+          <div class="value">12AB34567</div>
+        </div>
+        <div class="field">
+          <label>Téléphone chauffeur</label>
+          <div class="value">07 98 76 54 32</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DESTINATAIRE / INSTALLATION ========== -->
+  <div class="section">
+    <div class="section-title">3. Destinataire / Installation de traitement</div>
+    <div class="section-body">
+      <div class="grid-2" style="margin-bottom:6px;">
+        <div class="field">
+          <label>Nom de l'installation</label>
+          <div class="value bold">CENTRE DE TRI ET VALORISATION NORD – CTVN</div>
+        </div>
+        <div class="field">
+          <label>N° d'autorisation préfectorale (ICPE)</label>
+          <div class="value">AP 59-2021-ICPE-00789 (rubrique 2714)</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Adresse</label>
+          <div class="value">Zone Industrielle Est, Rue de la Tuilerie</div>
+        </div>
+        <div class="field">
+          <label>Code postal</label>
+          <div class="value">59160</div>
+        </div>
+        <div class="field">
+          <label>Commune</label>
+          <div class="value">CAPINGHEM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DESCRIPTION DES DÉCHETS ========== -->
+  <div class="section">
+    <div class="section-title">4. Identification et description des déchets transportés</div>
+    <div class="section-body">
+      <table class="waste-table">
+        <thead>
+          <tr>
+            <th style="width:12%;">Code déchet<br>(CED)</th>
+            <th style="width:30%;" class="td-left">Désignation du déchet</th>
+            <th style="width:12%;">Conditionnement</th>
+            <th style="width:10%;">Quantité<br>(unité)</th>
+            <th style="width:10%;">Poids estimé<br>(tonnes)</th>
+            <th style="width:13%;">Dangereux</th>
+            <th style="width:13%;">Mode de<br>valorisation/traitement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>17 01 01</strong></td>
+            <td class="td-left">Béton (gravats, dalles, éléments préfabriqués)</td>
+            <td>Vrac</td>
+            <td>1 benne</td>
+            <td>8,5</td>
+            <td>Non ☑</td>
+            <td>R5 – Recyclage minéral</td>
+          </tr>
+          <tr>
+            <td><strong>17 02 01</strong></td>
+            <td class="td-left">Bois (charpente, menuiserie non traitée)</td>
+            <td>Vrac</td>
+            <td>1 benne</td>
+            <td>3,2</td>
+            <td>Non ☑</td>
+            <td>R1 – Valorisation énergétique</td>
+          </tr>
+          <tr>
+            <td><strong>17 04 05</strong></td>
+            <td class="td-left">Ferrailles et métaux (acier, aluminium)</td>
+            <td>Big-bag</td>
+            <td>2 big-bags</td>
+            <td>0,8</td>
+            <td>Non ☑</td>
+            <td>R4 – Recyclage métaux</td>
+          </tr>
+          <tr>
+            <td><strong>17 09 04</strong></td>
+            <td class="td-left">Déchets de construction en mélange (hors substances dangereuses)</td>
+            <td>Vrac</td>
+            <td>1 benne</td>
+            <td>5,0</td>
+            <td>Non ☑</td>
+            <td>D5 – Mise en CET cl. II</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:6px; display:flex; gap:20px; align-items:center;">
+        <div class="field" style="flex:1;">
+          <label>Poids total chargé (tonnes)</label>
+          <div class="value bold" style="font-size:13px;">17,5 t</div>
+        </div>
+        <div class="field" style="flex:1;">
+          <label>Poids total mesuré à la bascule à l'arrivée (tonnes)</label>
+          <div class="value">17,3 t</div>
+        </div>
+        <div class="field" style="flex:1;">
+          <label>N° de bon de pesée</label>
+          <div class="value">BP-2026-4412</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CONDITIONS DE TRANSPORT ========== -->
+  <div class="section">
+    <div class="section-title">5. Conditions de transport</div>
+    <div class="section-body">
+      <div class="conditions-grid" style="margin-bottom:8px;">
+        <div class="condition-item">
+          <div class="ci-label">Date d'enlèvement</div>
+          <div class="ci-value">18/03/2026</div>
+        </div>
+        <div class="condition-item">
+          <div class="ci-label">Heure de départ</div>
+          <div class="ci-value">08 h 30</div>
+        </div>
+        <div class="condition-item">
+          <div class="ci-label">Date de livraison prévue</div>
+          <div class="ci-value">18/03/2026</div>
+        </div>
+        <div class="condition-item">
+          <div class="ci-label">Heure d'arrivée</div>
+          <div class="ci-value">10 h 15</div>
+        </div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div class="field">
+          <label>Itinéraire prévu (axes principaux)</label>
+          <div class="value">Lens (A21) → Lille (A1) → Capinghem (D933)</div>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <strong style="font-size:9px;">Caractéristiques des déchets :</strong>
+        <div class="cb-item"><div class="cb-box">✓</div> Solide</div>
+        <div class="cb-item"><div class="cb-box">&nbsp;</div> Liquide</div>
+        <div class="cb-item"><div class="cb-box">&nbsp;</div> Pâteux</div>
+        <div class="cb-item"><div class="cb-box">&nbsp;</div> Gazeux</div>
+        &nbsp;&nbsp;
+        <strong style="font-size:9px;">Contenant :</strong>
+        <div class="cb-item"><div class="cb-box">✓</div> Benne ouverte</div>
+        <div class="cb-item"><div class="cb-box">&nbsp;</div> Citerne</div>
+        <div class="cb-item"><div class="cb-box">&nbsp;</div> Big-bag</div>
+        <div class="cb-item"><div class="cb-box">✓</div> Bâchage obligatoire</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== RÉGLEMENTATION ADR ========== -->
+  <div class="section">
+    <div class="section-title">6. Transport de matières dangereuses (ADR)</div>
+    <div class="section-body">
+      <div class="checkbox-row">
+        <div class="cb-item"><div class="cb-box">✓</div> <strong>Transport NON soumis à l'ADR</strong> (déchets non dangereux)</div>
+        <div class="cb-item" style="margin-left:20px;"><div class="cb-box">&nbsp;</div> Transport soumis à l'ADR – N° ONU :</div>
+        <div class="field" style="flex:1;">
+          <div class="value" style="color:#aaa;">_______________________</div>
+        </div>
+        <div class="field" style="flex:1;">
+          <label>Classe ADR</label>
+          <div class="value" style="color:#aaa;">___________</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== OBSERVATIONS ========== -->
+  <div class="section">
+    <div class="section-title">7. Observations / Informations complémentaires</div>
+    <div class="section-body">
+      <div class="obs-box">
+        Chantier de démolition partielle – réhabilitation de la résidence « Les Acacias ».
+        Déchets conditionnés et triés conformément au SOGED (Schéma d'Organisation et de Gestion des Déchets) du chantier.
+        Bâchage du véhicule effectué avant départ. Aucune trace de pollution au sol constatée lors du chargement.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SIGNATURES ========== -->
+  <div class="section">
+    <div class="section-title">8. Signatures des parties (cachet + signature obligatoires)</div>
+    <div class="section-body">
+      <div class="signatures">
+        <div class="sig-block">
+          <div class="sig-title">Producteur / Détenteur</div>
+          <div class="sig-name">M. Jean-Pierre DUPONT</div>
+          <div class="sig-quality">Gérant – BÂTIMENTS DUPONT & FILS</div>
+          <div class="sig-date">Date : 18/03/2026 – 08h15</div>
+          <div class="sig-area">Cachet + Signature</div>
+        </div>
+        <div class="sig-block">
+          <div class="sig-title">Transporteur</div>
+          <div class="sig-name">M. Karim BENALI</div>
+          <div class="sig-quality">Chauffeur – ECOTRA SAS</div>
+          <div class="sig-date">Date : 18/03/2026 – 08h30</div>
+          <div class="sig-area">Cachet + Signature</div>
+        </div>
+        <div class="sig-block">
+          <div class="sig-title">Installation de traitement (réception)</div>
+          <div class="sig-name">Mme Sophie MARCHAND</div>
+          <div class="sig-quality">Responsable accueil – CTVN</div>
+          <div class="sig-date">Date : 18/03/2026 – 10h20</div>
+          <div class="sig-area">Cachet + Signature</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MENTIONS LÉGALES ========== -->
+  <div class="legal">
+    <strong>Base réglementaire :</strong> Code de l'environnement, art. L.541-1 et suivants &amp; R.541-43 – Arrêté du 29 juillet 2005 modifié relatif au registre de suivi des déchets –
+    Règlement (CE) n° 1013/2006 pour les transferts transfrontaliers.<br>
+    <strong>Conservation :</strong> Ce document doit être conservé 5 ans par le producteur, le transporteur et l'installation de traitement (art. R.541-45 du Code de l'environnement).<br>
+    <strong>Exemplaires :</strong> Original remis à l'installation de traitement – Copie 1 conservée par le transporteur – Copie 2 conservée par le producteur.<br>
+    <strong>En cas de non-conformité</strong>, le transporteur doit refuser le chargement et contacter immédiatement le producteur et ECOTRA SAS.
+  </div>
+
+  <!-- ========== PIED DE PAGE ========== -->
+  <div class="footer">
+    ECOTRA SAS – 12 Route Industrielle, 59000 LILLE – Tél. 03 20 45 67 89 – contact@ecotra.fr
+    &nbsp;|&nbsp; Document généré le 18/03/2026 &nbsp;|&nbsp; RTD-2026-03-0047
+    &nbsp;|&nbsp; Page 1 / 1
+  </div>
+
+</div>
+
+</body>
+</html>
