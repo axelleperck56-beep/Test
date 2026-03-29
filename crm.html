@@ -1,0 +1,3714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM – NÉBULA (Privé)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-500: #1d6ef5;
+      --blue-600: #1558cc;
+      --blue-100: #e8f0fe;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-400: #94a3b8;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --yellow-500: #f59e0b;
+      --yellow-100: #fef3c7;
+      --red-500: #ef4444;
+      --red-100: #fee2e2;
+      --purple-500: #8b5cf6;
+      --purple-100: #ede9fe;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+      --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      min-height: 100vh;
+    }
+
+    /* ===== LOGIN SCREEN ===== */
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a6e 50%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .login-card {
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .login-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--blue-500);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(29,110,245,.6);
+    }
+
+    .login-name {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .login-name strong { font-weight: 800; }
+
+    .login-subtitle {
+      color: rgba(255,255,255,.5);
+      font-size: .85rem;
+      margin-bottom: 36px;
+      letter-spacing: .5px;
+    }
+
+    .login-field {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .login-field input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: .95rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .login-field input::placeholder { color: rgba(255,255,255,.35); }
+
+    .login-field input:focus { border-color: var(--blue-500); }
+
+    .toggle-pw {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,.4);
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .toggle-pw:hover { color: rgba(255,255,255,.8); }
+
+    .login-error {
+      background: rgba(239,68,68,.2);
+      border: 1px solid rgba(239,68,68,.4);
+      color: #fca5a5;
+      font-size: .85rem;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--blue-500);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+
+    .login-btn:hover { background: var(--blue-600); }
+    .login-btn:active { transform: scale(.98); }
+
+    .login-hint {
+      margin-top: 20px;
+      color: rgba(255,255,255,.3);
+      font-size: .75rem;
+    }
+
+    /* ===== CRM LAYOUT ===== */
+    #crmApp { display: none; }
+
+    .crm-sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 240px;
+      background: var(--gray-900);
+      padding: 24px 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 12px;
+    }
+
+    .sidebar-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--blue-500);
+      border-radius: 50%;
+    }
+
+    .sidebar-name {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-name strong { font-weight: 800; }
+
+    .sidebar-badge {
+      margin-left: auto;
+      background: var(--blue-500);
+      color: #fff;
+      font-size: .6rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+    }
+
+    .sidebar-nav { padding: 0 12px; }
+
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,.5);
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: all .2s;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-nav-item:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); }
+    .sidebar-nav-item.active { background: rgba(29,110,245,.2); color: var(--blue-500); }
+
+    .sidebar-nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .sidebar-section-label {
+      padding: 16px 24px 8px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.25);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-logout {
+      position: absolute;
+      bottom: 20px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,.35);
+      cursor: pointer;
+      font-size: .9rem;
+      transition: all .2s;
+      border: none;
+      background: none;
+      width: calc(100% - 24px);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .sidebar-logout:hover { background: rgba(239,68,68,.15); color: #f87171; }
+    .sidebar-logout svg { width: 18px; height: 18px; }
+
+    .crm-main {
+      margin-left: 240px;
+      min-height: 100vh;
+      padding: 32px;
+    }
+
+    /* ===== TOP BAR ===== */
+    .crm-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .crm-page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .crm-page-title span {
+      font-size: .9rem;
+      font-weight: 400;
+      color: var(--gray-400);
+      margin-left: 8px;
+    }
+
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-icon svg { width: 22px; height: 22px; }
+    .stat-icon.blue { background: var(--blue-100); color: var(--blue-500); }
+    .stat-icon.green { background: var(--green-100); color: var(--green-500); }
+    .stat-icon.yellow { background: var(--yellow-100); color: var(--yellow-500); }
+    .stat-icon.purple { background: var(--purple-100); color: var(--purple-500); }
+
+    .stat-info { flex: 1; }
+    .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--gray-900); line-height: 1; }
+    .stat-label { font-size: .8rem; color: var(--gray-400); margin-top: 4px; }
+    .stat-change {
+      font-size: .75rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+    .stat-change.up { color: var(--green-500); }
+    .stat-change.neutral { color: var(--gray-400); }
+
+    /* ===== PANELS (views) ===== */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ===== LEADS TABLE ===== */
+    .leads-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-bar svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--gray-400);
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .search-bar input:focus { border-color: var(--blue-500); }
+
+    .filter-btn {
+      padding: 9px 14px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .85rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      color: var(--gray-600);
+      transition: all .2s;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--blue-500);
+      border-color: var(--blue-500);
+      color: #fff;
+    }
+
+    .btn-primary {
+      padding: 9px 18px;
+      background: var(--blue-500);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .2s;
+    }
+
+    .btn-primary:hover { background: var(--blue-600); }
+    .btn-primary svg { width: 16px; height: 16px; }
+
+    .btn-outline {
+      padding: 9px 18px;
+      background: #fff;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+    }
+
+    .btn-outline:hover { border-color: var(--gray-400); }
+    .btn-outline svg { width: 16px; height: 16px; }
+
+    .table-wrapper {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 16px;
+      font-size: .9rem;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--gray-50); }
+
+    .lead-name { font-weight: 600; color: var(--gray-900); }
+    .lead-email { color: var(--blue-500); font-size: .85rem; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+
+    .badge-nouveau { background: var(--blue-100); color: var(--blue-500); }
+    .badge-encours { background: var(--yellow-100); color: var(--yellow-500); }
+    .badge-gagne { background: var(--green-100); color: var(--green-500); }
+    .badge-perdu { background: var(--red-100); color: var(--red-500); }
+
+    .status-select {
+      padding: 4px 8px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: .8rem;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--gray-700);
+      cursor: pointer;
+      outline: none;
+    }
+
+    .action-btns { display: flex; gap: 6px; }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      color: var(--gray-400);
+    }
+
+    .icon-btn:hover { border-color: var(--blue-500); color: var(--blue-500); background: var(--blue-100); }
+    .icon-btn.delete:hover { border-color: var(--red-500); color: var(--red-500); background: var(--red-100); }
+    .icon-btn svg { width: 14px; height: 14px; }
+
+    .empty-state {
+      text-align: center;
+      padding: 64px 32px;
+      color: var(--gray-400);
+    }
+
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; opacity: .4; }
+    .empty-state p { font-size: .95rem; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 0;
+      margin-bottom: 24px;
+    }
+
+    .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-400);
+      transition: all .2s;
+    }
+
+    .modal-close:hover { background: var(--gray-100); color: var(--gray-700); }
+    .modal-close svg { width: 16px; height: 16px; }
+
+    .modal-body { padding: 0 28px 28px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .field input, .field select, .field textarea {
+      padding: 10px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-900);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--blue-500);
+    }
+
+    .field textarea { resize: vertical; min-height: 80px; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-100);
+      margin-top: 24px;
+    }
+
+    /* ===== DETAIL PANEL ===== */
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .detail-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-info h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+
+    .detail-meta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+    .detail-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      color: var(--gray-600);
+    }
+
+    .detail-meta-item svg { width: 16px; height: 16px; color: var(--gray-400); flex-shrink: 0; }
+    .detail-meta-item a { color: var(--blue-500); text-decoration: none; }
+    .detail-meta-item a:hover { text-decoration: underline; }
+
+    .detail-section {
+      background: var(--gray-50);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .detail-section-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 8px;
+    }
+
+    .detail-section-value {
+      font-size: .9rem;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    .detail-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ===== DASHBOARD ===== */
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .dash-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      padding: 24px;
+    }
+
+    .dash-card h3 {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .pipeline-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .pipeline-label { font-size: .85rem; color: var(--gray-600); width: 80px; flex-shrink: 0; }
+
+    .pipeline-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .pipeline-bar { height: 100%; border-radius: 4px; transition: width .6s ease; }
+    .pipeline-bar.blue { background: var(--blue-500); }
+    .pipeline-bar.yellow { background: var(--yellow-500); }
+    .pipeline-bar.green { background: var(--green-500); }
+    .pipeline-bar.red { background: var(--red-500); }
+
+    .pipeline-count { font-size: .85rem; font-weight: 600; color: var(--gray-700); width: 20px; text-align: right; }
+
+    .recent-leads { }
+
+    .recent-lead-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .recent-lead-item:last-child { border-bottom: none; }
+
+    .recent-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      font-size: .85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .recent-info { flex: 1; }
+    .recent-name { font-size: .9rem; font-weight: 600; color: var(--gray-900); }
+    .recent-project { font-size: .8rem; color: var(--gray-400); }
+    .recent-date { font-size: .78rem; color: var(--gray-400); }
+
+    /* ===== SETTINGS ===== */
+    .settings-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      padding: 28px;
+      max-width: 520px;
+      margin-bottom: 20px;
+    }
+
+    .settings-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--gray-900);
+    }
+
+    .settings-card p {
+      font-size: .85rem;
+      color: var(--gray-400);
+      margin-bottom: 20px;
+    }
+
+    .settings-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+    .settings-field label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .settings-field input {
+      padding: 10px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .settings-field input:focus { border-color: var(--blue-500); }
+
+    .settings-msg {
+      font-size: .85rem;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 12px;
+      display: none;
+    }
+
+    .settings-msg.success { background: var(--green-100); color: #15803d; }
+    .settings-msg.error { background: var(--red-100); color: #dc2626; }
+
+    /* ===== CLOUD SYNC ===== */
+    .sync-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--gray-400);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      margin: 0 16px 16px;
+      cursor: default;
+      user-select: none;
+    }
+    .sync-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gray-300); flex-shrink: 0;
+    }
+    .sync-dot.ok { background: #22c55e; }
+    .sync-dot.error { background: #ef4444; }
+    .sync-dot.syncing {
+      background: var(--blue-500);
+      animation: syncPulse .9s ease-in-out infinite;
+    }
+    @keyframes syncPulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.4; transform:scale(.65); }
+    }
+    .sync-toggle-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; font-size: .88rem; color: var(--gray-700);
+    }
+    .sync-toggle-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--blue-500); cursor: pointer; }
+
+    /* ===== PLANNING ===== */
+    .planning-controls {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .planning-month-nav {
+      display: flex; align-items: center; gap: 4px;
+      background: #fff; border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm); padding: 3px;
+    }
+    .planning-month-btn {
+      width: 30px; height: 30px; border: none; background: none;
+      cursor: pointer; border-radius: 5px; color: var(--gray-600);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .planning-month-btn:hover { background: var(--gray-100); }
+    .planning-month-label {
+      font-size: .9rem; font-weight: 700; color: var(--gray-900);
+      min-width: 155px; text-align: center; text-transform: capitalize;
+    }
+    .planning-view-toggle {
+      display: flex; background: var(--gray-100);
+      border-radius: var(--radius-sm); padding: 3px; gap: 2px;
+    }
+    .planning-view-btn {
+      padding: 6px 14px; border: none; background: none;
+      border-radius: 5px; font-size: .82rem; font-weight: 600;
+      color: var(--gray-500); cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; gap: 5px; transition: all .15s;
+    }
+    .planning-view-btn.active { background: #fff; color: var(--blue-500); box-shadow: var(--shadow-sm); }
+
+    /* Calendar */
+    .cal-grid {
+      background: #fff; border: 1px solid var(--gray-100);
+      border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+    }
+    .cal-header { display: grid; grid-template-columns: repeat(7,1fr); border-bottom: 1px solid var(--gray-100); }
+    .cal-dow {
+      padding: 10px 0; text-align: center;
+      font-size: .7rem; font-weight: 700; color: var(--gray-400);
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .cal-body { display: grid; grid-template-columns: repeat(7,1fr); }
+    .cal-cell {
+      min-height: 96px; border-right: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100); padding: 6px 5px;
+      cursor: pointer; transition: background .1s;
+    }
+    .cal-cell:nth-child(7n) { border-right: none; }
+    .cal-cell:hover { background: var(--gray-50); }
+    .cal-cell.other-month .cal-day-num { color: var(--gray-300); }
+    .cal-cell.today { background: #eff6ff; }
+    .cal-cell.today .cal-day-num {
+      background: var(--blue-500); color: #fff;
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-day-num {
+      font-size: .78rem; font-weight: 600; color: var(--gray-700);
+      margin-bottom: 3px; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-task-chip {
+      font-size: .66rem; font-weight: 600; padding: 2px 5px;
+      border-radius: 4px; margin-bottom: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      cursor: pointer; display: block; max-width: 100%;
+    }
+    .cal-task-chip.done-chip { opacity: .45; text-decoration: line-through; }
+    .cal-more { font-size: .66rem; color: var(--gray-400); padding: 1px 4px; font-weight: 500; }
+    .type-appel     { background: #dbeafe; color: #1d4ed8; }
+    .type-reunion   { background: #ede9fe; color: #7c3aed; }
+    .type-livraison { background: #dcfce7; color: #15803d; }
+    .type-deadline  { background: #fee2e2; color: #dc2626; }
+    .type-tache     { background: #fef3c7; color: #b45309; }
+    .type-autre     { background: var(--gray-100); color: var(--gray-600); }
+
+    /* List view */
+    .planning-list-group { margin-bottom: 22px; }
+    .planning-list-date-header {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .6px; color: var(--gray-400); margin-bottom: 8px; padding: 0 2px;
+    }
+    .planning-list-date-header.today-header { color: var(--blue-500); }
+    .task-item {
+      background: #fff; border: 1px solid var(--gray-100); border-radius: var(--radius-sm);
+      padding: 11px 14px; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 11px;
+      box-shadow: var(--shadow-sm); transition: box-shadow .15s;
+    }
+    .task-item:hover { box-shadow: var(--shadow); }
+    .task-item.done-task { opacity: .5; }
+    .task-item.done-task .task-title { text-decoration: line-through; }
+    .task-done-cb {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--gray-300);
+      flex-shrink: 0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all .15s;
+    }
+    .task-done-cb.checked { background: var(--green-500); border-color: var(--green-500); }
+    .task-done-cb.checked::after {
+      content:''; display:block; width:5px; height:8px;
+      border:2px solid #fff; border-top:none; border-left:none;
+      transform:rotate(45deg) translate(-1px,-1px);
+    }
+    .task-type-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .dot-appel     { background:#1d4ed8; }
+    .dot-reunion   { background:#7c3aed; }
+    .dot-livraison { background:#15803d; }
+    .dot-deadline  { background:#dc2626; }
+    .dot-tache     { background:#b45309; }
+    .dot-autre     { background:var(--gray-500); }
+    .task-info { flex: 1; min-width: 0; }
+    .task-title { font-size: .9rem; font-weight: 600; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-note-preview { font-size: .75rem; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+    .task-time-badge {
+      font-size: .75rem; font-weight: 600; color: var(--gray-500);
+      background: var(--gray-100); padding: 2px 8px; border-radius: 10px; flex-shrink: 0;
+    }
+    .task-actions { display:flex; gap:3px; flex-shrink:0; }
+    .task-action-btn {
+      width:28px; height:28px; border:none; background:none; cursor:pointer;
+      border-radius:6px; color:var(--gray-400);
+      display:flex; align-items:center; justify-content:center; transition:all .15s;
+    }
+    .task-action-btn:hover { background:var(--gray-100); color:var(--gray-700); }
+    .task-action-btn.del:hover { background:#fee2e2; color:#dc2626; }
+    .planning-empty {
+      text-align:center; padding:60px 20px;
+      color:var(--gray-400); font-size:.9rem;
+    }
+    .planning-empty svg { display:block; margin:0 auto 14px; opacity:.25; }
+
+    /* Task modal type selector */
+    .task-type-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:4px; }
+    .task-type-option {
+      padding:10px 6px; border:2px solid var(--gray-200); border-radius:var(--radius-sm);
+      text-align:center; cursor:pointer; font-size:.78rem; font-weight:700;
+      color:var(--gray-500); transition:all .15s; user-select:none;
+    }
+    .task-type-option:hover { border-color:var(--blue-500); color:var(--blue-500); }
+    .task-type-option.sel { color:#fff; border-color:transparent; }
+    .task-type-option[data-type="appel"].sel     { background:#1d4ed8; }
+    .task-type-option[data-type="reunion"].sel   { background:#7c3aed; }
+    .task-type-option[data-type="livraison"].sel { background:#15803d; }
+    .task-type-option[data-type="deadline"].sel  { background:#dc2626; }
+    .task-type-option[data-type="tache"].sel     { background:#b45309; }
+    .task-type-option[data-type="autre"].sel     { background:var(--gray-600); }
+
+    /* Upcoming widget on dashboard */
+    .upcoming-widget {
+      background:#fff; border:1px solid var(--gray-100); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:20px 22px; margin-top:24px;
+    }
+    .upcoming-widget h4 { font-size:.95rem; font-weight:700; color:var(--gray-900); margin-bottom:14px; }
+    .upcoming-item {
+      display:flex; align-items:center; gap:10px;
+      padding:8px 0; border-bottom:1px solid var(--gray-100);
+    }
+    .upcoming-item:last-child { border-bottom:none; }
+    .upcoming-date-col { font-size:.72rem; font-weight:700; color:var(--gray-400); min-width:36px; text-align:center; line-height:1.2; }
+    .upcoming-date-col .upcoming-day { font-size:1.1rem; color:var(--gray-900); }
+
+    @media (max-width:768px) {
+      .cal-cell { min-height:52px; padding:3px 2px; }
+      .cal-task-chip { display:none; }
+      .cal-more { font-size:.6rem; }
+      .planning-month-label { min-width:110px; font-size:.82rem; }
+      .planning-controls { gap:6px; }
+      .task-type-grid { grid-template-columns:repeat(2,1fr); }
+      .task-note-preview { display:none; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 1024px) {
+      .crm-sidebar { width: 200px; }
+      .crm-main { margin-left: 200px; padding: 28px 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-row { grid-template-columns: 1fr; }
+      .crm-page-title { font-size: 1.25rem; }
+    }
+
+    .mobile-topbar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--gray-900);
+      z-index: 200;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .mobile-topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: .95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .mobile-topbar-logo strong { font-weight: 800; }
+
+    .mobile-menu-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,.1);
+      border: none;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .mobile-menu-btn svg { width: 20px; height: 20px; }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 99;
+    }
+
+    .sidebar-overlay.open { display: block; }
+
+    @media (max-width: 768px) {
+      .crm-sidebar { transform: translateX(-100%); transition: transform .3s; z-index: 100; width: 240px; }
+      .crm-sidebar.open { transform: translateX(0); }
+      .crm-main { margin-left: 0; padding: 68px 16px 24px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .mobile-topbar { display: flex; }
+
+      /* Table scroll horizontal sur mobile */
+      .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { min-width: 680px; }
+
+      /* Topbar */
+      .crm-topbar { flex-wrap: wrap; gap: 10px; }
+      .topbar-actions { flex-wrap: wrap; gap: 8px; }
+
+      /* Toolbar leads */
+      .leads-toolbar { gap: 8px; }
+      .filter-btn { padding: 7px 12px; font-size: .8rem; }
+
+      /* Modal glisse depuis le bas */
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal { border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; }
+
+      /* Dashboard */
+      .stat-card { padding: 16px; gap: 12px; }
+      .stat-value { font-size: 1.5rem; }
+      .dash-card { padding: 18px; }
+
+      /* Tarifs editor */
+      #tarifsEditorGrid { grid-template-columns: 1fr !important; }
+    }
+
+    @media (max-width: 480px) {
+      .crm-main { padding: 64px 12px 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 12px 10px; gap: 10px; }
+      .stat-icon { width: 34px; height: 34px; }
+      .stat-icon svg { width: 17px; height: 17px; }
+      .stat-value { font-size: 1.25rem; }
+      .stat-label { font-size: .7rem; }
+      .stat-change { font-size: .7rem; }
+
+      /* Boutons */
+      .btn-primary, .btn-outline { padding: 8px 12px; font-size: .82rem; }
+      .btn-primary svg, .btn-outline svg { width: 14px; height: 14px; }
+      .crm-page-title { font-size: 1.05rem; }
+      .crm-page-title span { display: none; }
+
+      /* Toolbar – colonne complète */
+      .leads-toolbar { flex-direction: column; }
+      .search-bar { min-width: 100%; }
+      .leads-toolbar .filter-btn { text-align: center; }
+
+      /* Table thead petites colonnes */
+      th { padding: 10px 12px; font-size: .7rem; }
+      td { padding: 10px 12px; font-size: .82rem; }
+
+      /* Modal */
+      .modal-header { padding: 18px 16px 0; }
+      .modal-body { padding: 0 16px 16px; }
+      .form-grid { gap: 10px; }
+      .field label { font-size: .72rem; }
+      .field input, .field select, .field textarea { padding: 9px 10px; font-size: .85rem; }
+
+      /* Settings */
+      .settings-card { padding: 18px 16px; }
+
+      /* Dashboard */
+      .dashboard-row { gap: 12px; margin-top: 12px; }
+      .dash-card { padding: 14px; }
+      .dash-card h3 { font-size: .75rem; margin-bottom: 12px; }
+      .pipeline-label { font-size: .78rem; width: 68px; }
+      .pipeline-count { font-size: .78rem; }
+      .recent-date { display: none; }
+      .recent-name { font-size: .85rem; }
+      .recent-project { font-size: .75rem; }
+    }
+
+    /* ===== SITE EDITOR ===== */
+    .editor-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--gray-100);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .editor-tab {
+      flex: 1;
+      min-width: 100px;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: all .2s;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .editor-tab svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .editor-tab:hover { color: var(--gray-700); background: var(--gray-200); }
+    .editor-tab.active { background: #fff; color: var(--blue-500); box-shadow: var(--shadow-sm); }
+
+    .editor-panel { display: none; }
+    .editor-panel.active { display: block; }
+
+    .editor-section {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .editor-section-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editor-section-header h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      flex: 1;
+    }
+
+    .editor-section-header p {
+      font-size: .8rem;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    .editor-section-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .editor-section-icon svg { width: 16px; height: 16px; }
+
+    .editor-section-body {
+      padding: 20px 24px;
+    }
+
+    .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .editor-grid .full { grid-column: 1 / -1; }
+    .editor-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    .editor-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .editor-field label {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .editor-field input, .editor-field textarea, .editor-field select {
+      padding: 9px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .88rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-900);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 3px rgba(29,110,245,.08);
+    }
+
+    .editor-field textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+
+    .editor-divider {
+      height: 1px;
+      background: var(--gray-100);
+      margin: 16px 0;
+    }
+
+    .editor-sublabel {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--gray-600);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .service-editor-card {
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 12px;
+      background: var(--gray-50);
+    }
+
+    .service-editor-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .service-editor-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--blue-100);
+      color: var(--blue-500);
+      font-size: .75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .service-editor-title-display {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      flex: 1;
+    }
+
+    .service-editor-toggle {
+      color: var(--gray-400);
+      transition: transform .2s;
+    }
+
+    .service-editor-toggle.open { transform: rotate(180deg); }
+
+    .service-editor-body { display: none; }
+    .service-editor-body.open { display: block; }
+
+    .stat-editor-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .editor-grid { grid-template-columns: 1fr; }
+      .editor-grid-3 { grid-template-columns: 1fr; }
+      .editor-tabs { gap: 2px; }
+      .editor-tab { font-size: .8rem; padding: 8px 10px; min-width: 0; }
+      .editor-section-body { padding: 16px; }
+    }
+
+    /* ===== TARIFS EDITOR ===== */
+    .tarif-editor-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+    }
+
+    .tarif-editor-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tarif-editor-header h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .tarif-featured-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .75rem;
+      color: var(--gray-400);
+      cursor: pointer;
+    }
+
+    .tarif-featured-toggle input[type=checkbox] {
+      accent-color: var(--blue-500);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .tarif-editor-body { padding: 20px; }
+
+    .tarif-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tarif-price-input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 2px solid var(--blue-100);
+      border-radius: var(--radius-sm);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--blue-500);
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      text-align: center;
+      transition: border-color .2s;
+    }
+
+    .tarif-price-input:focus { border-color: var(--blue-500); }
+
+    .tarif-currency {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-400);
+    }
+
+    .tarif-field { margin-bottom: 12px; }
+
+    .tarif-field label {
+      display: block;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 5px;
+    }
+
+    .tarif-field input, .tarif-field textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .85rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-900);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .tarif-field input:focus, .tarif-field textarea:focus { border-color: var(--blue-500); }
+    .tarif-field textarea { resize: vertical; min-height: 60px; }
+
+    .features-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .feature-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-row input[type=text] {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: .82rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .feature-row input[type=text]:focus { border-color: var(--blue-500); }
+
+    .feature-row select {
+      padding: 5px 6px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: .75rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      background: #fff;
+      color: var(--gray-600);
+      cursor: pointer;
+    }
+
+    .feature-remove {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+
+    .feature-remove:hover { background: var(--red-100); color: var(--red-500); }
+    .feature-remove svg { width: 13px; height: 13px; }
+
+    .add-feature-btn {
+      margin-top: 6px;
+      width: 100%;
+      padding: 7px;
+      border: 1px dashed var(--gray-200);
+      border-radius: 6px;
+      background: none;
+      color: var(--gray-400);
+      font-size: .82rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .add-feature-btn:hover { border-color: var(--blue-500); color: var(--blue-500); background: var(--blue-100); }
+
+    @media (max-width: 1100px) {
+      #tarifsEditorGrid { grid-template-columns: 1fr 1fr !important; }
+    }
+
+    @media (max-width: 720px) {
+      #tarifsEditorGrid { grid-template-columns: 1fr !important; }
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--gray-900);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .3s cubic-bezier(.23,1,.32,1);
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #15803d; }
+    .toast.error { background: #dc2626; }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="logo-nebula.svg" alt="NEBULA" style="height:80px;width:auto;filter:brightness(0) invert(1);">
+    </div>
+    <p class="login-subtitle">Espace CRM privé</p>
+    <div class="login-field">
+      <input type="password" id="loginPassword" placeholder="Mot de passe" autocomplete="current-password" />
+      <button class="toggle-pw" id="togglePw" type="button" aria-label="Afficher/masquer">
+        <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div class="login-error" id="loginError">Mot de passe incorrect. Veuillez réessayer.</div>
+    <button class="login-btn" id="loginBtn">Accéder au CRM</button>
+    <p class="login-hint">Accès réservé à l'administrateur</p>
+  </div>
+</div>
+
+<!-- ===== CRM APP ===== -->
+<div id="crmApp">
+
+  <!-- Mobile top bar -->
+  <div class="mobile-topbar" id="mobileTopbar">
+    <div class="mobile-topbar-logo">
+      <img src="logo-nebula.svg" alt="NEBULA" style="height:36px;width:auto;filter:brightness(0) invert(1);">
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="crm-sidebar" id="crmSidebar">
+    <div class="sidebar-logo">
+      <img src="logo-nebula.svg" alt="NEBULA" style="height:44px;width:auto;filter:brightness(0) invert(1);">
+      <span class="sidebar-badge">CRM</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Principal</div>
+      <div class="sidebar-nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Tableau de bord
+      </div>
+      <div class="sidebar-nav-item" data-view="leads">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leads
+        <span id="sidebarLeadsCount" style="margin-left:auto;background:var(--blue-500);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;">0</span>
+      </div>
+      <div class="sidebar-nav-item" data-view="tarifs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Offres & Tarifs
+      </div>
+      <div class="sidebar-nav-item" data-view="siteeditor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Éditeur de site
+      </div>
+      <div class="sidebar-nav-item" data-view="planning">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Planning
+        <span id="sidebarPlanningCount" style="margin-left:auto;background:var(--yellow-500);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;display:none;">0</span>
+      </div>
+      <div class="sidebar-section-label" style="margin-top:8px;">Paramètres</div>
+      <div class="sidebar-nav-item" data-view="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Paramètres
+      </div>
+    </nav>
+    <div class="sync-badge" id="syncBadge" title="Synchronisation cloud">
+      <div class="sync-dot" id="syncDot"></div>
+      <span id="syncBadgeText">Cloud : non configuré</span>
+    </div>
+    <button class="sidebar-logout" id="logoutBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Déconnexion
+    </button>
+  </aside>
+
+  <!-- Main -->
+  <main class="crm-main">
+
+    <!-- ===== DASHBOARD VIEW ===== -->
+    <div class="view active" id="view-dashboard">
+      <div class="crm-topbar">
+        <div>
+          <div class="crm-page-title">Tableau de bord <span id="dashDate"></span></div>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-primary" id="dashAddLeadBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nouveau lead
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total leads</div>
+            <div class="stat-change neutral" id="statTotalSub">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statGagne">0</div>
+            <div class="stat-label">Projets gagnés</div>
+            <div class="stat-change up" id="statGagneSub">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statEncours">0</div>
+            <div class="stat-label">En cours</div>
+            <div class="stat-change neutral" id="statEnCoursSub">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statCA">0€</div>
+            <div class="stat-label">CA potentiel</div>
+            <div class="stat-change neutral">leads gagnés</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-row">
+        <div class="dash-card">
+          <h3>Pipeline</h3>
+          <div class="pipeline-row">
+            <div class="pipeline-label">Nouveau</div>
+            <div class="pipeline-bar-bg"><div class="pipeline-bar blue" id="pipeNouveau" style="width:0%"></div></div>
+            <div class="pipeline-count" id="pipeNouveauCount">0</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">En cours</div>
+            <div class="pipeline-bar-bg"><div class="pipeline-bar yellow" id="pipeEncours" style="width:0%"></div></div>
+            <div class="pipeline-count" id="pipeEncoursCount">0</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">Gagné</div>
+            <div class="pipeline-bar-bg"><div class="pipeline-bar green" id="pipeGagne" style="width:0%"></div></div>
+            <div class="pipeline-count" id="pipeGagneCount">0</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">Perdu</div>
+            <div class="pipeline-bar-bg"><div class="pipeline-bar red" id="pipePerdu" style="width:0%"></div></div>
+            <div class="pipeline-count" id="pipePerduCount">0</div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <h3>Derniers leads reçus</h3>
+          <div id="recentLeadsList">
+            <div class="empty-state" style="padding:32px 0;">
+              <p>Aucun lead pour l'instant</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LEADS VIEW ===== -->
+    <div class="view" id="view-leads">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Leads <span id="leadsCount"></span></div>
+        <div class="topbar-actions">
+          <button class="btn-outline" id="exportCsvBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exporter CSV
+          </button>
+          <button class="btn-primary" id="addLeadBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nouveau lead
+          </button>
+        </div>
+      </div>
+
+      <div class="leads-toolbar">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Rechercher un lead..." />
+        </div>
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="nouveau">Nouveaux</button>
+        <button class="filter-btn" data-filter="encours">En cours</button>
+        <button class="filter-btn" data-filter="gagne">Gagnés</button>
+        <button class="filter-btn" data-filter="perdu">Perdus</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email / Tél</th>
+              <th>Projet</th>
+              <th>Budget</th>
+              <th>Statut</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+          </tbody>
+        </table>
+        <div class="empty-state" id="leadsEmpty" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <p>Aucun lead trouvé</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SITE EDITOR VIEW ===== -->
+    <div class="view" id="view-siteeditor">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Éditeur de site</div>
+        <div class="topbar-actions">
+          <button class="btn-outline" id="previewSiteBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Voir le site
+          </button>
+          <button class="btn-primary" id="saveSiteContentBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Enregistrer & Publier
+          </button>
+        </div>
+      </div>
+      <p style="color:var(--gray-400);font-size:.88rem;margin-bottom:20px;">Modifiez le contenu de votre site ici. Les changements s'appliquent dès que vos visiteurs rechargent la page.</p>
+
+      <!-- Tabs -->
+      <div class="editor-tabs">
+        <button class="editor-tab active" data-tab="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+          Page d'accueil
+        </button>
+        <button class="editor-tab" data-tab="services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          Services
+        </button>
+        <button class="editor-tab" data-tab="about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          À propos
+        </button>
+        <button class="editor-tab" data-tab="contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact
+        </button>
+      </div>
+
+      <!-- HERO PANEL -->
+      <div class="editor-panel active" id="epanel-hero">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></div>
+            <div><h3>Badge d'accroche</h3><p>Petite ligne en haut du héro</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-field">
+              <label>Texte du badge</label>
+              <input type="text" id="se_badge" placeholder="Disponible pour de nouveaux projets" />
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h8M4 18h16"/></svg></div>
+            <div><h3>Titre principal</h3><p>Le grand titre de la page d'accueil</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Ligne 1</label>
+                <input type="text" id="se_title1" placeholder="Je crée des sites web" />
+              </div>
+              <div class="editor-field">
+                <label>Mot mis en valeur (bleu)</label>
+                <input type="text" id="se_highlight" placeholder="qui convertissent" />
+              </div>
+              <div class="editor-field full">
+                <label>Ligne 2</label>
+                <input type="text" id="se_title2" placeholder="& impressionnent" />
+              </div>
+              <div class="editor-field full">
+                <label>Sous-titre</label>
+                <textarea id="se_subtitle" rows="3" placeholder="Designer web freelance spécialisée..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div><h3>Boutons d'action</h3><p>Les 2 boutons sous le titre</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Bouton principal</label>
+                <input type="text" id="se_cta1" placeholder="Voir mon travail" />
+              </div>
+              <div class="editor-field">
+                <label>Bouton secondaire</label>
+                <input type="text" id="se_cta2" placeholder="Démarrer un projet" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><h3>Statistiques</h3><p>Les 3 chiffres clés sous les boutons</p></div>
+          </div>
+          <div class="editor-section-body">
+            <span class="editor-sublabel">Statistique 1</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s1v" placeholder="50+" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s1l" placeholder="Sites livrés" /></div>
+            </div>
+            <span class="editor-sublabel">Statistique 2</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s2v" placeholder="98%" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s2l" placeholder="Clients satisfaits" /></div>
+            </div>
+            <span class="editor-sublabel">Statistique 3</span>
+            <div class="stat-editor-row">
+              <div class="editor-field"><label>Valeur</label><input type="text" id="se_s3v" placeholder="5 ans" /></div>
+              <div class="editor-field"><label>Label</label><input type="text" id="se_s3l" placeholder="D'expérience" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES PANEL -->
+      <div class="editor-panel" id="epanel-services">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <div><h3>Les 6 cartes services</h3><p>Titre, description et 3 fonctionnalités par service</p></div>
+          </div>
+          <div class="editor-section-body" id="servicesEditorBody">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT PANEL -->
+      <div class="editor-panel" id="epanel-about">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div><h3>Votre biographie</h3><p>Texte de présentation dans la section À propos</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-field" style="margin-bottom:14px;">
+              <label>Paragraphe 1</label>
+              <textarea id="se_bio1" rows="3" placeholder="Passionnée par le design et le développement web depuis 5 ans..."></textarea>
+            </div>
+            <div class="editor-field">
+              <label>Paragraphe 2</label>
+              <textarea id="se_bio2" rows="3" placeholder="Mon approche : comprendre vos objectifs métier..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h3>Badge d'expérience</h3><p>La pastille bleue sur la photo de profil</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Nombre (ex : 5)</label>
+                <input type="text" id="se_expnum" placeholder="5" />
+              </div>
+              <div class="editor-field">
+                <label>Texte (ex : ans d'expérience)</label>
+                <input type="text" id="se_exptext" placeholder="ans d'expérience" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT PANEL -->
+      <div class="editor-panel" id="epanel-contact">
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><h3>Coordonnées</h3><p>Email, téléphone et infos affichés sur la page Contact</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Email</label>
+                <input type="email" id="se_email" placeholder="contact@nebula-design.fr" />
+              </div>
+              <div class="editor-field">
+                <label>Téléphone</label>
+                <input type="tel" id="se_phone" placeholder="+33 6 12 34 56 78" />
+              </div>
+              <div class="editor-field">
+                <label>Délai de réponse</label>
+                <input type="text" id="se_delay" placeholder="Réponse sous 24h ouvrées" />
+              </div>
+              <div class="editor-field">
+                <label>Zone de couverture</label>
+                <input type="text" id="se_location" placeholder="France entière & international" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div><h3>Liens réseaux sociaux</h3><p>URLs complètes (ex : https://linkedin.com/in/...)</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>LinkedIn (URL)</label>
+                <input type="url" id="se_linkedin" placeholder="https://linkedin.com/in/votre-profil" />
+              </div>
+              <div class="editor-field">
+                <label>Behance (URL)</label>
+                <input type="url" id="se_behance" placeholder="https://behance.net/votre-profil" />
+              </div>
+              <div class="editor-field full">
+                <label>Instagram (URL)</label>
+                <input type="url" id="se_instagram" placeholder="https://instagram.com/votre-compte" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-section-header">
+            <div class="editor-section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <div><h3>Identité & copyright</h3><p>Nom de la société et texte de bas de page</p></div>
+          </div>
+          <div class="editor-section-body">
+            <div class="editor-grid">
+              <div class="editor-field">
+                <label>Nom de la société</label>
+                <input type="text" id="se_company" placeholder="NÉBULA" />
+              </div>
+              <div class="editor-field">
+                <label>Texte copyright footer</label>
+                <input type="text" id="se_copyright" placeholder="© 2024 NÉBULA – Designer Web. Tous droits réservés." />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TARIFS VIEW ===== -->
+    <div class="view" id="view-tarifs">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Offres & Tarifs</div>
+        <div class="topbar-actions">
+          <button class="btn-primary" id="saveTarifsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Enregistrer & Publier
+          </button>
+        </div>
+      </div>
+      <p style="color:var(--gray-400);font-size:.9rem;margin-bottom:28px;">Les modifications sont appliquées immédiatement sur la page Tarifs et la page d'accueil du site.</p>
+
+      <div id="tarifsEditorGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <!-- Cards generated by JS -->
+      </div>
+    </div>
+
+    <!-- ===== PLANNING VIEW ===== -->
+    <div class="view" id="view-planning">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Planning</div>
+        <div class="topbar-actions planning-controls">
+          <div class="planning-view-toggle">
+            <button class="planning-view-btn active" id="calViewBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Calendrier
+            </button>
+            <button class="planning-view-btn" id="listViewBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Liste
+            </button>
+          </div>
+          <div class="planning-month-nav">
+            <button class="planning-month-btn" id="prevMonthBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="planning-month-label" id="currentMonthLabel"></span>
+            <button class="planning-month-btn" id="nextMonthBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <button class="btn-primary" id="addTaskBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter
+          </button>
+        </div>
+      </div>
+
+      <!-- Calendar view -->
+      <div id="planningCalView">
+        <div class="cal-grid">
+          <div class="cal-header" id="calDow"></div>
+          <div class="cal-body" id="calBody"></div>
+        </div>
+      </div>
+
+      <!-- List view -->
+      <div id="planningListView" style="display:none;">
+        <div id="planningListContent"></div>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS VIEW ===== -->
+    <div class="view" id="view-settings">
+      <div class="crm-topbar">
+        <div class="crm-page-title">Paramètres</div>
+      </div>
+
+      <div class="settings-card">
+        <h3>Changer le mot de passe</h3>
+        <p>Modifiez votre mot de passe d'accès au CRM.</p>
+        <div class="settings-field">
+          <label>Mot de passe actuel</label>
+          <input type="password" id="currentPw" placeholder="Mot de passe actuel" />
+        </div>
+        <div class="settings-field">
+          <label>Nouveau mot de passe</label>
+          <input type="password" id="newPw" placeholder="Nouveau mot de passe" />
+        </div>
+        <div class="settings-field">
+          <label>Confirmer le nouveau mot de passe</label>
+          <input type="password" id="confirmPw" placeholder="Confirmer" />
+        </div>
+        <button class="btn-primary" id="changePwBtn">Enregistrer le mot de passe</button>
+        <div class="settings-msg" id="pwMsg"></div>
+      </div>
+
+      <div class="settings-card">
+        <h3>Réinitialiser les données</h3>
+        <p>Supprime tous les leads du CRM. Cette action est irréversible.</p>
+        <button class="btn-outline" id="resetDataBtn" style="color:#dc2626;border-color:#fca5a5;">Supprimer tous les leads</button>
+      </div>
+
+      <div class="settings-card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:-2px;margin-right:6px;"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Synchronisation entre appareils
+        </h3>
+        <p>Synchronisez automatiquement vos données (leads, tarifs, contenu du site) entre votre téléphone et votre ordinateur via <a href="https://jsonbin.io" target="_blank" rel="noopener" style="color:var(--blue-500);text-decoration:none;">JSONBin.io</a> (service gratuit). Créez un compte, copiez votre <strong>Master Key</strong> et collez-la ci-dessous.</p>
+        <div class="settings-field">
+          <label>Clé API JSONBin (X-Master-Key)</label>
+          <input type="password" id="syncApiKey" placeholder="$2a$10$…" autocomplete="off" />
+        </div>
+        <div class="settings-field">
+          <label>Bin ID (généré automatiquement au premier envoi)</label>
+          <input type="text" id="syncBinId" placeholder="Généré lors du 1er envoi" readonly style="background:var(--gray-50);color:var(--gray-500);" />
+        </div>
+        <div class="sync-toggle-row">
+          <input type="checkbox" id="syncAutoToggle" />
+          <label for="syncAutoToggle">Synchronisation automatique à l'ouverture du CRM</label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-primary" id="syncPushBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Envoyer vers le cloud
+          </button>
+          <button class="btn-outline" id="syncPullBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><polyline points="8 8 12 12 16 8"/><line x1="12" y1="12" x2="12" y2="3"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Récupérer depuis le cloud
+          </button>
+        </div>
+        <div class="settings-msg" id="syncMsg"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== LEAD MODAL (Add / Edit) ===== -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Nouveau lead</div>
+      <button class="modal-close" id="modalClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editLeadId" />
+      <div class="form-grid">
+        <div class="field">
+          <label>Nom *</label>
+          <input type="text" id="fieldName" placeholder="Marie Dupont" />
+        </div>
+        <div class="field">
+          <label>Email *</label>
+          <input type="email" id="fieldEmail" placeholder="marie@exemple.fr" />
+        </div>
+        <div class="field">
+          <label>Téléphone</label>
+          <input type="tel" id="fieldPhone" placeholder="+33 6 00 00 00 00" />
+        </div>
+        <div class="field">
+          <label>Type de projet</label>
+          <select id="fieldProjectType">
+            <option value="">— Sélectionner —</option>
+            <option value="Site vitrine">Site vitrine</option>
+            <option value="E-commerce">E-commerce</option>
+            <option value="Refonte de site">Refonte de site</option>
+            <option value="Landing page">Landing page</option>
+            <option value="SEO & Performance">SEO & Performance</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Budget</label>
+          <select id="fieldBudget">
+            <option value="">— Sélectionner —</option>
+            <option value="< 1 500€">Moins de 1 500€</option>
+            <option value="1 500€ – 3 000€">1 500€ – 3 000€</option>
+            <option value="3 000€ – 6 000€">3 000€ – 6 000€</option>
+            <option value="> 6 000€">Plus de 6 000€</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Statut</label>
+          <select id="fieldStatus">
+            <option value="nouveau">Nouveau</option>
+            <option value="encours">En cours</option>
+            <option value="gagne">Gagné</option>
+            <option value="perdu">Perdu</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Message / Notes</label>
+          <textarea id="fieldMessage" placeholder="Description du projet, notes..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-outline" id="modalCancel">Annuler</button>
+        <button class="btn-primary" id="saveLead">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEAD DETAIL MODAL ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Fiche lead</div>
+      <button class="modal-close" id="detailModalClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="detailModalBody"></div>
+  </div>
+</div>
+
+<!-- ===== TASK MODAL ===== -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="taskModalTitle">Nouvelle tâche</div>
+      <button class="modal-close" id="taskModalClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="taskEditId" />
+      <div class="form-grid">
+        <div class="field full">
+          <label>Titre *</label>
+          <input type="text" id="taskTitle" placeholder="Ex : Appel client Martin, livraison projet…" />
+        </div>
+        <div class="field">
+          <label>Date *</label>
+          <input type="date" id="taskDate" />
+        </div>
+        <div class="field">
+          <label>Heure</label>
+          <input type="time" id="taskTime" />
+        </div>
+        <div class="field full">
+          <label>Type</label>
+          <div class="task-type-grid" id="taskTypeGrid">
+            <div class="task-type-option sel" data-type="tache">📋 Tâche</div>
+            <div class="task-type-option" data-type="appel">📞 Appel</div>
+            <div class="task-type-option" data-type="reunion">🤝 Réunion</div>
+            <div class="task-type-option" data-type="livraison">🚀 Livraison</div>
+            <div class="task-type-option" data-type="deadline">⚡ Deadline</div>
+            <div class="task-type-option" data-type="autre">📌 Autre</div>
+          </div>
+          <input type="hidden" id="taskType" value="tache" />
+        </div>
+        <div class="field full">
+          <label>Notes</label>
+          <textarea id="taskNote" rows="3" placeholder="Détails, infos supplémentaires…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-outline" id="taskModalCancel">Annuler</button>
+      <button class="btn-primary" id="saveTaskBtn">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== CONSTANTS =====
+  const STORAGE_KEY = 'nebula_crm_leads';
+  const PW_KEY = 'nebula_crm_pw';
+  const SESSION_KEY = 'nebula_crm_session';
+  const DEFAULT_PW = 'Nebula2024!';
+
+  // ===== HELPERS =====
+  function getPassword() {
+    return localStorage.getItem(PW_KEY) || DEFAULT_PW;
+  }
+
+  function getLeads() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function saveLeads(leads) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    autoPush();
+  }
+
+  function genId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  function initials(name) {
+    return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  }
+
+  function statusBadge(status) {
+    const map = {
+      nouveau: ['badge-nouveau', 'Nouveau'],
+      encours: ['badge-encours', 'En cours'],
+      gagne: ['badge-gagne', 'Gagné'],
+      perdu: ['badge-perdu', 'Perdu'],
+    };
+    const [cls, label] = map[status] || ['badge-nouveau', 'Nouveau'];
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  function budgetToAmount(budget) {
+    if (!budget) return 0;
+    if (budget.includes('1 500')) return 990;
+    if (budget.includes('3 000')) return 2490;
+    if (budget.includes('6 000')) return 4990;
+    if (budget.includes('> 6')) return 6000;
+    return 0;
+  }
+
+  // ===== TOAST =====
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(msg, type = '') {
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.className = 'toast show ' + type;
+    toastTimer = setTimeout(() => { toast.className = 'toast'; }, 3000);
+  }
+
+  // ===== LOGIN =====
+  const loginScreen = document.getElementById('loginScreen');
+  const crmApp = document.getElementById('crmApp');
+  const loginPassword = document.getElementById('loginPassword');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginError = document.getElementById('loginError');
+  const togglePw = document.getElementById('togglePw');
+  const eyeIcon = document.getElementById('eyeIcon');
+
+  function checkSession() {
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      showApp();
+    }
+  }
+
+  function showApp() {
+    loginScreen.style.display = 'none';
+    crmApp.style.display = 'block';
+    refreshAll();
+    fillSyncSettings();
+    autoSyncOnLoad();
+  }
+
+  togglePw.addEventListener('click', () => {
+    if (loginPassword.type === 'password') {
+      loginPassword.type = 'text';
+      eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+    } else {
+      loginPassword.type = 'password';
+      eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+  });
+
+  loginBtn.addEventListener('click', doLogin);
+  loginPassword.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+  function doLogin() {
+    const pw = loginPassword.value;
+    if (pw === getPassword()) {
+      loginError.style.display = 'none';
+      sessionStorage.setItem(SESSION_KEY, '1');
+      showApp();
+    } else {
+      loginError.style.display = 'block';
+      loginPassword.value = '';
+      loginPassword.focus();
+    }
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    location.reload();
+  });
+
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('crmSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+
+  document.getElementById('mobileMenuBtn').addEventListener('click', openSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // ===== NAVIGATION =====
+  let currentView = 'dashboard';
+  const navItems = document.querySelectorAll('.sidebar-nav-item[data-view]');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const view = item.dataset.view;
+      showView(view);
+      closeSidebar();
+    });
+  });
+
+  function showView(view) {
+    currentView = view;
+    navItems.forEach(i => i.classList.toggle('active', i.dataset.view === view));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    if (view === 'dashboard') refreshDashboard();
+    if (view === 'leads') renderLeadsTable();
+    if (view === 'tarifs') renderTarifsEditor();
+    if (view === 'planning') renderPlanning();
+    if (view === 'siteeditor') fillSiteEditorFields();
+    if (view === 'settings') fillSyncSettings();
+  }
+
+  // ===== DATA =====
+  let leads = [];
+  let filterStatus = 'all';
+  let searchTerm = '';
+  let editingId = null;
+
+  function refreshAll() {
+    leads = getLeads();
+    updateSidebarCount();
+    updatePlanningBadge();
+    refreshDashboard();
+
+    // Date in topbar
+    const now = new Date();
+    const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+    document.getElementById('dashDate').textContent = now.toLocaleDateString('fr-FR', opts);
+  }
+
+  function updateSidebarCount() {
+    document.getElementById('sidebarLeadsCount').textContent = leads.length;
+  }
+
+  // ===== DASHBOARD =====
+  function refreshDashboard() {
+    leads = getLeads();
+    const total = leads.length;
+    const gagne = leads.filter(l => l.status === 'gagne').length;
+    const encours = leads.filter(l => l.status === 'encours').length;
+    const perdu = leads.filter(l => l.status === 'perdu').length;
+    const nouveau = leads.filter(l => l.status === 'nouveau').length;
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statGagne').textContent = gagne;
+    document.getElementById('statEncours').textContent = encours;
+
+    const ca = leads.filter(l => l.status === 'gagne').reduce((sum, l) => sum + budgetToAmount(l.budget), 0);
+    document.getElementById('statCA').textContent = ca ? ca.toLocaleString('fr-FR') + '€' : '0€';
+
+    document.getElementById('statTotalSub').textContent = total === 0 ? 'Aucun lead' : `${nouveau} nouveau${nouveau > 1 ? 'x' : ''}`;
+    document.getElementById('statGagneSub').textContent = total > 0 ? Math.round(gagne / total * 100) + '% taux de conversion' : '—';
+    document.getElementById('statEnCoursSub').textContent = encours > 0 ? `${encours} en cours` : '—';
+
+    // Pipeline bars
+    const max = Math.max(nouveau, encours, gagne, perdu, 1);
+    document.getElementById('pipeNouveau').style.width = (nouveau / max * 100) + '%';
+    document.getElementById('pipeEncours').style.width = (encours / max * 100) + '%';
+    document.getElementById('pipeGagne').style.width = (gagne / max * 100) + '%';
+    document.getElementById('pipePerdu').style.width = (perdu / max * 100) + '%';
+    document.getElementById('pipeNouveauCount').textContent = nouveau;
+    document.getElementById('pipeEncoursCount').textContent = encours;
+    document.getElementById('pipeGagneCount').textContent = gagne;
+    document.getElementById('pipePerduCount').textContent = perdu;
+
+    // Recent leads
+    const recentContainer = document.getElementById('recentLeadsList');
+    const recent = [...leads].sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,5);
+    if (recent.length === 0) {
+      recentContainer.innerHTML = '<div class="empty-state" style="padding:32px 0;"><p>Aucun lead pour l\'instant</p></div>';
+    } else {
+      recentContainer.innerHTML = recent.map(l => `
+        <div class="recent-lead-item">
+          <div class="recent-avatar">${initials(l.name)}</div>
+          <div class="recent-info">
+            <div class="recent-name">${escHtml(l.name)}</div>
+            <div class="recent-project">${escHtml(l.projectType || '—')}</div>
+          </div>
+          ${statusBadge(l.status)}
+          <div class="recent-date">${formatDate(l.date)}</div>
+        </div>
+      `).join('');
+    }
+
+    updateSidebarCount();
+  }
+
+  // ===== LEADS TABLE =====
+  function getFilteredLeads() {
+    return leads.filter(l => {
+      const matchStatus = filterStatus === 'all' || l.status === filterStatus;
+      const search = searchTerm.toLowerCase();
+      const matchSearch = !search ||
+        l.name.toLowerCase().includes(search) ||
+        (l.email || '').toLowerCase().includes(search) ||
+        (l.projectType || '').toLowerCase().includes(search);
+      return matchStatus && matchSearch;
+    });
+  }
+
+  function renderLeadsTable() {
+    leads = getLeads();
+    const filtered = getFilteredLeads();
+    const tbody = document.getElementById('leadsTableBody');
+    const empty = document.getElementById('leadsEmpty');
+    document.getElementById('leadsCount').textContent = `(${leads.length})`;
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+
+    empty.style.display = 'none';
+    tbody.innerHTML = filtered.map(l => `
+      <tr>
+        <td>
+          <div class="lead-name">${escHtml(l.name)}</div>
+        </td>
+        <td>
+          <div class="lead-email">${escHtml(l.email || '—')}</div>
+          <div style="font-size:.8rem;color:var(--gray-400);margin-top:2px;">${escHtml(l.phone || '')}</div>
+        </td>
+        <td>${escHtml(l.projectType || '—')}</td>
+        <td>${escHtml(l.budget || '—')}</td>
+        <td>
+          <select class="status-select" data-id="${l.id}" onchange="updateStatus(this)">
+            <option value="nouveau" ${l.status==='nouveau'?'selected':''}>Nouveau</option>
+            <option value="encours" ${l.status==='encours'?'selected':''}>En cours</option>
+            <option value="gagne" ${l.status==='gagne'?'selected':''}>Gagné</option>
+            <option value="perdu" ${l.status==='perdu'?'selected':''}>Perdu</option>
+          </select>
+        </td>
+        <td style="white-space:nowrap;">${formatDate(l.date)}</td>
+        <td>
+          <div class="action-btns">
+            <button class="icon-btn" title="Voir" onclick="viewLead('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="icon-btn" title="Modifier" onclick="editLead('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="icon-btn delete" title="Supprimer" onclick="deleteLead('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  window.updateStatus = function(sel) {
+    const id = sel.dataset.id;
+    const leads2 = getLeads();
+    const lead = leads2.find(l => l.id === id);
+    if (lead) {
+      lead.status = sel.value;
+      saveLeads(leads2);
+      leads = leads2;
+      showToast('Statut mis à jour', 'success');
+      if (currentView === 'dashboard') refreshDashboard();
+    }
+  };
+
+  window.deleteLead = function(id) {
+    if (!confirm('Supprimer ce lead ?')) return;
+    const leads2 = getLeads().filter(l => l.id !== id);
+    saveLeads(leads2);
+    leads = leads2;
+    renderLeadsTable();
+    refreshDashboard();
+    showToast('Lead supprimé');
+  };
+
+  window.editLead = function(id) {
+    const lead = getLeads().find(l => l.id === id);
+    if (!lead) return;
+    editingId = id;
+    document.getElementById('modalTitle').textContent = 'Modifier le lead';
+    document.getElementById('editLeadId').value = id;
+    document.getElementById('fieldName').value = lead.name || '';
+    document.getElementById('fieldEmail').value = lead.email || '';
+    document.getElementById('fieldPhone').value = lead.phone || '';
+    document.getElementById('fieldProjectType').value = lead.projectType || '';
+    document.getElementById('fieldBudget').value = lead.budget || '';
+    document.getElementById('fieldStatus').value = lead.status || 'nouveau';
+    document.getElementById('fieldMessage').value = lead.message || '';
+    openModal('leadModal');
+  };
+
+  window.viewLead = function(id) {
+    const lead = getLeads().find(l => l.id === id);
+    if (!lead) return;
+    const body = document.getElementById('detailModalBody');
+    body.innerHTML = `
+      <div class="detail-header">
+        <div class="detail-avatar">${initials(lead.name)}</div>
+        <div class="detail-info">
+          <h2>${escHtml(lead.name)}</h2>
+          <div>${statusBadge(lead.status)}</div>
+        </div>
+      </div>
+      <div class="detail-meta">
+        <div class="detail-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:${escHtml(lead.email)}">${escHtml(lead.email || '—')}</a>
+        </div>
+        ${lead.phone ? `<div class="detail-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.03 1.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 6.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:${escHtml(lead.phone)}">${escHtml(lead.phone)}</a>
+        </div>` : ''}
+        <div class="detail-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Reçu le ${formatDate(lead.date)}
+        </div>
+      </div>
+      <div class="detail-tags">
+        ${lead.projectType ? `<span class="badge badge-nouveau">${escHtml(lead.projectType)}</span>` : ''}
+        ${lead.budget ? `<span class="badge badge-encours">${escHtml(lead.budget)}</span>` : ''}
+      </div>
+      ${lead.message ? `
+      <div class="detail-section" style="margin-top:16px;">
+        <div class="detail-section-label">Message</div>
+        <div class="detail-section-value">${escHtml(lead.message)}</div>
+      </div>` : ''}
+      <div class="modal-footer">
+        <button class="btn-outline" onclick="closeModal('detailModal')">Fermer</button>
+        <button class="btn-primary" onclick="closeModal('detailModal');editLead('${lead.id}')">Modifier</button>
+      </div>
+    `;
+    openModal('detailModal');
+  };
+
+  // ===== MODAL =====
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+  }
+
+  window.closeModal = function(id) {
+    document.getElementById(id).classList.remove('open');
+  };
+
+  document.getElementById('modalClose').addEventListener('click', () => closeModal('leadModal'));
+  document.getElementById('modalCancel').addEventListener('click', () => closeModal('leadModal'));
+  document.getElementById('detailModalClose').addEventListener('click', () => closeModal('detailModal'));
+
+  document.getElementById('leadModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal('leadModal');
+  });
+  document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal('detailModal');
+  });
+
+  function openAddLeadModal() {
+    editingId = null;
+    document.getElementById('modalTitle').textContent = 'Nouveau lead';
+    document.getElementById('editLeadId').value = '';
+    ['fieldName','fieldEmail','fieldPhone','fieldMessage'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fieldProjectType').value = '';
+    document.getElementById('fieldBudget').value = '';
+    document.getElementById('fieldStatus').value = 'nouveau';
+    openModal('leadModal');
+  }
+
+  document.getElementById('addLeadBtn').addEventListener('click', openAddLeadModal);
+  document.getElementById('dashAddLeadBtn').addEventListener('click', openAddLeadModal);
+
+  document.getElementById('saveLead').addEventListener('click', () => {
+    const name = document.getElementById('fieldName').value.trim();
+    const email = document.getElementById('fieldEmail').value.trim();
+    if (!name || !email) {
+      showToast('Nom et email sont obligatoires', 'error');
+      return;
+    }
+
+    const leads2 = getLeads();
+    if (editingId) {
+      const idx = leads2.findIndex(l => l.id === editingId);
+      if (idx >= 0) {
+        leads2[idx] = {
+          ...leads2[idx],
+          name, email,
+          phone: document.getElementById('fieldPhone').value.trim(),
+          projectType: document.getElementById('fieldProjectType').value,
+          budget: document.getElementById('fieldBudget').value,
+          status: document.getElementById('fieldStatus').value,
+          message: document.getElementById('fieldMessage').value.trim(),
+        };
+      }
+      showToast('Lead mis à jour', 'success');
+    } else {
+      leads2.unshift({
+        id: genId(),
+        name, email,
+        phone: document.getElementById('fieldPhone').value.trim(),
+        projectType: document.getElementById('fieldProjectType').value,
+        budget: document.getElementById('fieldBudget').value,
+        status: document.getElementById('fieldStatus').value,
+        message: document.getElementById('fieldMessage').value.trim(),
+        date: new Date().toISOString(),
+      });
+      showToast('Lead ajouté !', 'success');
+    }
+
+    saveLeads(leads2);
+    leads = leads2;
+    closeModal('leadModal');
+    renderLeadsTable();
+    refreshDashboard();
+  });
+
+  // ===== FILTERS & SEARCH =====
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterStatus = btn.dataset.filter;
+      renderLeadsTable();
+    });
+  });
+
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchTerm = e.target.value;
+    renderLeadsTable();
+  });
+
+  // ===== EXPORT CSV =====
+  document.getElementById('exportCsvBtn').addEventListener('click', () => {
+    const data = getLeads();
+    if (data.length === 0) { showToast('Aucune donnée à exporter'); return; }
+    const headers = ['Nom','Email','Téléphone','Type de projet','Budget','Statut','Date','Message'];
+    const rows = data.map(l => [
+      l.name, l.email, l.phone || '', l.projectType || '', l.budget || '',
+      l.status, l.date ? new Date(l.date).toLocaleDateString('fr-FR') : '', (l.message || '').replace(/\n/g,' ')
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nebula-crm-leads-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Export CSV téléchargé', 'success');
+  });
+
+  // ===== SETTINGS =====
+  document.getElementById('changePwBtn').addEventListener('click', () => {
+    const current = document.getElementById('currentPw').value;
+    const newPw = document.getElementById('newPw').value;
+    const confirm = document.getElementById('confirmPw').value;
+    const msg = document.getElementById('pwMsg');
+
+    if (current !== getPassword()) {
+      msg.textContent = 'Mot de passe actuel incorrect.';
+      msg.className = 'settings-msg error';
+      msg.style.display = 'block';
+      return;
+    }
+    if (newPw.length < 6) {
+      msg.textContent = 'Le nouveau mot de passe doit faire au moins 6 caractères.';
+      msg.className = 'settings-msg error';
+      msg.style.display = 'block';
+      return;
+    }
+    if (newPw !== confirm) {
+      msg.textContent = 'Les mots de passe ne correspondent pas.';
+      msg.className = 'settings-msg error';
+      msg.style.display = 'block';
+      return;
+    }
+    localStorage.setItem(PW_KEY, newPw);
+    ['currentPw','newPw','confirmPw'].forEach(id => document.getElementById(id).value = '');
+    msg.textContent = 'Mot de passe modifié avec succès !';
+    msg.className = 'settings-msg success';
+    msg.style.display = 'block';
+    showToast('Mot de passe mis à jour', 'success');
+  });
+
+  document.getElementById('resetDataBtn').addEventListener('click', () => {
+    if (!confirm('Supprimer tous les leads ? Cette action est irréversible.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    leads = [];
+    renderLeadsTable();
+    refreshDashboard();
+    showToast('Toutes les données ont été supprimées');
+  });
+
+  // ===== SITE EDITOR =====
+  const SITE_KEY = 'nebula_site_content';
+
+  const DEFAULT_SITE = {
+    hero: {
+      badge: 'Disponible pour de nouveaux projets',
+      title1: 'Je crée des sites web',
+      highlight: 'qui convertissent',
+      title2: '& impressionnent',
+      subtitle: "Designer web freelance spécialisée dans la création de sites professionnels sur mesure. De la conception à la mise en ligne, je transforme votre vision en expérience digitale mémorable.",
+      cta1: 'Voir mon travail',
+      cta2: 'Démarrer un projet',
+      s1v: '50+', s1l: 'Sites livrés',
+      s2v: '98%', s2l: 'Clients satisfaits',
+      s3v: '5 ans', s3l: "D'expérience",
+    },
+    services: [
+      { title: 'Site Vitrine', desc: "Un site élégant qui présente votre activité, vos services et renforce votre crédibilité professionnelle auprès de vos clients.", f1: 'Design sur mesure', f2: 'Responsive mobile', f3: 'SEO optimisé' },
+      { title: 'E-Commerce', desc: "Une boutique en ligne performante pour vendre vos produits 24h/24. Interface intuitive, paiement sécurisé et gestion simplifiée.", f1: 'Catalogue produits', f2: 'Paiement sécurisé', f3: 'Tableau de bord' },
+      { title: 'Refonte Web', desc: "Votre site est obsolète ? Je modernise votre présence en ligne avec un design actuel, des performances améliorées et une meilleure expérience utilisateur.", f1: 'Audit complet', f2: 'Redesign moderne', f3: 'Migration sécurisée' },
+      { title: 'Landing Page', desc: "Une page de vente optimisée pour convertir vos visiteurs en clients. Idéale pour le lancement d'un produit ou une campagne marketing.", f1: 'Copywriting inclus', f2: 'A/B testing', f3: 'Tunnel de vente' },
+      { title: 'SEO & Performance', desc: "Améliorez votre visibilité sur Google et accélérez votre site pour offrir la meilleure expérience à vos visiteurs.", f1: 'Audit SEO', f2: 'Optimisation Core Web Vitals', f3: 'Rapport mensuel' },
+      { title: 'Maintenance', desc: "Gardez votre site à jour, sécurisé et performant avec mon service de maintenance mensuel. Mises à jour, sauvegardes et support inclus.", f1: 'Mises à jour CMS', f2: 'Sauvegardes quotidiennes', f3: 'Support prioritaire' },
+    ],
+    about: {
+      bio1: "Passionnée par le design et le développement web depuis 5 ans, je crée des expériences digitales qui allient esthétique et performance.",
+      bio2: "Mon approche : comprendre vos objectifs métier pour concevoir un site qui travaille pour vous, pas seulement pour être beau.",
+      expnum: '5',
+      exptext: "ans d'expérience",
+    },
+    contact: {
+      email: 'contact@nebula-design.fr',
+      phone: '+33 6 12 34 56 78',
+      delay: 'Réponse sous 24h ouvrées',
+      location: 'France entière & international',
+      linkedin: '#',
+      behance: '#',
+      instagram: '#',
+      company: 'NÉBULA',
+      copyright: '© 2024 NÉBULA – Designer Web. Tous droits réservés.',
+    },
+  };
+
+  function getSiteContent() {
+    try { return JSON.parse(localStorage.getItem(SITE_KEY)) || DEFAULT_SITE; } catch(e) { return DEFAULT_SITE; }
+  }
+
+  function saveSiteContent(data) {
+    localStorage.setItem(SITE_KEY, JSON.stringify(data));
+    autoPush();
+  }
+
+  function collectSiteContent() {
+    var g = function(id) { return (document.getElementById(id) || {}).value || ''; };
+    var content = getSiteContent();
+    // Hero
+    content.hero = {
+      badge: g('se_badge'), title1: g('se_title1'), highlight: g('se_highlight'),
+      title2: g('se_title2'), subtitle: g('se_subtitle'),
+      cta1: g('se_cta1'), cta2: g('se_cta2'),
+      s1v: g('se_s1v'), s1l: g('se_s1l'),
+      s2v: g('se_s2v'), s2l: g('se_s2l'),
+      s3v: g('se_s3v'), s3l: g('se_s3l'),
+    };
+    // Services
+    content.services = Array.from({length: 6}, function(_, i) {
+      return {
+        title: g('sv_title_' + i), desc: g('sv_desc_' + i),
+        f1: g('sv_f1_' + i), f2: g('sv_f2_' + i), f3: g('sv_f3_' + i),
+      };
+    });
+    // About
+    content.about = {
+      bio1: g('se_bio1'), bio2: g('se_bio2'),
+      expnum: g('se_expnum'), exptext: g('se_exptext'),
+    };
+    // Contact
+    content.contact = {
+      email: g('se_email'), phone: g('se_phone'),
+      delay: g('se_delay'), location: g('se_location'),
+      linkedin: g('se_linkedin'), behance: g('se_behance'), instagram: g('se_instagram'),
+      company: g('se_company'), copyright: g('se_copyright'),
+    };
+    return content;
+  }
+
+  function fillSiteEditorFields() {
+    var c = getSiteContent();
+    var h = Object.assign({}, DEFAULT_SITE.hero, c.hero || {});
+    var a = Object.assign({}, DEFAULT_SITE.about, c.about || {});
+    var ct = Object.assign({}, DEFAULT_SITE.contact, c.contact || {});
+    var set = function(id, val) { var el = document.getElementById(id); if(el) el.value = val || ''; };
+
+    // Hero
+    set('se_badge', h.badge); set('se_title1', h.title1); set('se_highlight', h.highlight);
+    set('se_title2', h.title2); set('se_subtitle', h.subtitle);
+    set('se_cta1', h.cta1); set('se_cta2', h.cta2);
+    set('se_s1v', h.s1v); set('se_s1l', h.s1l);
+    set('se_s2v', h.s2v); set('se_s2l', h.s2l);
+    set('se_s3v', h.s3v); set('se_s3l', h.s3l);
+
+    // Services accordion
+    var svcs = c.services || DEFAULT_SITE.services;
+    var body = document.getElementById('servicesEditorBody');
+    if (body) {
+      body.innerHTML = svcs.map(function(s, i) {
+        var def = DEFAULT_SITE.services[i] || {};
+        var title = s.title || def.title || 'Service ' + (i+1);
+        return '<div class="service-editor-card">' +
+          '<div class="service-editor-card-header" onclick="toggleServiceCard(' + i + ')">' +
+            '<div class="service-editor-num">' + (i+1) + '</div>' +
+            '<div class="service-editor-title-display" id="sv_title_display_' + i + '">' + escHtml(title) + '</div>' +
+            '<svg class="service-editor-toggle" id="sv_toggle_' + i + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</div>' +
+          '<div class="service-editor-body" id="sv_body_' + i + '">' +
+            '<div class="editor-grid" style="margin-bottom:10px;">' +
+              '<div class="editor-field"><label>Titre du service</label><input type="text" id="sv_title_' + i + '" value="' + escHtml(s.title || def.title || '') + '" oninput="document.getElementById(\'sv_title_display_' + i + '\').textContent=this.value" /></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 1</label><input type="text" id="sv_f1_' + i + '" value="' + escHtml(s.f1 || def.f1 || '') + '" /></div>' +
+              '<div class="editor-field full"><label>Description</label><textarea id="sv_desc_' + i + '" rows="2">' + escHtml(s.desc || def.desc || '') + '</textarea></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 2</label><input type="text" id="sv_f2_' + i + '" value="' + escHtml(s.f2 || def.f2 || '') + '" /></div>' +
+              '<div class="editor-field"><label>Fonctionnalité 3</label><input type="text" id="sv_f3_' + i + '" value="' + escHtml(s.f3 || def.f3 || '') + '" /></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // About
+    set('se_bio1', a.bio1); set('se_bio2', a.bio2);
+    set('se_expnum', a.expnum); set('se_exptext', a.exptext);
+
+    // Contact
+    set('se_email', ct.email); set('se_phone', ct.phone);
+    set('se_delay', ct.delay); set('se_location', ct.location);
+    set('se_linkedin', ct.linkedin); set('se_behance', ct.behance); set('se_instagram', ct.instagram);
+    set('se_company', ct.company); set('se_copyright', ct.copyright);
+  }
+
+  window.toggleServiceCard = function(i) {
+    var body = document.getElementById('sv_body_' + i);
+    var toggle = document.getElementById('sv_toggle_' + i);
+    if (!body) return;
+    var open = body.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+  };
+
+  // Tab switching
+  document.querySelectorAll('.editor-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.editor-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.editor-panel').forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('epanel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Save
+  document.getElementById('saveSiteContentBtn').addEventListener('click', function() {
+    var data = collectSiteContent();
+    saveSiteContent(data);
+    showToast('Contenu du site mis à jour !', 'success');
+  });
+
+  // Preview
+  document.getElementById('previewSiteBtn').addEventListener('click', function() {
+    window.open('index.html', '_blank');
+  });
+
+  // ===== TARIFS EDITOR =====
+  const TARIFS_KEY = 'nebula_crm_tarifs';
+
+  const DEFAULT_TARIFS = [
+    {
+      id: 'starter',
+      name: 'Starter',
+      price: '990',
+      desc: 'Idéal pour les indépendants et petites entreprises qui débutent en ligne.',
+      featured: false,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: 'Site vitrine 5 pages', included: true },
+        { text: 'Design personnalisé', included: true },
+        { text: 'Responsive mobile', included: true },
+        { text: 'SEO de base', included: true },
+        { text: 'Formulaire de contact', included: true },
+        { text: 'Livraison en 7 jours', included: true },
+        { text: 'E-commerce', included: false },
+        { text: 'Animations avancées', included: false },
+      ],
+    },
+    {
+      id: 'pro',
+      name: 'Pro',
+      price: '2 490',
+      desc: 'Pour les entreprises qui veulent un site percutant avec plus de fonctionnalités.',
+      featured: true,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: "Site jusqu'à 15 pages", included: true },
+        { text: 'Design premium + animations', included: true },
+        { text: 'Responsive & cross-browser', included: true },
+        { text: 'SEO avancé', included: true },
+        { text: 'Blog intégré', included: true },
+        { text: 'Livraison en 14 jours', included: true },
+        { text: '1 mois de maintenance offert', included: true },
+        { text: 'Boutique e-commerce', included: false },
+      ],
+    },
+    {
+      id: 'business',
+      name: 'Business',
+      price: '4 990',
+      desc: 'Solution complète pour les e-commerçants et entreprises ambitieuses.',
+      featured: false,
+      featuredLabel: 'Le plus choisi',
+      features: [
+        { text: 'Pages illimitées', included: true },
+        { text: 'Boutique e-commerce complète', included: true },
+        { text: 'Design haut de gamme', included: true },
+        { text: 'SEO + stratégie de contenu', included: true },
+        { text: 'Intégrations sur mesure', included: true },
+        { text: 'Livraison en 21 jours', included: true },
+        { text: '3 mois de maintenance offerts', included: true },
+        { text: 'Formation complète incluse', included: true },
+      ],
+    },
+  ];
+
+  function getTarifs() {
+    try { return JSON.parse(localStorage.getItem(TARIFS_KEY)) || DEFAULT_TARIFS; }
+    catch(e) { return DEFAULT_TARIFS; }
+  }
+
+  function saveTarifs(tarifs) {
+    localStorage.setItem(TARIFS_KEY, JSON.stringify(tarifs));
+    autoPush();
+  }
+
+  function renderTarifsEditor() {
+    const tarifs = getTarifs();
+    const grid = document.getElementById('tarifsEditorGrid');
+    grid.innerHTML = tarifs.map((t, ti) => `
+      <div class="tarif-editor-card" data-tarif-index="${ti}">
+        <div class="tarif-editor-header">
+          <h3>
+            <input type="text" value="${escHtml(t.name)}" data-field="name"
+              style="border:none;outline:none;font-size:.95rem;font-weight:700;font-family:'Inter',sans-serif;background:transparent;width:120px;"
+              placeholder="Nom de l'offre" />
+          </h3>
+          <label class="tarif-featured-toggle">
+            <input type="checkbox" data-field="featured" ${t.featured ? 'checked' : ''} />
+            Mise en avant
+          </label>
+        </div>
+        <div class="tarif-editor-body">
+          <div class="tarif-price-row">
+            <input type="text" class="tarif-price-input" data-field="price" value="${escHtml(t.price)}" placeholder="990" />
+            <span class="tarif-currency">€</span>
+          </div>
+          ${t.featured ? `
+          <div class="tarif-field">
+            <label>Libellé badge "mis en avant"</label>
+            <input type="text" data-field="featuredLabel" value="${escHtml(t.featuredLabel || 'Le plus choisi')}" placeholder="Le plus choisi" />
+          </div>` : ''}
+          <div class="tarif-field">
+            <label>Description</label>
+            <textarea data-field="desc" rows="2">${escHtml(t.desc)}</textarea>
+          </div>
+          <div class="tarif-field">
+            <label>Fonctionnalités</label>
+            <div class="features-list" id="features-${ti}">
+              ${t.features.map((f, fi) => `
+                <div class="feature-row" data-feature-index="${fi}">
+                  <input type="text" value="${escHtml(f.text)}" placeholder="Fonctionnalité..." data-feature-text />
+                  <select data-feature-included>
+                    <option value="true" ${f.included ? 'selected' : ''}>✓ Inclus</option>
+                    <option value="false" ${!f.included ? 'selected' : ''}>✕ Non inclus</option>
+                  </select>
+                  <button class="feature-remove" data-remove-feature="${fi}" data-tarif="${ti}" title="Supprimer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+            <button class="add-feature-btn" data-add-feature="${ti}">+ Ajouter une fonctionnalité</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Remove feature buttons
+    grid.querySelectorAll('[data-remove-feature]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ti2 = parseInt(btn.dataset.tarif);
+        const fi = parseInt(btn.dataset.removeFeature);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].features.splice(fi, 1);
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+      });
+    });
+
+    // Add feature buttons
+    grid.querySelectorAll('[data-add-feature]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ti2 = parseInt(btn.dataset.addFeature);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].features.push({ text: '', included: true });
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+        // Focus the new input
+        const list = document.getElementById('features-' + ti2);
+        const inputs = list.querySelectorAll('input[data-feature-text]');
+        if (inputs.length) inputs[inputs.length - 1].focus();
+      });
+    });
+
+    // Toggle featured -> re-render to show/hide label field
+    grid.querySelectorAll('[data-field="featured"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const card = cb.closest('[data-tarif-index]');
+        const ti2 = parseInt(card.dataset.tarifIndex);
+        const tarifs2 = getTarifs();
+        tarifs2[ti2].featured = cb.checked;
+        saveTarifs(tarifs2);
+        renderTarifsEditor();
+      });
+    });
+  }
+
+  function collectTarifsFromDOM() {
+    const tarifs = getTarifs();
+    const grid = document.getElementById('tarifsEditorGrid');
+    grid.querySelectorAll('[data-tarif-index]').forEach(card => {
+      const ti = parseInt(card.dataset.tarifIndex);
+      const t = tarifs[ti];
+      // Scalar fields
+      card.querySelectorAll('[data-field]').forEach(el => {
+        const field = el.dataset.field;
+        if (field === 'featured') return; // handled separately
+        if (el.tagName === 'TEXTAREA') t[field] = el.value;
+        else t[field] = el.value;
+      });
+      // Features
+      const featureRows = card.querySelectorAll('.feature-row');
+      t.features = Array.from(featureRows).map(row => ({
+        text: row.querySelector('[data-feature-text]').value,
+        included: row.querySelector('[data-feature-included]').value === 'true',
+      }));
+    });
+    return tarifs;
+  }
+
+  document.getElementById('saveTarifsBtn').addEventListener('click', () => {
+    const tarifs = collectTarifsFromDOM();
+    saveTarifs(tarifs);
+    showToast('Tarifs mis à jour sur le site !', 'success');
+  });
+
+  // ===== PLANNING =====
+  const PLANNING_KEY = 'nebula_planning';
+  var planningMonth = new Date().getMonth();
+  var planningYear  = new Date().getFullYear();
+  var planningView  = 'cal';
+
+  function getTasks() {
+    try { return JSON.parse(localStorage.getItem(PLANNING_KEY)) || []; } catch(e) { return []; }
+  }
+  function saveTasks(tasks) {
+    localStorage.setItem(PLANNING_KEY, JSON.stringify(tasks));
+    autoPush();
+  }
+  function planningUid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  }
+  function toDateStr(d) {
+    return d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+  }
+  function todayStr() { return toDateStr(new Date()); }
+
+  function renderPlanning() {
+    updateMonthLabel();
+    if (planningView === 'cal') renderCalendar();
+    else renderPlanningList();
+    updatePlanningBadge();
+  }
+
+  function updateMonthLabel() {
+    var el = document.getElementById('currentMonthLabel');
+    if (!el) return;
+    var d = new Date(planningYear, planningMonth, 1);
+    el.textContent = d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+  }
+
+  function updatePlanningBadge() {
+    var tasks = getTasks();
+    var today = todayStr();
+    var upcoming = tasks.filter(function(t) { return !t.done && t.date >= today; });
+    var badge = document.getElementById('sidebarPlanningCount');
+    if (!badge) return;
+    if (upcoming.length > 0) {
+      badge.textContent = upcoming.length;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // Day-of-week header (Lun → Dim)
+  (function buildCalDow() {
+    var el = document.getElementById('calDow');
+    if (!el) return;
+    ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d) {
+      el.innerHTML += '<div class="cal-dow">' + d + '</div>';
+    });
+  })();
+
+  function renderCalendar() {
+    var tasks = getTasks();
+    var today = todayStr();
+    var year = planningYear, month = planningMonth;
+    var firstDay = new Date(year, month, 1).getDay();
+    firstDay = firstDay === 0 ? 6 : firstDay - 1; // Monday-first
+    var daysInMonth = new Date(year, month+1, 0).getDate();
+    var daysInPrev  = new Date(year, month, 0).getDate();
+    var totalCells  = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+    var body = document.getElementById('calBody');
+    if (!body) return;
+    var html = '';
+    for (var i = 0; i < totalCells; i++) {
+      var day, isOther = false, d;
+      if (i < firstDay) {
+        day = daysInPrev - firstDay + i + 1;
+        d = new Date(year, month-1, day);
+        isOther = true;
+      } else if (i >= firstDay + daysInMonth) {
+        day = i - firstDay - daysInMonth + 1;
+        d = new Date(year, month+1, day);
+        isOther = true;
+      } else {
+        day = i - firstDay + 1;
+        d = new Date(year, month, day);
+      }
+      var ds = toDateStr(d);
+      var isToday = ds === today;
+      var dayTasks = tasks.filter(function(t) { return t.date === ds; });
+      var chips = dayTasks.slice(0,3).map(function(t) {
+        return '<span class="cal-task-chip type-' + (t.type||'tache') + (t.done?' done-chip':'') +
+          '" onclick="event.stopPropagation();openEditTask(\'' + t.id + '\')">' +
+          escHtml((t.time ? t.time+' ' : '') + t.title) + '</span>';
+      }).join('');
+      var more = dayTasks.length > 3 ? '<span class="cal-more">+' + (dayTasks.length-3) + ' de plus</span>' : '';
+      html += '<div class="cal-cell' + (isOther?' other-month':'') + (isToday?' today':'') +
+        '" data-date="' + ds + '" onclick="clickCalDay(\'' + ds + '\')">' +
+        '<div class="cal-day-num">' + day + '</div>' + chips + more + '</div>';
+    }
+    body.innerHTML = html;
+  }
+
+  function renderPlanningList() {
+    var tasks = getTasks();
+    var today = todayStr();
+    var container = document.getElementById('planningListContent');
+    if (!container) return;
+    if (tasks.length === 0) {
+      container.innerHTML = '<div class="planning-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Aucune tâche planifiée.<br>Cliquez sur <strong>+ Ajouter</strong> pour commencer.</div>';
+      return;
+    }
+    var sorted = tasks.slice().sort(function(a,b) {
+      return (a.date+(a.time||'00:00')).localeCompare(b.date+(b.time||'00:00'));
+    });
+    var groups = {};
+    sorted.forEach(function(t) {
+      if (!groups[t.date]) groups[t.date] = [];
+      groups[t.date].push(t);
+    });
+    var html = '';
+    Object.keys(groups).forEach(function(date) {
+      var dayTasks = groups[date];
+      var d = new Date(date + 'T12:00:00');
+      var isToday = date === today;
+      var isPast  = date < today;
+      var label = isToday ? 'Aujourd\'hui' :
+        d.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+      var items = dayTasks.map(function(t) {
+        return '<div class="task-item' + (t.done?' done-task':'') + '">' +
+          '<div class="task-done-cb' + (t.done?' checked':'') + '" onclick="event.stopPropagation();toggleTaskDone(\'' + t.id + '\')"></div>' +
+          '<div class="task-type-dot dot-' + (t.type||'tache') + '"></div>' +
+          '<div class="task-info">' +
+            '<div class="task-title">' + escHtml(t.title) + '</div>' +
+            (t.note ? '<div class="task-note-preview">' + escHtml(t.note) + '</div>' : '') +
+          '</div>' +
+          (t.time ? '<div class="task-time-badge">' + t.time + '</div>' : '') +
+          '<div class="task-actions">' +
+            '<button class="task-action-btn" onclick="event.stopPropagation();openEditTask(\'' + t.id + '\')" title="Modifier">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="task-action-btn del" onclick="event.stopPropagation();deleteTask(\'' + t.id + '\')" title="Supprimer">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      html += '<div class="planning-list-group">' +
+        '<div class="planning-list-date-header' + (isToday?' today-header':'') + '">' + label + '</div>' +
+        items + '</div>';
+    });
+    container.innerHTML = html || '<div class="planning-empty">Aucune tâche.</div>';
+  }
+
+  window.clickCalDay    = function(ds) { openAddTask(ds); };
+  window.toggleTaskDone = function(id) {
+    var tasks = getTasks();
+    var t = tasks.find(function(x) { return x.id === id; });
+    if (!t) return;
+    t.done = !t.done;
+    saveTasks(tasks);
+    renderPlanning();
+  };
+  window.deleteTask = function(id) {
+    if (!confirm('Supprimer cette tâche ?')) return;
+    saveTasks(getTasks().filter(function(t) { return t.id !== id; }));
+    renderPlanning();
+    showToast('Tâche supprimée');
+  };
+  window.openEditTask = function(id) {
+    var tasks = getTasks();
+    var t = tasks.find(function(x) { return x.id === id; });
+    if (!t) return;
+    document.getElementById('taskModalTitle').textContent = 'Modifier la tâche';
+    document.getElementById('taskEditId').value = t.id;
+    document.getElementById('taskTitle').value  = t.title || '';
+    document.getElementById('taskDate').value   = t.date  || '';
+    document.getElementById('taskTime').value   = t.time  || '';
+    document.getElementById('taskNote').value   = t.note  || '';
+    document.getElementById('taskType').value   = t.type  || 'tache';
+    document.querySelectorAll('.task-type-option').forEach(function(o) {
+      o.classList.toggle('sel', o.dataset.type === (t.type||'tache'));
+    });
+    openModal('taskModal');
+  };
+
+  function openAddTask(dateStr) {
+    document.getElementById('taskModalTitle').textContent = 'Nouvelle tâche';
+    document.getElementById('taskEditId').value = '';
+    document.getElementById('taskTitle').value  = '';
+    document.getElementById('taskDate').value   = dateStr || todayStr();
+    document.getElementById('taskTime').value   = '';
+    document.getElementById('taskNote').value   = '';
+    document.getElementById('taskType').value   = 'tache';
+    document.querySelectorAll('.task-type-option').forEach(function(o) {
+      o.classList.toggle('sel', o.dataset.type === 'tache');
+    });
+    openModal('taskModal');
+    setTimeout(function() { document.getElementById('taskTitle').focus(); }, 100);
+  }
+
+  // Type selector
+  document.getElementById('taskTypeGrid').addEventListener('click', function(e) {
+    var opt = e.target.closest('.task-type-option');
+    if (!opt) return;
+    document.querySelectorAll('.task-type-option').forEach(function(o) { o.classList.remove('sel'); });
+    opt.classList.add('sel');
+    document.getElementById('taskType').value = opt.dataset.type;
+  });
+
+  // Month nav
+  document.getElementById('prevMonthBtn').addEventListener('click', function() {
+    planningMonth--;
+    if (planningMonth < 0) { planningMonth = 11; planningYear--; }
+    renderPlanning();
+  });
+  document.getElementById('nextMonthBtn').addEventListener('click', function() {
+    planningMonth++;
+    if (planningMonth > 11) { planningMonth = 0; planningYear++; }
+    renderPlanning();
+  });
+
+  // View toggle
+  document.getElementById('calViewBtn').addEventListener('click', function() {
+    planningView = 'cal';
+    document.getElementById('calViewBtn').classList.add('active');
+    document.getElementById('listViewBtn').classList.remove('active');
+    document.getElementById('planningCalView').style.display = 'block';
+    document.getElementById('planningListView').style.display = 'none';
+    renderCalendar();
+  });
+  document.getElementById('listViewBtn').addEventListener('click', function() {
+    planningView = 'list';
+    document.getElementById('listViewBtn').classList.add('active');
+    document.getElementById('calViewBtn').classList.remove('active');
+    document.getElementById('planningCalView').style.display = 'none';
+    document.getElementById('planningListView').style.display = 'block';
+    renderPlanningList();
+  });
+
+  // Add task button
+  document.getElementById('addTaskBtn').addEventListener('click', function() { openAddTask(null); });
+
+  // Modal close
+  document.getElementById('taskModalClose').addEventListener('click', function() { closeModal('taskModal'); });
+  document.getElementById('taskModalCancel').addEventListener('click', function() { closeModal('taskModal'); });
+  document.getElementById('taskModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal('taskModal');
+  });
+
+  // Save task
+  document.getElementById('saveTaskBtn').addEventListener('click', function() {
+    var title = document.getElementById('taskTitle').value.trim();
+    var date  = document.getElementById('taskDate').value;
+    if (!title) { document.getElementById('taskTitle').focus(); return; }
+    if (!date)  { document.getElementById('taskDate').focus();  return; }
+    var tasks  = getTasks();
+    var editId = document.getElementById('taskEditId').value;
+    if (editId) {
+      var idx = tasks.findIndex(function(t) { return t.id === editId; });
+      if (idx !== -1) Object.assign(tasks[idx], {
+        title: title, date: date,
+        time: document.getElementById('taskTime').value || '',
+        type: document.getElementById('taskType').value || 'tache',
+        note: document.getElementById('taskNote').value.trim(),
+      });
+    } else {
+      tasks.push({
+        id: planningUid(), title: title, date: date,
+        time: document.getElementById('taskTime').value || '',
+        type: document.getElementById('taskType').value || 'tache',
+        note: document.getElementById('taskNote').value.trim(),
+        done: false, createdAt: new Date().toISOString(),
+      });
+    }
+    saveTasks(tasks);
+    closeModal('taskModal');
+    renderPlanning();
+    showToast(editId ? 'Tâche modifiée !' : 'Tâche ajoutée !', 'success');
+  });
+
+  // ===== CLOUD SYNC (JSONBin.io) =====
+  const SYNC_CONFIG_KEY = 'nebula_sync_config';
+  const JSONBIN_BASE = 'https://api.jsonbin.io/v3/b';
+
+  function getSyncConfig() {
+    try { return JSON.parse(localStorage.getItem(SYNC_CONFIG_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function saveSyncConfig(cfg) { localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify(cfg)); }
+
+  function getAllDataForSync() {
+    return {
+      leads: getLeads(),
+      siteContent: getSiteContent(),
+      tarifs: getTarifs(),
+      tasks: getTasks(),
+      syncedAt: new Date().toISOString(),
+    };
+  }
+
+  function applyCloudData(data) {
+    if (Array.isArray(data.leads)) localStorage.setItem(STORAGE_KEY, JSON.stringify(data.leads));
+    if (data.siteContent && typeof data.siteContent === 'object') localStorage.setItem(SITE_KEY, JSON.stringify(data.siteContent));
+    if (Array.isArray(data.tarifs)) localStorage.setItem(TARIFS_KEY, JSON.stringify(data.tarifs));
+    if (Array.isArray(data.tasks)) localStorage.setItem(PLANNING_KEY, JSON.stringify(data.tasks));
+  }
+
+  function setSyncStatus(state, text) {
+    var dot = document.getElementById('syncDot');
+    var badge = document.getElementById('syncBadgeText');
+    if (!dot || !badge) return;
+    dot.className = 'sync-dot' + (state ? ' ' + state : '');
+    badge.textContent = text;
+  }
+
+  function updateSyncBadge() {
+    var cfg = getSyncConfig();
+    if (!cfg.apiKey) { setSyncStatus('', 'Cloud : non configuré'); return; }
+    if (cfg.lastSync) {
+      var d = new Date(cfg.lastSync);
+      setSyncStatus('ok', 'Sync ' + d.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}));
+    } else {
+      setSyncStatus('', 'Cloud : configuré');
+    }
+  }
+
+  function fillSyncSettings() {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var binInput = document.getElementById('syncBinId');
+    var autoToggle = document.getElementById('syncAutoToggle');
+    if (apiInput && cfg.apiKey) apiInput.value = cfg.apiKey;
+    if (binInput && cfg.binId) binInput.value = cfg.binId;
+    if (autoToggle) autoToggle.checked = !!cfg.autoSync;
+    updateSyncBadge();
+  }
+
+  function showSyncMsg(msg, type) {
+    var el = document.getElementById('syncMsg');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'settings-msg ' + (type || '');
+    el.style.display = 'block';
+    clearTimeout(el._t);
+    el._t = setTimeout(function() { el.style.display = 'none'; }, 6000);
+  }
+
+  async function pushToCloud(silent) {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var apiKey = (apiInput ? apiInput.value.trim() : '') || cfg.apiKey || '';
+    if (!apiKey) {
+      if (!silent) showSyncMsg('Entrez votre clé API JSONBin d\'abord.', 'error');
+      return false;
+    }
+    setSyncStatus('syncing', 'Envoi…');
+    var payload = getAllDataForSync();
+    try {
+      var res, binId = cfg.binId || '';
+      if (binId) {
+        res = await fetch(JSONBIN_BASE + '/' + binId, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        res = await fetch(JSONBIN_BASE, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': apiKey,
+            'X-Bin-Name': 'nebula-crm',
+            'X-Bin-Private': 'true',
+          },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          var clone = res.clone();
+          var j = await clone.json();
+          binId = (j.metadata && j.metadata.id) || (j.record && j.record._id) || '';
+        }
+      }
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var now = new Date().toISOString();
+      saveSyncConfig(Object.assign({}, cfg, { apiKey: apiKey, binId: binId, lastSync: now }));
+      var binInput = document.getElementById('syncBinId');
+      if (binInput) binInput.value = binId;
+      updateSyncBadge();
+      if (!silent) showSyncMsg('✓ Données envoyées dans le cloud !', 'success');
+      return true;
+    } catch(e) {
+      setSyncStatus('error', 'Erreur sync');
+      if (!silent) showSyncMsg('Erreur réseau : ' + e.message, 'error');
+      return false;
+    }
+  }
+
+  async function pullFromCloud(silent) {
+    var cfg = getSyncConfig();
+    var apiInput = document.getElementById('syncApiKey');
+    var apiKey = (apiInput ? apiInput.value.trim() : '') || cfg.apiKey || '';
+    var binId = cfg.binId;
+    if (!apiKey) { if (!silent) showSyncMsg('Entrez votre clé API JSONBin.', 'error'); return false; }
+    if (!binId) { if (!silent) showSyncMsg('Aucun Bin ID. Envoyez d\'abord depuis un autre appareil.', 'error'); return false; }
+    setSyncStatus('syncing', 'Récupération…');
+    try {
+      var res = await fetch(JSONBIN_BASE + '/' + binId + '/latest', {
+        headers: { 'X-Master-Key': apiKey }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var json = await res.json();
+      var data = json.record;
+      if (!data) throw new Error('Données vides');
+      applyCloudData(data);
+      var now = new Date().toISOString();
+      saveSyncConfig(Object.assign({}, cfg, { apiKey: apiKey, lastSync: now }));
+      updateSyncBadge();
+      if (!silent) {
+        showSyncMsg('✓ Données récupérées ! Actualisation…', 'success');
+        setTimeout(function() { location.reload(); }, 1200);
+      }
+      return true;
+    } catch(e) {
+      setSyncStatus('error', 'Erreur sync');
+      if (!silent) showSyncMsg('Erreur : ' + e.message, 'error');
+      return false;
+    }
+  }
+
+  async function autoPush() {
+    var cfg = getSyncConfig();
+    if (!cfg.apiKey || !cfg.binId) return;
+    await pushToCloud(true);
+  }
+
+  async function autoSyncOnLoad() {
+    var cfg = getSyncConfig();
+    if (!cfg.autoSync || !cfg.apiKey || !cfg.binId) return;
+    if (sessionStorage.getItem('nebula_synced')) return;
+    sessionStorage.setItem('nebula_synced', '1');
+    var ok = await pullFromCloud(true);
+    if (ok) {
+      leads = getLeads();
+      updateSidebarCount();
+      refreshDashboard();
+      updatePlanningBadge();
+      renderTarifsEditor();
+      fillSiteEditorFields();
+      updateSyncBadge();
+      showToast('Données synchronisées depuis le cloud', 'success');
+    }
+  }
+
+  document.getElementById('syncPushBtn').addEventListener('click', async function() {
+    var apiKey = document.getElementById('syncApiKey').value.trim();
+    if (apiKey) saveSyncConfig(Object.assign(getSyncConfig(), { apiKey: apiKey }));
+    await pushToCloud(false);
+  });
+
+  document.getElementById('syncPullBtn').addEventListener('click', async function() {
+    var apiKey = document.getElementById('syncApiKey').value.trim();
+    if (apiKey) saveSyncConfig(Object.assign(getSyncConfig(), { apiKey: apiKey }));
+    await pullFromCloud(false);
+  });
+
+  document.getElementById('syncAutoToggle').addEventListener('change', function() {
+    saveSyncConfig(Object.assign(getSyncConfig(), { autoSync: this.checked }));
+  });
+
+  // ===== SECURITY: XSS =====
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ===== INIT =====
+  checkSession();
+
+})();
+</script>
+</body>
+</html>
