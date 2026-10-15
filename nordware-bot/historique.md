@@ -24,6 +24,7 @@
 - Black Friday + calendrier de l'Avent (24 posts, décembre)
 - Calendrier 17 oct. → 4 nov. déjà dessiné (Toussaint, tiroirs, impact, écran cassé 3 options, quiz matériaux, occasion vs reconditionné, grades, avant/après, heure d'hiver, 5 gestes, fast tech, vider son iPhone, 5 % recyclés, 10 points de contrôle, Halloween, seconde vie, tour du monde, vrai/faux reconditionné, âge du téléphone)
 - 15 oct. : 3 gestes avant de déposer votre iPhone
+- 16 oct. : On ne vous entend plus ? (micro & haut-parleur, 3 tests)
 
 ## Reels
 - Batterie iPhone
@@ -34,3 +35,4 @@
 - Coulisses d'un changement d'écran
 - 3 vérifs avant d'acheter un iPhone
 - 15 oct. : Rachat de ton vieil iPhone
+- 16 oct. : iPhone qui plante en boucle (restauration logicielle 35 €)
