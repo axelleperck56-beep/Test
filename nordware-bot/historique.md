@@ -26,6 +26,7 @@
 - 15 oct. : 3 gestes avant de déposer votre iPhone
 - 16 oct. : On ne vous entend plus ? (micro & haut-parleur, 3 tests)
 - 17 oct. : Vacances de la Toussaint (-10 % lycéens/étudiants, carrousel du calendrier)
+- 18 oct. : 113 millions de téléphones dans les tiroirs (rachat, carrousel du calendrier, Samsung retiré)
 
 ## Reels
 - Batterie iPhone
@@ -38,3 +39,4 @@
 - 15 oct. : Rachat de ton vieil iPhone
 - 16 oct. : iPhone qui plante en boucle (restauration logicielle 35 €)
 - 17 oct. : Vitre arrière fêlée (sur devis)
+- 18 oct. : Diagnostic offert (Votre iPhone fait des siennes ?)
