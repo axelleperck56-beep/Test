@@ -1,0 +1,61 @@
+{
+  "lead": 10,
+  "tail": 16,
+  "base": {
+    "S01": 150, "S02": 300, "S03": 210, "S04": 240, "S05": 300, "S06": 240,
+    "S07": 240, "S08": 210, "S09": 210, "S10": 210, "S11": 210, "S12": 240, "HOOK": 72
+  },
+  "voiceLead": {"S04": 14, "S12": 12, "S03": 12},
+  "cuts": {
+    "Master": {
+      "w": 1920, "h": 1080, "captions": false, "file": "Traceo-film-16x9.mp4",
+      "items": [
+        {"s": "S01"}, {"s": "S02", "v": "S02"}, {"s": "S03", "v": "S03"}, {"s": "S04", "v": "S04"},
+        {"s": "S05", "v": "S05"}, {"s": "S06", "v": "S06"}, {"s": "S07", "v": "S07"}, {"s": "S08", "v": "S08"},
+        {"s": "S09", "v": "S09"}, {"s": "S10", "v": "S10"}, {"s": "S11"}, {"s": "S12", "v": "S12"}
+      ],
+      "tr": [["wipe", 8], ["cut"], ["cut"], ["wipe", 8], ["slide", 12], ["wipe", 8], ["wipe", 8], ["slide", 12], ["wipe", 8], ["cut"], ["fade", 15]]
+    },
+    "MasterSousTitres": {"same": "Master", "captions": true, "file": "Traceo-film-16x9-soustitres.mp4"},
+    "Reel916": {
+      "w": 1080, "h": 1920, "captions": true, "file": "Traceo-reel-9x16.mp4",
+      "items": [
+        {"s": "S01", "min": 104}, {"s": "S02", "v": "S02"}, {"s": "S03", "v": "S03"}, {"s": "S04", "v": "S04"},
+        {"s": "S06", "v": "S06"}, {"s": "S12", "v": "S12", "min": 210}
+      ],
+      "tr": [["wipe", 8], ["cut"], ["cut"], ["wipe", 8], ["wipe", 8]]
+    },
+    "Carre11": {
+      "w": 1080, "h": 1080, "captions": true, "file": "Traceo-carre-1x1.mp4",
+      "items": [
+        {"s": "S01", "min": 104}, {"s": "S02", "v": "S02"}, {"s": "S03", "v": "S03"}, {"s": "S04", "v": "S04"},
+        {"s": "S05", "v": "S05"}, {"s": "S06", "v": "S06"}, {"s": "S09", "v": "S09"}, {"s": "S12", "v": "S12", "min": 210}
+      ],
+      "tr": [["wipe", 8], ["cut"], ["cut"], ["wipe", 8], ["slide", 12], ["wipe", 8], ["fade", 15]]
+    },
+    "ShortRadar": {
+      "w": 1080, "h": 1920, "captions": true, "file": "Traceo-short-radar.mp4",
+      "items": [
+        {"s": "HOOK", "v": "H_RADAR", "text": "Votre argent vous échappe ?", "kw": ["argent"]},
+        {"s": "S05", "v": "S05"}, {"s": "S12", "v": "CTA_SHORT", "min": 170}
+      ],
+      "tr": [["wipe", 8], ["fade", 12]]
+    },
+    "ShortChauffeur": {
+      "w": 1080, "h": 1920, "captions": true, "file": "Traceo-short-chauffeur.mp4",
+      "items": [
+        {"s": "HOOK", "v": "H_CHAUFFEUR", "text": "Fini les BSD papier dans la cabine.", "kw": ["papier"]},
+        {"s": "S09", "v": "S09"}, {"s": "S08", "v": "S08"}, {"s": "S12", "v": "CTA_SHORT", "min": 170}
+      ],
+      "tr": [["wipe", 8], ["slide", 12], ["fade", 12]]
+    },
+    "ShortCarte": {
+      "w": 1080, "h": 1920, "captions": true, "file": "Traceo-short-carte.mp4",
+      "items": [
+        {"s": "HOOK", "v": "H_CARTE", "text": "Où sont vos camions, là, maintenant ?", "kw": ["camions,"]},
+        {"s": "S06", "v": "S06"}, {"s": "S07", "v": "S07"}, {"s": "S12", "v": "CTA_SHORT", "min": 170}
+      ],
+      "tr": [["wipe", 8], ["wipe", 8], ["fade", 12]]
+    }
+  }
+}

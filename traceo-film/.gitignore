@@ -3,3 +3,6 @@ out/check/
 out/check2/
 out/storyboard-frames/
 *.log
+out/check3/
+out/tmp/
+assets/voix/*.mp3

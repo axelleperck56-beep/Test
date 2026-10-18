@@ -41,11 +41,18 @@ export const Screen: React.FC<{
   opacity?: number;
   radius?: number;
   overlay?: {name: string; opacity: number}; // fondu vers un autre état de la même page
+  zoomMul?: number;
   children?: React.ReactNode;
-}> = ({name, cx, cy, w, h, cam, rx = 0, ry = 0, rz = 0, scale = 1, opacity = 1, radius = 22, overlay, children}) => {
+}> = ({name, cx, cy, w, h, cam, rx = 0, ry = 0, rz = 0, scale = 1, opacity = 1, radius = 22, overlay, zoomMul = 1, children}) => {
   const size = capSize(name);
-  const s = (w / 1920) * cam.zoom;
-  const tx = w / 2 - cam.x * s;
+  const s = (w / 1920) * cam.zoom * zoomMul;
+  // formats étroits : la caméra reste dans la zone utile de l'appli (à droite de la barre latérale)
+  let camX = cam.x;
+  if (zoomMul !== 1) {
+    const half = w / s / 2;
+    camX = half * 2 < 1920 - 270 ? Math.min(Math.max(camX, 270 + half), 1920 - half) : 960;
+  }
+  const tx = w / 2 - camX * s;
   const ty = h / 2 - cam.y * s;
   return (
     <div

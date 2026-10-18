@@ -14,10 +14,15 @@ const useLayout = () => {
   const {width, height} = useVideoConfig();
   const portrait = height > width;
   const square = width === height;
-  if (portrait) return {portrait, square, W: width, H: height, sw: 1000, sh: 563, scx: width / 2, scy: height * 0.52, titleTop: 250, titleSize: 76};
-  if (square) return {portrait, square, W: width, H: height, sw: 1000, sh: 563, scx: width / 2, scy: height * 0.6, titleTop: 110, titleSize: 64};
-  return {portrait, square, W: width, H: height, sw: 1440, sh: 810, scx: width / 2, scy: 594, titleTop: 70, titleSize: 58};
+  // zm : facteur de zoom caméra pour cadrer la même zone dans une fenêtre plus étroite
+  if (portrait) return {portrait, square, W: width, H: height, sw: 980, sh: 1120, scx: width / 2, scy: 1000, titleTop: 250, titleSize: 64, zm: 1.2};
+  if (square) return {portrait, square, W: width, H: height, sw: 1000, sh: 640, scx: width / 2, scy: 556, titleTop: 92, titleSize: 50, zm: 1.15};
+  return {portrait, square, W: width, H: height, sw: 1440, sh: 810, scx: width / 2, scy: 594, titleTop: 70, titleSize: 58, zm: 1};
 };
+
+// position des cartes flottantes (compteurs) selon le format
+const calloutPos = (L: ReturnType<typeof useLayout>, landscape: {x: number; y: number}) =>
+  L.portrait ? {x: 70, y: L.scy + L.sh / 2 - 250} : L.square ? {x: 50, y: L.scy + L.sh / 2 - 210} : landscape;
 
 const Title: React.FC<{text: string; keywords: string[]; start?: number; exit?: number}> = ({text, keywords, start = 6, exit}) => {
   const L = useLayout();
@@ -64,7 +69,7 @@ export const S04Dashboard: React.FC = () => {
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: 0.62, size: 1.0, opacity: 0.25}} />
       <Title text="Votre journée, en un coup d’œil." keywords={['journée,']} exit={D - 14} />
-      <Screen name="dashboard" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} {...intro}>
+      <Screen name="dashboard" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro}>
         <Spotlight rect={{x: kpis.x, y: kpis.y, w: kpis.w, h: kpis.h}} start={96} end={146} />
         <Spotlight rect={{x: today.x, y: today.y, w: today.w, h: 430}} start={176} />
       </Screen>
@@ -107,17 +112,16 @@ export const S05Radar: React.FC = () => {
     {f: T.tabs, x: 1440, y: 720, zoom: 1.6},
     {f: D, x: 1440, y: 720, zoom: 1.66},
   ]);
-  const s = cam.zoom * (L.sw / 1920);
+  const s = cam.zoom * L.zm * (L.sw / 1920);
   // l'alerte traitée quitte la liste et file vers l'onglet « Traitées »
   const fly = ip(frame, [T.slide, T.slide + 22], [0, 1], IN);
   const after = ip(frame, [T.slide + 4, T.slide + 16], [0, 1], EASE);
-  const callX = L.portrait ? 80 : 1240;
-  const callY = L.portrait ? L.scy + L.sh / 2 + 40 : 700;
+  const {x: callX, y: callY} = calloutPos(L, {x: 1240, y: 700});
   return (
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: 0.6, size: 1.0, opacity: 0.25}} />
       <Title text="Le Radar vous montre l’argent qui vous échappe." keywords={['Radar', 'l’argent']} exit={D - 14} />
-      <Screen name="radar" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} {...intro} overlay={{name: 'radar-apres', opacity: after}}>
+      <Screen name="radar" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro} overlay={{name: 'radar-apres', opacity: after}}>
         <Spotlight rect={total} start={T.total + 10} end={T.kpi - 10} />
         {[0, 1, 2, 3].map((i) => (
           <Pop key={i} name="radar" rect={kpi(i)} at={T.kpi + i * 6} mode="enter" cover={C.appBg} />
@@ -174,5 +178,5 @@ export const S05Radar: React.FC = () => {
   );
 };
 
-export {useLayout, Title, r, center, OrangeOut, B};
+export {useLayout, Title, r, center, OrangeOut, B, calloutPos};
 export const _unused = {CameraMotionBlur, POPPINS, extra};

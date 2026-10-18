@@ -44,12 +44,13 @@ export const S09Chauffeur: React.FC = () => {
   const frame = useCurrentFrame();
   const {width, height} = useVideoConfig();
   const portrait = height > width;
+  const square = width === height;
   const T = {tapBsd: 46, sig: 70, valider: 112, tournee: 124, photo: 168};
   // tour complet sur lui-même à l'entrée, puis léger balancement
   const spin = ip(frame, [0, 44], [-380, -16], OUT);
   const sway = Math.sin(frame / 34) * 5;
   const ry = frame < 44 ? spin : -16 + sway * ip(frame, [44, 70], [0, 1], EASE);
-  const phoneW = portrait ? 520 : 400;
+  const phoneW = portrait ? 520 : square ? 330 : 400;
   // écrans successifs
   let src = 'chauffeur-1-accueil', srcH = 844, scroll = 0;
   let next: {src: string; srcH: number; opacity: number} | undefined;
@@ -66,14 +67,14 @@ export const S09Chauffeur: React.FC = () => {
   return (
     <AbsoluteFill>
       <Backdrop halo={{x: portrait ? 0.5 : 0.7, y: portrait ? 0.62 : 0.5, size: 0.8, opacity: 0.3}} />
-      <div style={{position: 'absolute', left: portrait ? 80 : 150, right: portrait ? 80 : undefined, top: portrait ? 230 : 330, width: portrait ? undefined : 760}}>
-        <Kinetic text="Le chauffeur valide tout depuis son téléphone." keywords={['téléphone.']} start={8} exit={196} size={portrait ? 76 : 80} align={portrait ? 'center' : 'left'} />
+      <div style={{position: 'absolute', left: portrait ? 80 : square ? 70 : 150, right: portrait ? 80 : undefined, top: portrait ? 230 : square ? 300 : 330, width: portrait ? undefined : square ? 480 : 760}}>
+        <Kinetic text="Le chauffeur valide tout depuis son téléphone." keywords={['téléphone.']} start={8} exit={196} size={portrait ? 76 : square ? 58 : 80} align={portrait ? 'center' : 'left'} />
       </div>
       <div
         style={{
           position: 'absolute',
-          left: (portrait ? width / 2 : 1340) - phoneW / 2,
-          top: (portrait ? height * 0.6 : 540) - (phoneW * 844) / 390 / 2,
+          left: (portrait ? width / 2 : square ? 790 : 1340) - phoneW / 2,
+          top: (portrait ? height * 0.6 : square ? 520 : 540) - (phoneW * 844) / 390 / 2,
           transform: `translateY(${(1 - k) * 200}px) scale(${0.9 + 0.1 * k})`,
           opacity: Math.min(1, k * 2),
         }}
@@ -132,7 +133,7 @@ export const S10Mosaique: React.FC = () => {
   const gw = tw * 3 + gap * 2, gh = th * 3 + gap * 2;
   const glide = ip(frame, [0, D], [-70, 70], (t) => t);
   const dive = Math.exp(ip(frame, [D - 40, D], [0, Math.log(7)], IN));
-  const fit = portrait ? 0.56 : 0.7;
+  const fit = portrait ? 0.56 : width === height ? 0.5 : 0.7;
   const centers = TILES.map((_, i) => ({x: (i % 3) * (tw + gap) + tw / 2, y: Math.floor(i / 3) * (th + gap) + th / 2}));
   const links = [
     [0, 1], [1, 2], [0, 3], [3, 4], [4, 5], [2, 5], [3, 6], [6, 7], [7, 8], [5, 8], [4, 7], [1, 4],
@@ -220,7 +221,7 @@ export const S10Mosaique: React.FC = () => {
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(20,22,27,0.95) 0%, rgba(20,22,27,0) 26%)'}} />
       <div style={{position: 'absolute', left: 100, right: 100, top: portrait ? 230 : 60}}>
-        <Kinetic text="Flotte, conformité, sous-traitance, relances… tout est relié." keywords={['relié.']} start={10} exit={D - 46} size={portrait ? 68 : 52} align="center" stagger={3} />
+        <Kinetic text="Flotte, conformité, sous-traitance, relances… tout est relié." keywords={['relié.']} start={10} exit={D - 46} size={portrait ? 68 : width === height ? 44 : 52} align="center" stagger={3} />
       </div>
       <AbsoluteFill style={{background: C.night, opacity: ip(frame, [D - 14, D], [0, 1], IN)}} />
       <Sfx at={4} name="whoosh" volume={0.4} />
@@ -258,7 +259,7 @@ export const S11Benefices: React.FC = () => {
             <div style={{fontFamily: POPPINS, fontWeight: 600, fontSize: 28, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.55)', marginBottom: 24, opacity: ip(frame, [s0 + 2, s0 + 12], [0, 1], OUT) * ip(frame, [s0 + seg - 10, s0 + seg - 2], [1, 0], IN)}}>
               0{i + 1}
             </div>
-            <Kinetic text={b.text} keywords={b.kw} start={s0 + 2} exit={s0 + seg - 12} size={portrait ? 120 : 150} align="center" stagger={5} maxWidth={portrait ? 900 : 1600} />
+            <Kinetic text={b.text} keywords={b.kw} start={s0 + 2} exit={s0 + seg - 12} size={portrait ? 120 : width === height ? 104 : 150} align="center" stagger={5} maxWidth={portrait || width === height ? 920 : 1600} />
             <div style={{marginTop: 36, height: 10, width: 360 * bar, borderRadius: 5, background: C.orange}} />
           </AbsoluteFill>
         );

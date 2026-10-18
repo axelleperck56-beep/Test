@@ -6,7 +6,7 @@ import {Backdrop} from '../components/Backdrop';
 import {Callout, Cursor, DemoBadge, Sfx, counterTicks} from '../components/Fx';
 import {Pop, Rect, Screen, Spotlight, camAt, capSize, capSrc, useScreenIntro} from '../components/Screen';
 import {C, EASE, OUT, ip} from '../theme';
-import {Title, useLayout} from './UiScenes';
+import {Title, calloutPos, useLayout} from './UiScenes';
 
 // Zone d'une autre capture affichée par-dessus (même page, autre état), avec fondu
 const Patch: React.FC<{name: string; rect: Rect; opacity: number}> = ({name, rect, opacity}) =>
@@ -35,7 +35,7 @@ export const S06Carte: React.FC = () => {
     {f: T.pan + 40, x: fiche.x + fiche.w / 2 - 60, y: fiche.y + fiche.h / 2 + 10, zoom: 1.95},
     {f: D, x: fiche.x + fiche.w / 2 - 70, y: fiche.y + fiche.h / 2 + 10, zoom: 2.02},
   ]);
-  const s = cam.zoom * (L.sw / 1920);
+  const s = cam.zoom * L.zm * (L.sw / 1920);
   const ficheOn = ip(frame, [T.fiche, T.fiche + 8], [0, 1], OUT);
   return (
     <AbsoluteFill>
@@ -43,7 +43,7 @@ export const S06Carte: React.FC = () => {
       <Title text="Vos camions en temps réel." keywords={['temps', 'réel.']} exit={D - 14} />
       <CameraMotionBlur samples={5} shutterAngle={150}>
         <AbsoluteFill>
-          <Screen name="carte" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} {...intro} overlay={{name: 'carte-fiche', opacity: ficheOn}}>
+          <Screen name="carte" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro} overlay={{name: 'carte-fiche', opacity: ficheOn}}>
             {/* pulsation sur le camion visé */}
             {[0, 1].map((i) => {
               const p = ((frame - 60 + i * 15) % 30) / 30;
@@ -109,7 +109,7 @@ export const S07Rentabilite: React.FC = () => {
     {f: T.tab1 - 4, x: 820, y: 560, zoom: 1.15},
     {f: D, x: 820, y: 560, zoom: 1.2},
   ]);
-  const s = cam.zoom * (L.sw / 1920);
+  const s = cam.zoom * L.zm * (L.sw / 1920);
   const t1 = ip(frame, [T.tab1 + 2, T.tab1 + 10], [0, 1], EASE);
   const t2 = ip(frame, [T.tab2 + 2, T.tab2 + 10], [0, 1], EASE);
   const name = t2 > 0 ? 'rentabilite-2' : 'rentabilite-1';
@@ -118,7 +118,7 @@ export const S07Rentabilite: React.FC = () => {
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: 0.6, size: 1.0, opacity: 0.25}} />
       <Title text="La vraie marge de chaque voyage." keywords={['marge']} exit={D - 14} />
-      <Screen name={name} cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} {...intro} overlay={overlay}>
+      <Screen name={name} cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro} overlay={overlay}>
         <Spotlight rect={row} start={T.row + 14} end={T.marge - 8} color={C.red} pad={4} />
         <Spotlight rect={marge} start={T.marge + 14} end={T.tab1 - 22} pad={6} />
         <Cursor
@@ -133,7 +133,7 @@ export const S07Rentabilite: React.FC = () => {
           appear={T.tab1 - 22}
         />
       </Screen>
-      <Callout x={L.portrait ? 80 : 150} y={L.portrait ? L.scy + L.sh / 2 + 40 : 700} start={T.count} end={T.tab1 - 16} label="Marge moyenne du mois" value={15.1} decimals={1} suffix=" %" width={480} />
+      <Callout {...calloutPos(L, {x: 150, y: 700})} start={T.count} end={T.tab1 - 16} label="Marge moyenne du mois" value={15.1} decimals={1} suffix=" %" width={480} />
       <DemoBadge right={L.W - (L.scx + L.sw / 2) + 22} bottom={L.H - (L.scy + L.sh / 2) + 22} />
       <Sfx at={T.row} name="swish" volume={0.35} />
       <Sfx at={T.marge + 4} name="swish" volume={0.35} />
@@ -211,13 +211,13 @@ export const S08Facturation: React.FC = () => {
     {f: T.gen - 8, x: 1500, y: 440, zoom: 1.8},
     {f: D, x: 1500, y: 440, zoom: 1.86},
   ]);
-  const s = cam.zoom * (L.sw / 1920);
+  const s = cam.zoom * L.zm * (L.sw / 1920);
   const genOn = ip(frame, [T.c3, T.c3 + 6], [0, 1], OUT);
   return (
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: 0.6, size: 1.0, opacity: 0.25}} />
       <Title text="Du chantier à la facture, sans ressaisie." keywords={['facture,', 'ressaisie.']} exit={D - 14} />
-      <Screen name="comptabilite-prets" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} {...intro}>
+      <Screen name="comptabilite-prets" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro}>
         <Spotlight rect={{x: 288, y: 680, w: 1600, h: 58}} start={T.rows + 18} end={T.pill + 26} pad={2} />
         <StatusPill at={T.pill} />
         {checks.map((y, i) => (
