@@ -22,7 +22,7 @@ const useLayout = () => {
 
 // position des cartes flottantes (compteurs) selon le format
 const calloutPos = (L: ReturnType<typeof useLayout>, landscape: {x: number; y: number}) =>
-  L.portrait ? {x: 70, y: L.scy + L.sh / 2 - 250} : L.square ? {x: 50, y: L.scy + L.sh / 2 - 210} : landscape;
+  L.portrait ? {x: 70, y: L.scy + L.sh / 2 - 430} : L.square ? {x: 50, y: L.scy + L.sh / 2 - 210} : landscape;
 
 const Title: React.FC<{text: string; keywords: string[]; start?: number; exit?: number}> = ({text, keywords, start = 6, exit}) => {
   const L = useLayout();

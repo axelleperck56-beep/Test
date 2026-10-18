@@ -108,7 +108,7 @@ def run_api():
             "next_text": say(LINES[keys[i + 1]]) if i + 1 < len(keys) and k.startswith("S") and keys[i + 1].startswith("S") else None,
         }
         body = {a: b for a, b in body.items() if b is not None}
-        req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{vid}/with-timestamps?output_format=mp3_44100_192",
+        req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{vid}/with-timestamps?output_format=mp3_44100_128",
                                      data=json.dumps(body).encode(), headers={"xi-api-key": key, "Content-Type": "application/json"})
         res = json.loads(urllib.request.urlopen(req, timeout=120).read())
         mp3 = OUT / f"{k}.mp3"; mp3.write_bytes(base64.b64decode(res["audio_base64"]))
