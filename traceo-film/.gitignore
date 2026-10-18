@@ -1,0 +1,5 @@
+node_modules/
+out/check/
+out/check2/
+out/storyboard-frames/
+*.log

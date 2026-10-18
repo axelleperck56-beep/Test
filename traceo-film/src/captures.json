@@ -1,0 +1,172 @@
+{
+"administratif": {
+"w": 1920,
+"h": 1475,
+"dpr": 2
+},
+"analyse-ia": {
+"w": 1920,
+"h": 1216,
+"dpr": 2
+},
+"bennes": {
+"w": 1920,
+"h": 2090,
+"dpr": 2
+},
+"bsd": {
+"w": 1920,
+"h": 1321,
+"dpr": 2
+},
+"carte-fiche": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"carte": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"chauffeur-0-login": {
+"w": 390,
+"h": 844,
+"dpr": 3
+},
+"chauffeur-1-accueil": {
+"w": 390,
+"h": 844,
+"dpr": 3
+},
+"chauffeur-2-tournee": {
+"w": 390,
+"h": 1792,
+"dpr": 3
+},
+"chauffeur-3-bsd": {
+"w": 390,
+"h": 868,
+"dpr": 3
+},
+"chauffeur-4-documents": {
+"w": 390,
+"h": 844,
+"dpr": 3
+},
+"chauffeur-5-bsd-detail": {
+"w": 390,
+"h": 918,
+"dpr": 3
+},
+"chauffeur-6-signature": {
+"w": 390,
+"h": 918,
+"dpr": 3
+},
+"chauffeurs": {
+"w": 1920,
+"h": 1141,
+"dpr": 2
+},
+"comptabilite-prets": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"comptabilite-selection": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"comptabilite": {
+"w": 1920,
+"h": 1151,
+"dpr": 2
+},
+"consommation": {
+"w": 1920,
+"h": 1602,
+"dpr": 2
+},
+"dashboard": {
+"w": 1920,
+"h": 2088,
+"dpr": 2
+},
+"devis": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"flotte": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"parametres-couts": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"parametres": {
+"w": 1920,
+"h": 1797,
+"dpr": 2
+},
+"portail": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"radar-apres": {
+"w": 1920,
+"h": 2282,
+"dpr": 2
+},
+"radar": {
+"w": 1920,
+"h": 2494,
+"dpr": 2
+},
+"relances": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"remorques": {
+"w": 1920,
+"h": 2447,
+"dpr": 2
+},
+"rentabilite-1": {
+"w": 1920,
+"h": 1690,
+"dpr": 2
+},
+"rentabilite-2": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"rentabilite-3": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"rentabilite": {
+"w": 1920,
+"h": 1690,
+"dpr": 2
+},
+"sous-traitance": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+},
+"tournees": {
+"w": 1920,
+"h": 1080,
+"dpr": 2
+}
+}
