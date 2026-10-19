@@ -12,6 +12,7 @@ import {S01Logo} from './scenes/S01Logo';
 import {S02Probleme, S03Aspiration} from './scenes/S02S03Probleme';
 import {S04Dashboard, S05Radar} from './scenes/UiScenes';
 import {S06Carte, S07Rentabilite, S08Facturation} from './scenes/UiScenes2';
+import {S06bFiche} from './scenes/S06bFiche';
 import {S09Chauffeur, S10Mosaique, S11Benefices, S12Packshot} from './scenes/EndScenes';
 import {Hook} from './scenes/Extras';
 import {VOICE, voiceFrames} from './voice';
@@ -19,11 +20,11 @@ import {FPS} from './theme';
 
 // Registre des scènes (= précompositions)
 export const SCENE_COMPONENTS: Record<string, React.FC<any>> = {
-  S01: S01Logo, S02: S02Probleme, S03: S03Aspiration, S04: S04Dashboard, S05: S05Radar, S06: S06Carte,
+  S01: S01Logo, S02: S02Probleme, S03: S03Aspiration, S04: S04Dashboard, S05: S05Radar, S06: S06Carte, S06B: S06bFiche,
   S07: S07Rentabilite, S08: S08Facturation, S09: S09Chauffeur, S10: S10Mosaique, S11: S11Benefices, S12: S12Packshot, HOOK: Hook,
 };
 export const SCENE_TITLES: Record<string, string> = {
-  S01: 'Logo', S02: 'Le problème', S03: 'Aspiration / zoom-through', S04: 'Tableau de bord', S05: 'Radar', S06: 'Carte en direct',
+  S01: 'Logo', S02: 'Le problème', S03: 'Aspiration / zoom-through', S04: 'Tableau de bord', S05: 'Radar', S06: 'Carte en direct', S06B: 'Fiche véhicule',
   S07: 'Rentabilité', S08: 'BSD + clôture', S09: 'Appli chauffeur', S10: 'Mosaïque', S11: 'Bénéfices', S12: 'Packshot', HOOK: 'Accroche',
 };
 
@@ -112,3 +113,7 @@ export const SCENES = Object.keys(SCENE_COMPONENTS)
   .map((id) => ({id, title: SCENE_TITLES[id], dur: J.base[id], C: SCENE_COMPONENTS[id]}));
 export const Master: React.FC = () => <Cut cutId="Master" />;
 export const masterDuration = () => cutDuration(getCut('Master'));
+
+// Calque de sous-titres seul (fond transparent), superposé ensuite au film avec ffmpeg :
+// évite de refaire tout le rendu image pour la version sous-titrée.
+export const CaptionsLayer: React.FC<{cutId: string}> = ({cutId}) => <Captions words={cutWords(getCut(cutId))} />;

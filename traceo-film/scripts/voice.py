@@ -26,6 +26,7 @@ LINES = {
     "S04": "Voici Tracéo. Votre journée, en un coup d’œil : les tâches, les camions, les documents.",
     "S05": "Le Radar vous montre l’argent qui vous échappe : voyages non facturés, kilomètres à vide, attentes, surconsommation.",
     "S06": "Suivez vos camions en temps réel, sur la carte.",
+    "S06B": "Chaque camion, sa benne et sa charge, sur une seule fiche.",
     "S07": "Connaissez la vraie marge de chaque voyage, de chaque client, de chaque camion.",
     "S08": "Du chantier à la facture, sans ressaisie.",
     "S09": "Et vos chauffeurs valident tout depuis leur téléphone.",
@@ -98,7 +99,10 @@ def run_api():
         print("voix :", match[0]["name"], vid)
     data = {}
     keys = list(LINES)
+    only = sys.argv[2:]  # ex. : voice.py api S06B -> ne régénère que ces répliques
     for i, k in enumerate(keys):
+        if only and k not in only:
+            continue
         body = {
             "text": say(LINES[k]),
             "model_id": os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2"),
@@ -158,5 +162,7 @@ if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     mode = sys.argv[1] if len(sys.argv) > 1 else "api"
     data = {"api": run_api, "files": run_files, "single": run_single}[mode]()
+    if JSON_OUT.exists() and len(sys.argv) > 2:
+        data = {**json.loads(JSON_OUT.read_text()), **data}
     JSON_OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1))
     print("→", JSON_OUT, len(data), "répliques")

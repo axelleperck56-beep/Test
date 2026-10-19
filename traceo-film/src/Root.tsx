@@ -1,6 +1,6 @@
 import React from 'react';
 import {Composition, Folder, Still} from 'remotion';
-import {CUT_IDS, Cut, SCENES, cutDuration, getCut} from './Master';
+import {CUT_IDS, CaptionsLayer, Cut, SCENES, cutDuration, getCut} from './Master';
 import {Bumper, Thumbnail} from './scenes/Extras';
 import {FPS} from './theme';
 
@@ -11,6 +11,7 @@ export const RemotionRoot: React.FC = () => (
         const c = getCut(id);
         return <Composition key={id} id={id} component={Cut} defaultProps={{cutId: id}} durationInFrames={cutDuration(c)} fps={FPS} width={c.w} height={c.h} />;
       })}
+      <Composition id="CalqueSousTitres" component={CaptionsLayer} defaultProps={{cutId: 'MasterSousTitres'}} durationInFrames={cutDuration(getCut('Master'))} fps={FPS} width={1920} height={1080} />
       <Composition id="Bumper6s" component={Bumper} durationInFrames={180} fps={FPS} width={1920} height={1080} />
       <Still id="MiniatureYouTube" component={Thumbnail} width={1280} height={720} />
     </Folder>

@@ -41,7 +41,7 @@ export const S06Carte: React.FC = () => {
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: 0.6, size: 1.0, opacity: 0.25}} />
       <Title text="Vos camions en temps réel." keywords={['temps', 'réel.']} exit={D - 14} />
-      <CameraMotionBlur samples={5} shutterAngle={150}>
+      <CameraMotionBlur samples={4} shutterAngle={150}>
         <AbsoluteFill>
           <Screen name="carte" cx={L.scx} cy={L.scy} w={L.sw} h={L.sh} cam={cam} zoomMul={L.zm} {...intro} overlay={{name: 'carte-fiche', opacity: ficheOn}}>
             {/* pulsation sur le camion visé */}

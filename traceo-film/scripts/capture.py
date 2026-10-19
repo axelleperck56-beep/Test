@@ -65,6 +65,7 @@ def main(parts):
         if "desktop" in parts: desktop(b)
         if "mobile" in parts: mobile(b)
         if "extras" in parts: extras(b)
+        if "fiche" in parts: fiche(b)
         if "video" in parts: videos(b)
         b.close()
     print("MISSING:", missing)
@@ -199,6 +200,32 @@ def extras(b):
     print(json.dumps(info))
 
 
+def fiche(b):
+    """Fiche véhicule GA-308-NV : 8 angles du camion, détails de la benne, jauge de charge."""
+    import json
+    ctx = b.new_context(viewport={"width": 1920, "height": 1080}, device_scale_factor=2, locale="fr-FR")
+    pg = ctx.new_page(); enter_demo(pg)
+    goto(pg, "/flotte/v5", 3000)
+    shot(pg, "fiche")
+    info = {}
+    q = lambda sel: pg.evaluate("(s) => { const r = document.querySelector(s).getBoundingClientRect(); return {x:r.x+scrollX,y:r.y+scrollY,w:r.width,h:r.height}; }", sel)
+    info["plus"] = pg.get_by_role("button", name="Détails de la benne").bounding_box()
+    info["gauge"] = pg.evaluate("""() => { const t=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()==='Capacité & charge');
+        let p=t; while(p && p.getBoundingClientRect().height<300) p=p.parentElement; const r=p.getBoundingClientRect(); return {x:r.x+scrollX,y:r.y+scrollY,w:r.width,h:r.height}; }""")
+    info["rotLabel"] = pg.get_by_text("Glissez pour tourner").first.bounding_box()
+    for k in range(8):
+        deg = (360 - 45 * k) % 360
+        shot(pg, f"fiche-rot-{deg:03d}", full=False)
+        pg.get_by_role("button", name="Tourner à droite").click(); pg.wait_for_timeout(800)
+    pg.get_by_role("button", name="Détails de la benne").click(); pg.wait_for_timeout(1500)
+    shot(pg, "fiche-benne", full=False)
+    info["popover"] = pg.evaluate("""() => { const t=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim()==='Détails de la benne');
+        let p=t; while(p && p.getBoundingClientRect().height<300) p=p.parentElement; const r=p.getBoundingClientRect(); return {x:r.x,y:r.y,w:r.width,h:r.height}; }""")
+    ctx.close()
+    (OUT.parent.parent / "src" / "boxes-fiche.json").write_text(json.dumps(info, indent=1))
+    print(json.dumps(info))
+
+
 def videos(b):
     if True:
         # --- vidéos d'écran ---
@@ -261,4 +288,4 @@ def videos(b):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:] or ["desktop", "mobile", "extras", "video"])
+    main(sys.argv[1:] or ["desktop", "mobile", "extras", "fiche", "video"])

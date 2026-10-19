@@ -113,7 +113,7 @@ export const S02Probleme: React.FC = () => {
     <AbsoluteFill>
       <Backdrop halo={st.landscape ? {x: 0.72, y: 0.5, size: 0.8, opacity: 0.2} : {x: 0.5, y: 0.62, size: 1.1, opacity: 0.22}} />
       <AbsoluteFill style={{transform: st.transform, transformOrigin: '0 0', width: 1920, height: 1080}}>
-        <CameraMotionBlur samples={6} shutterAngle={160}>
+        <CameraMotionBlur samples={4} shutterAngle={160}>
           <AbsoluteFill>
             <Pile mode="arrive" />
           </AbsoluteFill>
@@ -152,7 +152,7 @@ export const S03Aspiration: React.FC = () => {
     <AbsoluteFill>
       <Backdrop halo={{x: 0.5, y: st.portrait ? 0.62 : 0.56, size: st.landscape ? 0.6 : 1, opacity: 0.18 + 0.2 * ip(frame, [40, 110], [0, 1], EASE)}} />
       <AbsoluteFill style={{transform: st.transform, transformOrigin: '0 0', width: 1920, height: 1080}}>
-        <CameraMotionBlur samples={6} shutterAngle={180}>
+        <CameraMotionBlur samples={4} shutterAngle={180}>
           <AbsoluteFill>
             <Pile mode="suck" suckStart={44} target={target} />
             <div
