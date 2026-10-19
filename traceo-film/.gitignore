@@ -7,3 +7,4 @@ out/check3/
 out/tmp/
 assets/voix/*.mp3
 out/web/
+public/music/*.wav

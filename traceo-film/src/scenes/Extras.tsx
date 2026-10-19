@@ -1,5 +1,6 @@
 import React from 'react';
-import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import musicGains from '../music.json';
 import {Backdrop} from '../components/Backdrop';
 import {LogoIcon, Sfx, Wordmark} from '../components/Fx';
 import {Kinetic} from '../components/Kinetic';
@@ -61,6 +62,7 @@ export const Bumper: React.FC = () => {
         </div>
       </AbsoluteFill>
       <AbsoluteFill style={{background: C.night, opacity: ip(frame, [D - 10, D], [0, 1], IN)}} />
+      <Audio src={staticFile('music/Bumper6s.wav')} volume={10 ** (musicGains.Bumper6s / 20)} />
       <Sfx at={2} name="pop" volume={0.5} />
       <Sfx at={20} name="impact" volume={0.8} />
       <Sfx at={78} name="swish" volume={0.4} />

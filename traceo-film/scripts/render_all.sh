@@ -11,6 +11,7 @@ declare -A FILE=(
   [ShortCarte]=Traceo-short-carte.mp4 [Bumper6s]=Traceo-bumper-6s.mp4
 )
 mkdir -p out/tmp
+python3 scripts/music.py && python3 scripts/add_music.py   # musique et gains avant le rendu
 for id in "${IDS[@]}"; do
   f=${FILE[$id]}
   echo "== $id → out/$f"

@@ -4,6 +4,7 @@ import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import {fade} from '@remotion/transitions/fade';
 import {slide} from '@remotion/transitions/slide';
 import cutsJson from './cuts.json';
+import musicGains from './music.json';
 import {diagonalWipe} from './components/transitions';
 import {Sfx} from './components/Fx';
 import {Captions, TimedWord} from './components/Captions';
@@ -88,6 +89,8 @@ export const Cut: React.FC<{cutId: string}> = ({cutId}) => {
           );
         })}
       </TransitionSeries>
+      {/* musique de fond (scripts/music.py), déjà baissée sous la voix */}
+      {cutId in musicGains ? <Audio src={staticFile(`music/${cutId}.wav`)} volume={10 ** ((musicGains as Record<string, number>)[cutId] / 20)} /> : null}
       {/* voix off */}
       {tl.map(({it, start}, i) =>
         it.v && VOICE[it.v] ? (
