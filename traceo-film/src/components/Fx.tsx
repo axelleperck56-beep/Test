@@ -5,9 +5,12 @@ import {C, EASE, IN, OUT, POPPINS, fmtNum, ip, sp} from '../theme';
 // ---------- Son ponctuel ----------
 export type SfxName =
   | 'whoosh' | 'swish' | 'click' | 'tick' | 'pop' | 'impact' | 'riser' | 'success' | 'paper' | 'marker' | 'ring';
+// Niveau global des bruitages (discrets : la voix et la musique passent devant)
+export const SFX_GAIN = 0.3;
+const SFX_EXTRA: Partial<Record<SfxName, number>> = {tick: 0.5, click: 0.6, success: 0.6, ring: 0.6}; // les plus aigus encore plus bas
 export const Sfx: React.FC<{at: number; name: SfxName; volume?: number}> = ({at, name, volume = 0.6}) => (
   <Sequence from={Math.max(0, Math.round(at))} layout="none" name={`sfx ${name}`}>
-    <Audio src={staticFile(`sfx/${name}.wav`)} volume={volume} />
+    <Audio src={staticFile(`sfx/${name}.wav`)} volume={volume * SFX_GAIN * (SFX_EXTRA[name] ?? 1)} />
   </Sequence>
 );
 
