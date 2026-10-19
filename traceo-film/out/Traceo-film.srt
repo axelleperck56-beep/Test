@@ -42,44 +42,49 @@ Suivez vos camions en temps réel, sur la
 carte.
 
 11
-00:00:47,133 --> 00:00:50,667
+00:00:47,000 --> 00:00:51,133
+Chaque camion, sa benne et sa charge, sur
+une seule fiche.
+
+12
+00:00:55,733 --> 00:00:59,267
 Connaissez la vraie marge de chaque
 voyage, de chaque client, de chaque
 
-12
-00:00:50,433 --> 00:00:51,633
+13
+00:00:59,033 --> 00:01:00,233
 camion.
 
-13
-00:00:54,867 --> 00:00:58,533
+14
+00:01:03,467 --> 00:01:07,133
 Du chantier à la facture, sans ressaisie.
 
-14
-00:01:01,467 --> 00:01:05,200
+15
+00:01:10,067 --> 00:01:13,800
 Et vos chauffeurs valident tout depuis
 leur téléphone.
 
-15
-00:01:08,200 --> 00:01:13,667
+16
+00:01:16,800 --> 00:01:22,267
 Flotte, conformité, sous-traitance,
 relances : tout est relié.
 
-16
-00:01:21,767 --> 00:01:22,900
+17
+00:01:30,367 --> 00:01:31,500
 Tracéo.
 
-17
-00:01:22,900 --> 00:01:23,733
+18
+00:01:31,500 --> 00:01:32,333
 Gérer.
 
-18
-00:01:23,667 --> 00:01:24,533
+19
+00:01:32,267 --> 00:01:33,133
 Suivre.
 
-19
-00:01:24,433 --> 00:01:25,533
+20
+00:01:33,033 --> 00:01:34,133
 Optimiser.
 
-20
-00:01:25,600 --> 00:01:27,267
+21
+00:01:34,200 --> 00:01:35,867
 Demandez votre démo.
