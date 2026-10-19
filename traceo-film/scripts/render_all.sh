@@ -21,4 +21,5 @@ for id in "${IDS[@]}"; do
 done
 npx remotion still src/index.ts MiniatureYouTube out/Traceo-miniature-youtube.png --log=error 2>&1 | grep -v -i "memory\|cgroup\|docker\|lower amount" || true
 python3 scripts/srt.py Master
+python3 scripts/loudness.py
 python3 scripts/check.py
