@@ -28,6 +28,7 @@
 - 17 oct. : Vacances de la Toussaint (-10 % lycéens/étudiants, carrousel du calendrier)
 - 18 oct. : 113 millions de téléphones dans les tiroirs (rachat, carrousel du calendrier, Samsung retiré)
 - 20 oct. : Écran cassé, 3 options (carrousel du calendrier, 4 slides)
+- 21 oct. : Quiz matériaux (70 matériaux, 200 kg, source ADEME ; carrousel du calendrier, 4 slides)
 
 ## Reels
 - Batterie iPhone
@@ -42,3 +43,4 @@
 - 17 oct. : Vitre arrière fêlée (sur devis)
 - 18 oct. : Diagnostic offert (Votre iPhone fait des siennes ?)
 - 20 oct. : iPhone tombé dans l'eau (bons gestes + désoxydation dès 70 €)
+- 21 oct. : Comment ça marche, 3 étapes (DM, main propre, garanti 3 mois ; diagnostic offert, -10 % étudiants)
