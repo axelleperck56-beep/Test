@@ -29,6 +29,7 @@
 - 18 oct. : 113 millions de téléphones dans les tiroirs (rachat, carrousel du calendrier, Samsung retiré)
 - 20 oct. : Écran cassé, 3 options (carrousel du calendrier, 4 slides)
 - 21 oct. : Quiz matériaux (70 matériaux, 200 kg, source ADEME ; carrousel du calendrier, 4 slides)
+- 22 oct. : Occasion ou reconditionné (carrousel du calendrier, 3 slides)
 
 ## Reels
 - Batterie iPhone
@@ -44,3 +45,4 @@
 - 18 oct. : Diagnostic offert (Votre iPhone fait des siennes ?)
 - 20 oct. : iPhone tombé dans l'eau (bons gestes + désoxydation dès 70 €)
 - 21 oct. : Comment ça marche, 3 étapes (DM, main propre, garanti 3 mois ; diagnostic offert, -10 % étudiants)
+- 22 oct. : Du SE au 16, 100 % iPhone (modèles réparés ; écran dès 55 €, batterie dès 59 €, connecteur 45 €)
