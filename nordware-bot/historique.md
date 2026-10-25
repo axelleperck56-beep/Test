@@ -32,6 +32,7 @@
 - 22 oct. : Occasion ou reconditionné (carrousel du calendrier, 3 slides)
 - 23 oct. : Les grades A/B/C (carrousel du calendrier, 3 slides ; conseil grade B)
 - 25 oct. : Heure d'hiver (carrousel du calendrier, 3 slides ; dispo soir et week-end, main propre)
+- 26 oct. : 5 gestes pour garder votre téléphone plus longtemps (carrousel du calendrier, 3 slides ; tarifs batterie corrigés en « dès 59 € / dès 79 € »)
 
 ## Reels
 - Batterie iPhone
@@ -50,3 +51,4 @@
 - 22 oct. : Du SE au 16, 100 % iPhone (modèles réparés ; écran dès 55 €, batterie dès 59 €, connecteur 45 €)
 - 23 oct. : Garantie 3 mois (écran, batterie, connecteur, caméra, micro/HP ; hors désoxydation ; diagnostic offert, main propre, -10 % étudiants)
 - 25 oct. : Il fait froid, votre iPhone s'éteint ? (froid et batterie : 3 réflexes ; diagnostic offert, batterie dès 59 € / 79 €, garantie 3 mois)
+- 26 oct. : Vos appels et vocaux grésillent ? (micro & haut-parleur : 3 tests ; diagnostic offert, micro/HP dès 40 €, garantie 3 mois, main propre, -10 % étudiants)
