@@ -34,6 +34,7 @@
 - 25 oct. : Heure d'hiver (carrousel du calendrier, 3 slides ; dispo soir et week-end, main propre)
 - 26 oct. : 5 gestes pour garder votre téléphone plus longtemps (carrousel du calendrier, 3 slides ; tarifs batterie corrigés en « dès 59 € / dès 79 € »)
 - 27 oct. : Fast tech, un nouveau téléphone tous les 2 à 3 ans (carrousel du calendrier, 3 slides ; batterie corrigée en « dès 59 € », WARE passé en bleu)
+- 28 oct. : Videz votre iPhone en 3 étapes avant de vendre (carrousel du calendrier, 3 slides ; médias prêts, NON programmé : limite Metricool atteinte)
 
 ## Reels
 - Batterie iPhone
@@ -54,3 +55,4 @@
 - 25 oct. : Il fait froid, votre iPhone s'éteint ? (froid et batterie : 3 réflexes ; diagnostic offert, batterie dès 59 € / 79 €, garantie 3 mois)
 - 26 oct. : Vos appels et vocaux grésillent ? (micro & haut-parleur : 3 tests ; diagnostic offert, micro/HP dès 40 €, garantie 3 mois, main propre, -10 % étudiants)
 - 27 oct. : iPad ou Apple Watch au tiroir ? On les rachète (3 étapes DM / offre / main propre ; rachat & vente iPad et Watch ; jamais bloqué iCloud)
+- 28 oct. : Envie d'un iPhone moins cher ? On en vend d'occasion (3 étapes DM / dispo / main propre ; contrôlé, iPad & Watch aussi, rachat ; médias prêts, NON programmé : limite Metricool atteinte)
