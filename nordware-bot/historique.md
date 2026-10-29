@@ -37,7 +37,6 @@
 - 28 oct. : Videz votre iPhone en 3 étapes avant de vendre (carrousel du calendrier, 3 slides ; médias prêts, NON programmé : limite Metricool atteinte)
 - 29 oct. : 5 % seulement des smartphones recyclés (carrousel du calendrier, 3 slides ; chiffre ADEME corrigé en « recyclés en fin d’usage », 80 % non sourcé retiré, « bloqué » retiré, WARE en bleu)
 
-- 30 oct. : 10 points de contrôle avant de revendre (carrousel du calendrier, 3 slides ; WARE en bleu secondaire, retours à la ligne propres sur 2 cartes)
 ## Reels
 - Batterie iPhone
 - Écran iPhone
@@ -59,4 +58,3 @@
 - 27 oct. : iPad ou Apple Watch au tiroir ? On les rachète (3 étapes DM / offre / main propre ; rachat & vente iPad et Watch ; jamais bloqué iCloud)
 - 28 oct. : Envie d'un iPhone moins cher ? On en vend d'occasion (3 étapes DM / dispo / main propre ; contrôlé, iPad & Watch aussi, rachat ; médias prêts, NON programmé : limite Metricool atteinte)
 - 29 oct. : Votre iPhone chauffe sans raison ? (3 réflexes anti-chauffe : coque en charge, soleil/voiture, oreiller ; diagnostic offert, batterie dès 59 € / 79 €, garantie 3 mois, main propre)
-- 30 oct. : -10 % lycéens et étudiants (écran cassé pendant les vacances ; 3 étapes DM / carte / -10 % déduits ; exemples écran XR/11 dès 58,50 €, 13/14 dès 116,10 €, batterie SE à 14 dès 53,10 € ; diagnostic offert, garantie 3 mois)
